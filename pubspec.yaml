@@ -54,6 +54,8 @@ dependencies:
   animations: ^2.0.10
   hexcolor: ^3.0.1
   yandex_mobileads: ^7.16.0
+  flutter_launcher_icons: ^0.14.4
+  audioplayers: ^6.5.1
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +71,24 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/imgs/app_icon2.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/imgs/app_icon2.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/imgs/app_icon2.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/imgs/app_icon2.png"
+
 # The following section is specific to Flutter packages.
 flutter:
   generate: true
@@ -80,6 +100,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - ./assets/imgs/cards-svgrepo-com.png
+    - ./assets/imgs/app_icon2.png
+    - assets/audio/timeFinishedSound.mp3
+    - assets/gifs/clock(60fps).gif
+    - assets/gifs/clock(24fps).gif
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

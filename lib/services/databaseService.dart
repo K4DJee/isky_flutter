@@ -2,7 +2,7 @@ import 'package:isky_new/database/sqfliteDatabase.dart';
 import 'package:isky_new/models/folders.dart';
 import 'package:isky_new/models/words.dart';
 
-class Databaseservice {
+class DatabaseService {
   final SQLiteDatabase _db = SQLiteDatabase.instance;
   Future<List<Folders>> loadFolders() async {
     print('Начало загрузки папок...');
@@ -38,7 +38,6 @@ class Databaseservice {
         print('Ошибка создания новой папки, такая папка уже существует');
         return folderId;
       }
-      await loadFolders();
       return folderId;
     } catch (e) {
       print('Ошибка создания папки $e');
@@ -90,6 +89,22 @@ class Databaseservice {
     } catch (e) {
       print('Ошибка изменения слова: $e');
       throw e;
+    }
+  }
+
+  Future<List<Words>?> getFlashcards(int folderId, {int page = 1, int limit = 25})async{
+    try{
+      print('Начало получения flashcards');
+      final flashcards = await _db.getFlashcards(folderId, page:page, limit:limit);
+      if(flashcards == null){
+        print('Слов нету');
+        return null;
+      }
+      print('flashcards получены: $flashcards');
+      return flashcards;
+    }
+    catch(e){
+      print('Ошибка получения flashcards: $e');
     }
   }
 }

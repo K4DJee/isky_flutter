@@ -7,11 +7,14 @@ import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/modals/AddWordModal.dart';
 import 'package:isky_new/models/folders.dart';
 import 'package:isky_new/models/words.dart';
+import 'package:isky_new/pages/allFlashCardsPage.dart';
 import 'package:isky_new/pages/flashCardsPage.dart';
 import 'package:isky_new/pages/onBoardingScreen.dart';
+import 'package:isky_new/pages/timeFlashcardsPage.dart';
 import 'package:isky_new/pages/wordActionsPage.dart';
 import 'package:isky_new/providers/FolderUpdateProvider.dart';
 import 'package:isky_new/services/adService.dart';
+import 'package:isky_new/services/databaseService.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 import 'pages/SettingsPage.dart';
 import 'pages/SyncPage.dart';
@@ -56,7 +59,7 @@ class MyApp extends StatelessWidget {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: localeProvider.locale,
-          home: const MyHomePage(title: 'Isky'),//OnBoardingScreen()
+          home: const MyHomePage(title: 'Isky'), //OnBoardingScreen()
         );
       },
     );
@@ -85,16 +88,17 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController searchController;
   List<Words> _filteredWords = [];
   final AdService _adService = AdService();
+  final DatabaseService _dbService = DatabaseService();
 
   @override
   void initState() {
     super.initState();
     searchController = TextEditingController();
     context.read<FolderUpdateProvider>().addListener(_onFolderUpdated);
-    searchController.addListener(()=>_filterWords());
+    searchController.addListener(() => _filterWords());
     _loadFolders();
 
-    if(Platform.isWindows || Platform.isLinux){
+    if (Platform.isWindows || Platform.isLinux) {
       return;
     }
     MobileAds.initialize().then((_) {
@@ -104,57 +108,50 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  
-
-  void _filterWords(){
+  void _filterWords() {
     String query = searchController.text.toLowerCase().trim();
-    
-    if(query.isEmpty){
+
+    if (query.isEmpty) {
       setState(() {
-      _filteredWords = _words;
-    });
-    return;
+        _filteredWords = _words;
+      });
+      return;
     }
 
     setState(() {
-    _filteredWords = _words.where((word) {
-      return word.word.toLowerCase().contains(query) ||
-             word.translate.toLowerCase().contains(query) ||
-             word.example.toLowerCase().contains(query);
-    }).toList();
-  });
+      _filteredWords = _words.where((word) {
+        return word.word.toLowerCase().contains(query) ||
+            word.translate.toLowerCase().contains(query) ||
+            word.example.toLowerCase().contains(query);
+      }).toList();
+    });
   }
 
-  
-
-
-
   Future<void> _loadFolders() async {
-    print('Начало загрузки папок...');
-    try {
-      final folders = await _sqfliteDatabase.getFolders();
-      print('Получен список папок: ${folders.map((f) => f.name).join(', ')}');
-      setState(() {
-        _folders = folders;
+    setState(() {
+      _isLoading = true;
+    });
+    final folders = await _dbService.loadFolders();
+    setState(() {
+      _folders = folders;
 
-        if (_selectedFolderIdForWord == null && folders.isNotEmpty) {
-          final firstFolder = folders.first;
-          _selectedFolderIdForWord = firstFolder.id;
-          _selectedFolder = firstFolder;
-        }
+      if (_selectedFolderIdForWord != null &&
+          !folders.any((f) => f.id == _selectedFolderIdForWord)) {
+        _selectedFolderIdForWord = folders.isNotEmpty ? folders.first.id : null;
+        _selectedFolder = folders.isNotEmpty ? folders.first : null;
+      } else if (_selectedFolderIdForWord == null && folders.isNotEmpty) {
+        _selectedFolderIdForWord = folders.first.id;
+        _selectedFolder = folders.first;
+      }
+      if (_selectedFolderIdForWord != null) {
+        _loadWordsFromFolder(_selectedFolderIdForWord!);
+      } else {
+        _words = [];
+        _filteredWords = [];
+      }
 
-        if (_selectedFolderIdForWord != null) {
-          _loadWordsFromFolder(_selectedFolderIdForWord!);
-        }
-
-        _isLoading = false;
-      });
-    } catch (e) {
-      print('Ошибка загрузки папок: $e');
-      setState(() {
-        _isLoading = false;
-      });
-    }
+      _isLoading = false;
+    });
   }
 
   void _onFolderUpdated() {
@@ -162,36 +159,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _loadWordsFromFolder(int folderId) async {
-    print('Загрузка слов для папки с ID $folderId');
-    try {
-      final words = await _sqfliteDatabase.getWords(folderId);
-      print('Получен список слов: ${words.map((w) => w.word).join(', ')}');
-      setState(() {
-        _words = words;
-        _filteredWords = List.from(words);
-      });
-      _filterWords();
-    } catch (e) {
-      print('Ошибка загрузки слов: $e');
-    }
+    final words = await _dbService.loadWordsFromFolder(folderId);
+    print('Получен список слов: ${words.map((w) => w.word).join(', ')}');
+    setState(() {
+      _words = words;
+      _filteredWords = List.from(words);
+    });
+    _filterWords();
   }
 
   Future<int> _CreateNewFolder(String folderName) async {
-    print('Попытка создания папки: $folderName');
-    try {
-      final newFolder = Folders(id: null, name: folderName);
-      print('Создан объект папки: ${newFolder.toMap()}');
-      final folderId = await _sqfliteDatabase.createFolder(newFolder);
-      if (folderId == 0) {
-        print('Ошибка создания новой папки, такая папка уже существует');
-        return folderId;
-      }
-      await _loadFolders();
-      return folderId;
-    } catch (e) {
-      print('Ошибка создания папки $e');
-      throw Error();
-    }
+    final newFolder = await _dbService.createFolder(folderName);
+    await _loadFolders();
+    return newFolder;
   }
 
   Future<void> _AddWord() async {
@@ -251,11 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _changeWord(Words word) async {
     try {
-      final result = await _sqfliteDatabase.changeWord(word);
-      if (result == 0) {
-        print("Ошибка изменения слова, такого слов не существует");
-      }
-      print('Слово успешно изменилось c ID$result');
+      final result = await _dbService.changeWord(word);
     } catch (e) {
       print('Ошибка изменения слова: $e');
       throw e;
@@ -427,7 +403,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(radius: 25),
+                  CircleAvatar(radius: 25,
+                  backgroundColor: Colors.transparent,
+                  child: Image.asset('assets/imgs/app_icon2.png'),),
 
                   Text(
                     '${AppLocalizations.of(context)!.selectedFolderTitle} ${_selectedFolder?.name != null ? _selectedFolder?.name : AppLocalizations.of(context)!.folderAbsent}',
@@ -448,7 +426,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               }).toList(),
               padding: EdgeInsets.only(left: 20.0, right: 20.0),
-              hint:  Text(AppLocalizations.of(context)!.yourFolders),
+              hint: Text(AppLocalizations.of(context)!.yourFolders),
               value: _selectedFolderIdForWord,
               onChanged: (int? newValue) {
                 setState(() {
@@ -466,7 +444,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.folder),
-              title:  Text(AppLocalizations.of(context)!.addFolderTooltip),
+              title: Text(AppLocalizations.of(context)!.addFolderTooltip),
               onTap: () {
                 Navigator.pop(context);
                 _showAddFolderDialog();
@@ -550,10 +528,92 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: <Widget>[
-          PopupMenuButton(
+          PopupMenuButton<String>(
+            icon: ImageIcon(AssetImage("assets/imgs/cards-svgrepo-com.png")),
+            onSelected: (String value) {},
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
                 onTap: (){
+                  if (_selectedFolderIdForWord == null) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Выберите папку',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                  return;
+                }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FlashcardPage(
+                      selectedFolderId: _selectedFolderIdForWord!,
+                    ),
+                  ),
+                );
+                },
+                child: Row(
+                  children: [
+                    ImageIcon(AssetImage("assets/imgs/cards-svgrepo-com.png")),
+                    SizedBox(width: 8),
+                    Text(AppLocalizations.of(context)!.educationAnki),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                onTap: (){
+                  if (_selectedFolderIdForWord == null) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Выберите папку',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                  return;
+                }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AllFlashcardsPage(
+                      selectedFolderId: _selectedFolderIdForWord!,
+                    ),
+                  ),
+                );
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.my_library_books),
+                    SizedBox(width: 8),
+                    Text('Все слова'),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TimeFlashcardsPage(selectedFolderId: _selectedFolderIdForWord!)));
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.timelapse),
+                    SizedBox(width: 8),
+                    Text('На время'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          PopupMenuButton(
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                onTap: () {
                   _adService.loadAd(context, setState);
                 },
                 child: Row(
@@ -564,36 +624,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-            ],
-          ),
-          PopupMenuButton<String>(
-            icon: ImageIcon(AssetImage("assets/imgs/cards-svgrepo-com.png")),
-            onSelected: (String value) {},
-            itemBuilder: (BuildContext context) => [
               PopupMenuItem(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(),
+                    ),
+                  );
+                },
                 child: Row(
                   children: [
-                    Icon(Icons.share),
+                    Icon(Icons.settings),
                     SizedBox(width: 8),
-                    Text('Все слова'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                child: Row(
-                  children: [
-                    Icon(Icons.feedback),
-                    SizedBox(width: 8),
-                    Text('Плохие слова'),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                child: Row(
-                  children: [
-                    Icon(Icons.feedback),
-                    SizedBox(width: 8),
-                    Text('Слова, которые нужно подучить'),
+                    Text('Настройки'),
                   ],
                 ),
               ),
@@ -642,87 +686,93 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   Expanded(
-
-                    child: 
-                    _filteredWords.isEmpty 
-                    ? Center(
-                      child: Text(AppLocalizations.of(context)!.noWordsFound,
-                      style:TextStyle(color: Colors.grey, fontSize: 16)),
-                    )
-                    : ListView.builder(
-                      itemCount: _filteredWords.length,
-                      itemBuilder: (context, index) {
-                        final word = _filteredWords[index];
-
-                        return OpenContainer(
-                          closedColor: Theme.of(context).cardColor,
-                          openColor: Theme.of(context).scaffoldBackgroundColor,
-                          transitionType: ContainerTransitionType.fade,
-                          transitionDuration: Duration(milliseconds: 50),
-                          openBuilder: (context, action) {
-                            return WordActionsPage(
-                              word: word,
-                              onSave: (updatedWord) async {
-                                await _changeWord(updatedWord);
-                                await _loadWordsFromFolder(
-                                  _selectedFolderIdForWord!,
-                                );
-                              },
-                              onDelete: (wordId) async {
-                                await _deleteWord(wordId);
-                                await _loadWordsFromFolder(
-                                  _selectedFolderIdForWord!,
-                                );
-                              },
-                            );
-                          },
-                          closedBuilder: (context, action) {
-                            return Card(
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0),
-                                side: BorderSide.none,
+                    child: _filteredWords.isEmpty
+                        ? Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.noWordsFound,
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
                               ),
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  ListTile(
-                                    title: Text(
-                                      word.word,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0,
-                                      ),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: _filteredWords.length,
+                            itemBuilder: (context, index) {
+                              final word = _filteredWords[index];
+
+                              return OpenContainer(
+                                closedColor: Theme.of(context).cardColor,
+                                openColor: Theme.of(
+                                  context,
+                                ).scaffoldBackgroundColor,
+                                transitionType: ContainerTransitionType.fade,
+                                transitionDuration: Duration(milliseconds: 50),
+                                openBuilder: (context, action) {
+                                  return WordActionsPage(
+                                    word: word,
+                                    onSave: (updatedWord) async {
+                                      await _changeWord(updatedWord);
+                                      await _loadWordsFromFolder(
+                                        _selectedFolderIdForWord!,
+                                      );
+                                    },
+                                    onDelete: (wordId) async {
+                                      await _deleteWord(wordId);
+                                      await _loadWordsFromFolder(
+                                        _selectedFolderIdForWord!,
+                                      );
+                                    },
+                                  );
+                                },
+                                closedBuilder: (context, action) {
+                                  return Card(
+                                    elevation: 4,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(0),
+                                      side: BorderSide.none,
                                     ),
-                                    subtitle: Text(
-                                      word.translate,
-                                      style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 18.0,
-                                      ),
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        ListTile(
+                                          title: Text(
+                                            word.word,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20.0,
+                                            ),
+                                          ),
+                                          subtitle: Text(
+                                            word.translate,
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 18.0,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 16,
+                                            bottom: 8,
+                                          ),
+                                          child: Text(word.example),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 16,
-                                      bottom: 8,
-                                    ),
-                                    child: Text(word.example),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: _adService.getAdWidget(),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -747,12 +797,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
   @override
   void dispose() {
-    searchController.removeListener(()=>_filterWords);
+    searchController.removeListener(() => _filterWords);
     searchController.dispose();
     _adService.dispose();
     super.dispose();
   }
 }
-

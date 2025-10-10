@@ -46,7 +46,7 @@ class SQLiteDatabase {
       print('Полный путь к файлу базы: $path');
       return await openDatabase(
         path,
-        version: 11,
+        version: 12,
         onCreate: _createDB,
         onUpgrade: _onUpgrade, // Добавляем для будущих миграций
       );
@@ -59,23 +59,22 @@ class SQLiteDatabase {
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     print('Миграция БД: с $oldVersion на $newVersion');
     if (oldVersion < newVersion) {
-      await db.execute('DROP TABLE IF EXISTS words ');
+      await db.execute('DROP TABLE IF EXISTS statistics ');
       await db.execute('''
-    CREATE TABLE words (
+    CREATE TABLE statistics(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       folderId INTEGER NOT NULL,  
-      word TEXT NOT NULL,
-      translate TEXT NOT NULL,
-      example TEXT,
-      difficulty TEXT NOT NULL DEFAULT 'hard',
-      counter INTEGER DEFAULT 0, 
-      expiresAt TEXT DEFAULT CURRENT_TIMESTAMP,
-      CHECK(difficulty IN ('easy', 'medium', 'hard')),
+      correctWordsPerTime INTEGER NULL,
+      amountCorrectAnswers INTEGER NULL,
+      amountIncorrectAnswers INTEGER NULL,
+      amountAnswersPerDay INTEGER NULL,
+      wordsLearnedToday INTEGER NULL,
+      createdAt INTEGER NOT NULL,
       FOREIGN KEY (folderId) REFERENCES folders (id) ON DELETE CASCADE
     )
-    ''');
-      await db.execute('DROP TABLE IF EXISTS flashcards');
-      print('Таблица flashcards успешно добавлена!');
+    '''
+    );
+    print('Таблица statistics создана');
     }
   }
 
@@ -109,6 +108,20 @@ class SQLiteDatabase {
       FOREIGN KEY (folderId) REFERENCES folders (id) ON DELETE CASCADE
     )
     ''');
+    await db.execute('''
+    CREATE TABLE statistics(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      folderId INTEGER NOT NULL,  
+      correctWordsPerTime INTEGER NULL,
+      amountCorrectAnswers INTEGER NULL,
+      amountIncorrectAnswers INTEGER NULL,
+      amountAnswersPerDay INTEGER NULL,
+      wordsLearnedToday INTEGER NULL,
+      createdAt INTEGER NOT NULL,
+      FOREIGN KEY (folderId) REFERENCES folders (id) ON DELETE CASCADE
+    )
+    '''
+    );
     print('Поле difficulty добавлено в words, таблица flashcards удалена');
     await db.execute('PRAGMA foreign_keys = ON;');
   }
@@ -310,6 +323,26 @@ Future<Words?> getFlashcard(int folderId) async{
   }
   catch(e){
     print('Ошибка получения flashcard: $e');
+    rethrow;
+  }
+}
+
+Future<List<Words>?> getFlashcards(int folderId, {int page = 1, int limit = 25}) async{
+  try{
+  final db = await instance.database;
+  final offset = (page - 1) * limit;
+  final List<Map<String, dynamic>> flashcards = await db.rawQuery(
+    '''SELECT * FROM words WHERE folderId = ? LIMIT ? OFFSET ?''', [folderId,limit, offset]
+  );
+
+  if(flashcards.isNotEmpty){
+    return flashcards.map((map)=>Words.fromMap(map)).toList();
+  }
+
+  return null;
+  }
+  catch(e){
+    print('Ошибка получения flashcards: $e');
     rethrow;
   }
 }
