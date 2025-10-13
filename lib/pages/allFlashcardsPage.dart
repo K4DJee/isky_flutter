@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:isky_new/database/sqfliteDatabase.dart';
 import 'package:isky_new/helpers/formatDayEnding.dart';
+import 'package:isky_new/helpers/showExitDialog.dart';
 import 'package:isky_new/models/flashcardWithWord.dart';
 import 'package:isky_new/models/words.dart';
 import 'package:intl/intl.dart';
@@ -111,7 +113,17 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('All words')),
+      appBar: AppBar(
+        title: Text('All words'),
+        leading: IconButton(onPressed: ()async{
+          final shouldExit = await showExitDialog(context);
+          if(shouldExit){
+            HapticFeedback.heavyImpact();
+            Navigator.pop(context);
+          }
+        }, icon: Icon(Icons.close)),
+      ),
+      
       body: Center(
         child: SizedBox(
           width: 350,

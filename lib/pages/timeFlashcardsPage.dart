@@ -1,5 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:isky_new/helpers/formatDuration.dart';
+import 'package:isky_new/helpers/showExitDialog.dart';
+import 'package:isky_new/models/statistics.dart';
 import 'package:isky_new/models/words.dart';
 import 'package:isky_new/services/databaseService.dart';
 import 'package:isky_new/widgets/timeProgressBar.dart';
@@ -27,6 +31,12 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
   final DatabaseService _dbService = DatabaseService();
   bool _isTimerStarted = false;
   bool _isTimerFinished = false;
+  int correctWordsPerTime = 0,
+      amountCorrectAnswers = 0,
+      amountIncorrectAnswers = 0,
+      amountAnswersPerDay = 0,
+      wordsLearnedToday = 0;
+  DateTime? _startTime;
 
   @override
   void initState() {
@@ -46,6 +56,7 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
     setState(() {
       _isTimerStarted = true;
       this._selectedDuration = timer;
+      _startTime = DateTime.now();
     });
   }
 
@@ -96,6 +107,10 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Неверное слово, попробуйте снова')),
         );
+        setState(() {
+          amountIncorrectAnswers++;
+          amountAnswersPerDay++;
+        });
         return;
       }
 
@@ -106,6 +121,10 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
           _currentFlashcard = allFlashcards[index];
           _isLoading = false;
           _showAnswer = false;
+          correctWordsPerTime++;
+          wordsLearnedToday++;
+          amountCorrectAnswers++;
+          amountAnswersPerDay++;
         });
       } else {
         setState(() {
@@ -115,6 +134,9 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
           _isLoading = false;
           _showAnswer = false;
         });
+
+        _finishTimerEarly();
+        return;
       }
     } catch (e) {
       if (mounted) {
@@ -130,6 +152,46 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
     }
   }
 
+  void _finishTimerEarly() {
+    if (_isTimerStarted && !_isTimerFinished) {
+      setState(() {
+        _isTimerStarted = false;
+        _isTimerFinished = true;
+      });
+
+      _handleTimerFinish();
+    }
+    HapticFeedback.heavyImpact();
+  }
+
+  Future<void> _handleTimerFinish() async {
+    final actualDuration = _elapsedTime;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Тренировка завершена')));
+
+    await _dbService.createStatisticDay(
+      widget.selectedFolderId,
+      Statistics(
+        folderId: widget.selectedFolderId,
+        correctWordsPerTime: correctWordsPerTime,
+        amountCorrectAnswers: amountCorrectAnswers,
+        amountIncorrectAnswers: amountIncorrectAnswers,
+        amountAnswersPerDay: amountAnswersPerDay,
+        wordsLearnedToday: wordsLearnedToday,
+        createdAt: DateTime.now().toString()
+      ),
+    );
+
+    final player = AudioPlayer();
+    await player.play(AssetSource('audio/timeFinishedSound.mp3'));
+  }
+
+  Duration get _elapsedTime {
+    if (_startTime == null) return Duration.zero;
+    return DateTime.now().difference(_startTime!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,14 +199,22 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
         title: const Text('Написание слова по переводу на время'),
         elevation: 0,
         actions: [IconButton(icon: const Icon(Icons.help), onPressed: () {})],
+        leading: IconButton(onPressed: ()async{
+          final shouldExit = await showExitDialog(context);
+          if(shouldExit){
+            if (_isTimerStarted && !_isTimerFinished) {
+              _finishTimerEarly(); // сохранить статистику
+            }
+            Navigator.pop(context);
+          }
+        }, icon: Icon(Icons.close)),
       ),
       body: Column(
         children: [
           if (_isTimerStarted)
             TimerProgressBar(
               testDuration: _selectedDuration,
-              onTimerFinish: () {
-                _isTimerStarted = false;
+              onTimerFinish: () async {
                 ScaffoldMessenger.of(
                   context,
                 ).showSnackBar(SnackBar(content: Text('Тест завершён')));
@@ -152,8 +222,22 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
                   _isTimerStarted = false;
                   _isTimerFinished = true;
                 });
+                final actualDuration = _elapsedTime;
+                await _dbService.createStatisticDay(
+                  widget.selectedFolderId,
+                  Statistics(
+                    folderId: widget.selectedFolderId,
+                    correctWordsPerTime: correctWordsPerTime,
+                    amountCorrectAnswers: amountCorrectAnswers,
+                    amountIncorrectAnswers: amountIncorrectAnswers,
+                    amountAnswersPerDay: amountAnswersPerDay,
+                    wordsLearnedToday: wordsLearnedToday,
+                    createdAt: DateTime.now().toString()
+                  ),
+                );
                 final player = AudioPlayer();
                 player.play((AssetSource('audio/timeFinishedSound.mp3')));
+                HapticFeedback.heavyImpact();
               },
             ),
           Expanded(
@@ -223,7 +307,7 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          _currentFlashcard == null
+                          _currentFlashcard == null && _isTimerFinished == false
                               ? Column(
                                   children: [
                                     const Icon(
@@ -249,52 +333,71 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
                                 )
                               : Padding(
                                   padding: const EdgeInsets.all(16.0),
-                                  child: 
-                                  _isTimerFinished == false ?
-                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      
-                                      Text(
-                                        _currentFlashcard!.translate,
-                                        style: const TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(height: 40),
-                                      TextField(
-                                        controller: controller,
-                                        decoration: InputDecoration(
-                                          labelText: 'Слово',
-                                          suffixIcon: IconButton(
-                                            onPressed: _nextFlashcard,
-                                            icon: const Icon(
-                                              Icons.arrow_right_alt_sharp,
+                                  child: _isTimerFinished == false
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              _currentFlashcard!.translate,
+                                              style: const TextStyle(
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                          ),
+                                            const SizedBox(height: 40),
+                                            TextField(
+                                              controller: controller,
+                                              decoration: InputDecoration(
+                                                labelText: 'Слово',
+                                                suffixIcon: IconButton(
+                                                  onPressed: _nextFlashcard,
+                                                  icon: const Icon(
+                                                    Icons.arrow_right_alt_sharp,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              'assets/gifs/clock(60fps).gif',
+                                              height: 50,
+                                              width: 50,
+                                            ),
+                                            Card(
+                                              child: Padding(
+                                                padding: EdgeInsets.all(16),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text('Время закончилось!', style: TextStyle(fontWeight: FontWeight.bold),),
+                                                    Text(
+                                                      'Всего слов: $amountAnswersPerDay',
+                                                    ),
+                                                    Text(
+                                                      'Правильно: $amountCorrectAnswers',
+                                                      style: TextStyle(color: Colors.green[400])
+                                                    ),
+                                                    Text(
+                                                      'Ошибок: $amountIncorrectAnswers',
+                                                      style: TextStyle(color: Colors.red)
+                                                    ),
+                                                    Text(
+                                                      'Время: ${formatDuration(_elapsedTime)}',
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
-                                  )
-                                  : Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image.asset('assets/gifs/clock(60fps).gif',
-                                      height: 50,
-                                      width: 50,
-                                      ),
-                                      Text('Время закончилось!'),
-                                      SizedBox(height: 5,),
-                                      Text('Всего слов пройдено: 32'),
-                                      Text('Время: 2 минуты'),
-                                      Text('Попыток: 50'),
-                                      Text('Ошибок: 12'),
-                                    ],
-                                  )
                                 ),
                         ],
                       ),

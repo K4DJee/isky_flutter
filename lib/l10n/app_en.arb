@@ -31,8 +31,19 @@
     "wordActionsTitle": "Editing a word",
     "localSync": "Local synchronization",
     "globalSync": "Global synchronization",
-
-
+    
+    "searchWords":"Search words",
+    "noWords": "There are no words",
+    "noWordsDescription": "There are no words for the flashcards. Add new words or wait for words.",
+    "showExitDialogTitle": "Are you sure you want to finish the workout?",
+    "yesAction": "Yes",
+    "noAction": "No",
+    "localSyncDescription": "How does local sync work? You can transfer all your folders to another device via a Wi-Fi hotspot or when both devices are connected to the same Wi-Fi network.",
+    "renameFolder": "Rename",
+    "deleteFolder": "Delete",
+    "folderActionsPage": "Folder management",
+    "allFlashcards": "All words",
+    "timePage": "For a while", 
     "noWordsFound": "Words not found",
     "day": "day",
     "daysGenitive": "days",

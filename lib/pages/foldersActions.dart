@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isky_new/database/sqfliteDatabase.dart';
+import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/models/folders.dart';
 import 'package:isky_new/pages/folderNamePage.dart';
 import 'package:isky_new/providers/FolderUpdateProvider.dart';
@@ -77,7 +78,7 @@ class _folderActionsPageState extends State<folderActionsPage>{
   @override Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Взаимодействие с папками'),
+        title: Text(AppLocalizations.of(context)!.folderActionsPage),
       ),
       body: ListView.separated(
         itemCount: _folders.length,
@@ -117,7 +118,7 @@ class _folderActionsPageState extends State<folderActionsPage>{
                   child: Row(
                     children: [
                       Icon(Icons.edit, size: 18),
-                      Text('Переименовать'),
+                      Text(AppLocalizations.of(context)!.renameFolder),
                     ],
                   )
                   ),
@@ -126,7 +127,7 @@ class _folderActionsPageState extends State<folderActionsPage>{
                   child: Row(
                     children: [
                       Icon(Icons.delete, size: 18),
-                      Text('Удалить'),
+                      Text(AppLocalizations.of(context)!.deleteFolder),
                     ],
                   )
                   )

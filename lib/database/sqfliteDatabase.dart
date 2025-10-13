@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:isky_new/models/flashcardWithWord.dart';
+import 'package:isky_new/models/statistics.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -46,7 +47,7 @@ class SQLiteDatabase {
       print('Полный путь к файлу базы: $path');
       return await openDatabase(
         path,
-        version: 12,
+        version: 13,
         onCreate: _createDB,
         onUpgrade: _onUpgrade, // Добавляем для будущих миграций
       );
@@ -60,7 +61,7 @@ class SQLiteDatabase {
     print('Миграция БД: с $oldVersion на $newVersion');
     if (oldVersion < newVersion) {
       await db.execute('DROP TABLE IF EXISTS statistics ');
-      await db.execute('''
+     await db.execute('''
     CREATE TABLE statistics(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       folderId INTEGER NOT NULL,  
@@ -69,7 +70,7 @@ class SQLiteDatabase {
       amountIncorrectAnswers INTEGER NULL,
       amountAnswersPerDay INTEGER NULL,
       wordsLearnedToday INTEGER NULL,
-      createdAt INTEGER NOT NULL,
+      createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (folderId) REFERENCES folders (id) ON DELETE CASCADE
     )
     '''
@@ -117,7 +118,7 @@ class SQLiteDatabase {
       amountIncorrectAnswers INTEGER NULL,
       amountAnswersPerDay INTEGER NULL,
       wordsLearnedToday INTEGER NULL,
-      createdAt INTEGER NOT NULL,
+      createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (folderId) REFERENCES folders (id) ON DELETE CASCADE
     )
     '''
@@ -393,6 +394,103 @@ Future<int> changeWordDifficulty(int? id, String difficulty) async{
   }
   catch(e){
     print('Ошибка получения flashcard: $e');
+    rethrow;
+  }
+}
+
+
+//Statistics
+Future<int> createStatisticDay(int   folderId, Statistics statistic)async{
+  try{
+    final now = DateTime.now();
+    final dateString = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+    final db = await instance.database;
+    //Проверка на существование статистики этого дня
+    //Если да, то обновление статистики этого дня
+    //Если нет, то создание статистики этого дня
+    final List<Map<String, Object?>> existStatistic = await db.query('statistics',where: 'date(createdAt) = ? AND folderId = ?', whereArgs: [dateString, folderId], orderBy: 'id DESC');
+    if(existStatistic.isEmpty){
+      print('Статистики на этот день не существует');//'
+      //Создание статистики
+      final newStatistic = await db.insert('statistics', statistic.toMap());
+      return newStatistic;
+    }
+    else{
+      print('Обновление статистики');
+      final existing = existStatistic.first;
+      final prevCorrectWordsPerTime = existing['correctWordsPerTime'] as int? ?? 0;
+      final prevCorrectAnswers = existing['amountCorrectAnswers'] as int? ?? 0;
+      final prevIncorrectAnswers = existing['amountIncorrectAnswers'] as int? ?? 0;
+      final prevAnswersPerDay = existing['amountAnswersPerDay'] as int? ?? 0;
+      final prevWordsLearnedToday = existing['wordsLearnedToday'] as int? ?? 0;
+      
+      int correctWordsPerTime = prevCorrectWordsPerTime;
+      if(statistic.correctWordsPerTime != null && statistic.correctWordsPerTime! > correctWordsPerTime){
+        correctWordsPerTime = statistic.correctWordsPerTime!;
+      }
+      final updatedStatistic = db.update('statistics',
+      {
+        'correctWordsPerTime': correctWordsPerTime ,
+        'amountCorrectAnswers': statistic.amountCorrectAnswers != 0 ? statistic.amountCorrectAnswers! + prevCorrectAnswers : prevCorrectAnswers,
+        'amountIncorrectAnswers': statistic.amountIncorrectAnswers != 0 ? statistic.amountIncorrectAnswers! + prevIncorrectAnswers : prevIncorrectAnswers,
+        'amountAnswersPerDay': statistic.amountAnswersPerDay != 0 ? statistic.amountAnswersPerDay! + prevAnswersPerDay : prevAnswersPerDay,
+        'wordsLearnedToday': statistic.wordsLearnedToday != 0 ? statistic.wordsLearnedToday! + prevWordsLearnedToday : prevWordsLearnedToday
+      },
+       where: 'date(createdAt) = ? AND folderId = ?', whereArgs: [dateString, folderId]);
+      
+      return updatedStatistic;
+    }
+  }
+  catch(e){
+    print('Ошибка создания статистики: $e');
+    rethrow;
+  }
+}
+
+Future<List<Statistics>> getStatistics(int folderId) async{
+  try{
+    final db = await instance.database;
+    final List<Map<String, dynamic>> statisticsRows = await db.rawQuery('''
+      SELECT * FROM statistics WHERE folderId = ? ORDER BY date(createdAt)
+    ''', [folderId]);
+
+    if(statisticsRows.isEmpty){
+      return [];
+    }
+    final stats = statisticsRows.map((row) => Statistics.fromMap(row)).toList();
+    final List<Statistics> filledStats = [];
+    final DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    DateTime? lastDate;
+
+    for (final stat in stats) {
+    final currentDate = format.parse(stat.createdAt!);
+
+    if (lastDate != null) {
+      // Проверим пропущенные дни между lastDate и currentDate
+      var nextDay = lastDate.add(const Duration(days: 1));
+      while (nextDay.isBefore(currentDate)) {
+        // Добавляем "пустой" день
+        filledStats.add(Statistics(
+          folderId: folderId,
+          correctWordsPerTime: 0,
+          amountCorrectAnswers: 0,
+          amountIncorrectAnswers: 0,
+          amountAnswersPerDay: 0,
+          wordsLearnedToday: 0,
+          createdAt: DateFormat('yyyy-MM-dd HH:mm:ss').format(nextDay),
+        ));
+        nextDay = nextDay.add(const Duration(days: 1));
+      }
+    }
+
+    filledStats.add(stat);
+    lastDate = currentDate;
+  }
+
+  return filledStats;
+  }
+  catch(e){
+    print('Ошибка получения статистики: $e');
     rethrow;
   }
 }

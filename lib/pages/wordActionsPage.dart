@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:isky_new/database/sqfliteDatabase.dart';
 import 'package:flutter/material.dart';
 import 'package:isky_new/l10n/app_localizations.dart';
@@ -38,7 +39,7 @@ class _WordActionsPageState extends State<WordActionsPage>{
     return Scaffold(
       backgroundColor: Theme.of(context).appBarTheme?.backgroundColor ?? Theme.of(context).colorScheme.primary,
       appBar: AppBar(
-      title: Text(AppLocalizations.of(context)!.wordActionsTitle), // ← Добавь перевод в AppLocalizations
+      title: Text(AppLocalizations.of(context)!.wordActionsTitle), 
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
     ),
     body: Padding(
@@ -86,6 +87,7 @@ class _WordActionsPageState extends State<WordActionsPage>{
                 );
 
                 widget.onSave(updatedWord);
+                HapticFeedback.vibrate();
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
@@ -97,6 +99,7 @@ class _WordActionsPageState extends State<WordActionsPage>{
             ElevatedButton(
               onPressed: (){
                 widget.onDelete(widget.word.id!);
+                HapticFeedback.heavyImpact();
               }, 
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 77, 183, 58),

@@ -105,6 +105,42 @@ class AppLocalizationsRu extends AppLocalizations {
   String get globalSync => 'Глобальная синхронизация';
 
   @override
+  String get searchWords => 'Поиск слов';
+
+  @override
+  String get noWords => 'Слов нету';
+
+  @override
+  String get noWordsDescription => 'Слов для обучающих карточек нету, добавьте новые слова или дождитесь слов';
+
+  @override
+  String get showExitDialogTitle => 'Вы точно хотите завершить тренировку?';
+
+  @override
+  String get yesAction => 'Да';
+
+  @override
+  String get noAction => 'Нет';
+
+  @override
+  String get localSyncDescription => 'Как происходит локальная синхронизация? Вы можете передавать все свои папки на другое устройство через точку доступа Wi-Fi или когда оба устройства подключены к одному и тому же Wi-Fi';
+
+  @override
+  String get renameFolder => 'Переименовать';
+
+  @override
+  String get deleteFolder => 'Удалить';
+
+  @override
+  String get folderActionsPage => 'Управление папками';
+
+  @override
+  String get allFlashcards => 'Все слова';
+
+  @override
+  String get timePage => 'На время';
+
+  @override
   String get noWordsFound => 'Слова не найдены';
 
   @override

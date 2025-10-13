@@ -105,6 +105,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get globalSync => 'Global synchronization';
 
   @override
+  String get searchWords => 'Search words';
+
+  @override
+  String get noWords => 'There are no words';
+
+  @override
+  String get noWordsDescription => 'There are no words for the flashcards. Add new words or wait for words.';
+
+  @override
+  String get showExitDialogTitle => 'Are you sure you want to finish the workout?';
+
+  @override
+  String get yesAction => 'Yes';
+
+  @override
+  String get noAction => 'No';
+
+  @override
+  String get localSyncDescription => 'How does local sync work? You can transfer all your folders to another device via a Wi-Fi hotspot or when both devices are connected to the same Wi-Fi network.';
+
+  @override
+  String get renameFolder => 'Rename';
+
+  @override
+  String get deleteFolder => 'Delete';
+
+  @override
+  String get folderActionsPage => 'Folder management';
+
+  @override
+  String get allFlashcards => 'All words';
+
+  @override
+  String get timePage => 'For a while';
+
+  @override
   String get noWordsFound => 'Words not found';
 
   @override

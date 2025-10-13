@@ -1,5 +1,6 @@
 import 'package:isky_new/database/sqfliteDatabase.dart';
 import 'package:isky_new/models/folders.dart';
+import 'package:isky_new/models/statistics.dart';
 import 'package:isky_new/models/words.dart';
 
 class DatabaseService {
@@ -105,6 +106,22 @@ class DatabaseService {
     }
     catch(e){
       print('Ошибка получения flashcards: $e');
+    }
+  }
+
+  Future<void> createStatisticDay(int folderId, Statistics statistic)async{
+    try{
+      final statisticDay = await _db.createStatisticDay(folderId, statistic);
+      if(statisticDay != 0){
+        print('Статистика успешно была создана или обновлена');
+      }
+      else{
+        print('Ошибка создания или обновления статистики');
+      }
+    }
+    catch(e){
+      print('Ошибка создания статистики: $e');
+
     }
   }
 }

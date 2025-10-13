@@ -92,7 +92,7 @@ class AddWordModal extends StatelessWidget {
                 );
               }).toList(),
               isExpanded: true,
-              style:const TextStyle(),
+              style: TextStyle(),
             
                onChanged: (int? newValue){
                 if(onFolderSelected != null && newValue != null){

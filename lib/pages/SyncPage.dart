@@ -15,7 +15,7 @@ class _SyncPageState extends State<SyncPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Синхронизация'),
+        title:  Text(AppLocalizations.of(context)!.synchronizationPage),
       ),
       body:Padding(
       padding: const EdgeInsets.all(16),
@@ -33,7 +33,7 @@ class _SyncPageState extends State<SyncPage>{
 
             ),
             ListTile(
-              title: Text('Как происходит локальная синхронизация? Вы можете передать все свои папки другому устройству через точку доступа Wi-Fi или когда оба устройства подключены к одному и тому же wifi',
+              title: Text(AppLocalizations.of(context)!.localSyncDescription,
               style: TextStyle(fontSize: 18),),
             ),
             ListTile(

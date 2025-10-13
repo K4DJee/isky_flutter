@@ -7,6 +7,7 @@ import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/modals/AddWordModal.dart';
 import 'package:isky_new/models/folders.dart';
 import 'package:isky_new/models/words.dart';
+import 'package:isky_new/pages/StatisticPage.dart';
 import 'package:isky_new/pages/allFlashCardsPage.dart';
 import 'package:isky_new/pages/flashCardsPage.dart';
 import 'package:isky_new/pages/onBoardingScreen.dart';
@@ -474,7 +475,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SettingsPage()),
+                  MaterialPageRoute(builder: (context) => StatisticsPage(selectedFolderId: _selectedFolderIdForWord!,)),
                 );
                 // Можно открыть новую страницу:
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
@@ -539,7 +540,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Выберите папку',
+                        AppLocalizations.of(context)!.selectFolder,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       backgroundColor: Colors.red,
@@ -571,7 +572,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Выберите папку',
+                        AppLocalizations.of(context)!.selectFolder,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       backgroundColor: Colors.red,
@@ -592,7 +593,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Icon(Icons.my_library_books),
                     SizedBox(width: 8),
-                    Text('Все слова'),
+                    Text(AppLocalizations.of(context)!.allFlashcards),
                   ],
                 ),
               ),
@@ -604,7 +605,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Icon(Icons.timelapse),
                     SizedBox(width: 8),
-                    Text('На время'),
+                    Text(AppLocalizations.of(context)!.timePage),
                   ],
                 ),
               ),
@@ -637,7 +638,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Icon(Icons.settings),
                     SizedBox(width: 8),
-                    Text('Настройки'),
+                    Text(AppLocalizations.of(context)!.settingsPage),
                   ],
                 ),
               ),
@@ -677,6 +678,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             constraints: BoxConstraints.tightFor(height: 40),
                             controller: searchController, //
                             trailing: <Widget>[const Icon(Icons.search)],
+                            hintText: AppLocalizations.of(context)!.searchWords,
                             onSubmitted: (value) {
                               FocusScope.of(context).unfocus();
                             },

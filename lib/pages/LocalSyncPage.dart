@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:sqflite/sqflite.dart';
 import '../sync/tcpSender.dart';
 import '../sync/tcpReceiver.dart';
@@ -97,7 +98,7 @@ class _LocalSyncPageState extends State<LocalSyncPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      title: Text('Локальная синхронизация'),
+      title: Text(AppLocalizations.of(context)!.localSync),
       
       ),
       body: Padding(

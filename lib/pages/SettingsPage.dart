@@ -4,6 +4,7 @@ import 'package:isky_new/helpers/themes.dart';
 import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/models/languages.dart';
 import 'package:isky_new/pages/foldersActions.dart';
+import 'package:isky_new/pages/testPage.dart';
 import 'package:provider/provider.dart';
 import 'package:isky_new/providers/locale_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -64,7 +65,7 @@ class _SettingsPageState extends State<SettingsPage>{
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Настройки'),
+        title: Text(AppLocalizations.of(context)!.settingsPage),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -172,6 +173,15 @@ class _SettingsPageState extends State<SettingsPage>{
                   selectedTileColor: Colors.black,
                   onTap:(){
                     
+                  }
+                ),
+                ListTile(
+                  title:Text('Тест', 
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+                  trailing: Icon(Icons.feedback),
+                  selectedTileColor: Colors.black,
+                  onTap:(){
+                    Navigator.push(context,  MaterialPageRoute(builder: (context)=> TestPage()));
                   }
                 ),
                 ListTile(

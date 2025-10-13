@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:isky_new/database/sqfliteDatabase.dart';
 import 'package:isky_new/helpers/formatDayEnding.dart';
+import 'package:isky_new/helpers/showExitDialog.dart';
+import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/models/flashcardWithWord.dart';
 import 'package:isky_new/models/words.dart';
 import 'package:intl/intl.dart';
@@ -86,7 +89,16 @@ class _FlashcardPageState extends State<FlashcardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('flashCard')),
+      appBar: AppBar(
+      title: Text(AppLocalizations.of(context)!.educationAnki),
+      leading: IconButton(onPressed: ()async{
+          final shouldExit = await showExitDialog(context);
+          if(shouldExit){
+            HapticFeedback.heavyImpact();
+            Navigator.pop(context);
+          }
+        }, icon: Icon(Icons.close)),
+      ),
       body: Center(
         child: SizedBox(
           width: 350,
@@ -102,12 +114,12 @@ class _FlashcardPageState extends State<FlashcardPage> {
                           Icon(Icons.warning, size: 48, color: Colors.grey),
                           const SizedBox(height: 16),
                           Text(
-                            'Слов нет',
+                            AppLocalizations.of(context)!.noWords,
                             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Слов для обучающих карточек нету, добавьте новые слова или дождитесь слов',
+                            AppLocalizations.of(context)!.noWordsDescription,
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.grey[600]),
                           ),

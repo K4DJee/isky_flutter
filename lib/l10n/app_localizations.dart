@@ -287,6 +287,78 @@ abstract class AppLocalizations {
   /// **'Global synchronization'**
   String get globalSync;
 
+  /// No description provided for @searchWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Search words'**
+  String get searchWords;
+
+  /// No description provided for @noWords.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no words'**
+  String get noWords;
+
+  /// No description provided for @noWordsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no words for the flashcards. Add new words or wait for words.'**
+  String get noWordsDescription;
+
+  /// No description provided for @showExitDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to finish the workout?'**
+  String get showExitDialogTitle;
+
+  /// No description provided for @yesAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yesAction;
+
+  /// No description provided for @noAction.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get noAction;
+
+  /// No description provided for @localSyncDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'How does local sync work? You can transfer all your folders to another device via a Wi-Fi hotspot or when both devices are connected to the same Wi-Fi network.'**
+  String get localSyncDescription;
+
+  /// No description provided for @renameFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get renameFolder;
+
+  /// No description provided for @deleteFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteFolder;
+
+  /// No description provided for @folderActionsPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Folder management'**
+  String get folderActionsPage;
+
+  /// No description provided for @allFlashcards.
+  ///
+  /// In en, this message translates to:
+  /// **'All words'**
+  String get allFlashcards;
+
+  /// No description provided for @timePage.
+  ///
+  /// In en, this message translates to:
+  /// **'For a while'**
+  String get timePage;
+
   /// No description provided for @noWordsFound.
   ///
   /// In en, this message translates to:
