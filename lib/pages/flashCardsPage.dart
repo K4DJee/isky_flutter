@@ -5,8 +5,10 @@ import 'package:isky_new/helpers/formatDayEnding.dart';
 import 'package:isky_new/helpers/showExitDialog.dart';
 import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/models/flashcardWithWord.dart';
+import 'package:isky_new/models/statistics.dart';
 import 'package:isky_new/models/words.dart';
 import 'package:intl/intl.dart';
+import 'package:isky_new/services/databaseService.dart';
 
 class FlashcardPage extends StatefulWidget {
   final int selectedFolderId;
@@ -23,6 +25,11 @@ class _FlashcardPageState extends State<FlashcardPage> {
   bool _isLoading = true;
   String? _selectedDifficulty;
   int? newCounter;
+  final DatabaseService _dbService = DatabaseService();
+  int amountCorrectAnswers = 0,
+      amountIncorrectAnswers = 0,
+      amountAnswersPerDay = 0,
+      wordsLearnedToday = 0;
 
   String showNextInDays(int days){
   newCounter = _currentFlashcard!.counter + days;
@@ -73,6 +80,11 @@ class _FlashcardPageState extends State<FlashcardPage> {
         print('Слова не существует');
         return;
       }
+      setState(() {
+        amountCorrectAnswers++;
+        amountAnswersPerDay++;
+        wordsLearnedToday++;
+      });
       print(
         'Сложность слова ${_currentFlashcard?.word} была успешна изменена на ${difficulty}}',
       );
@@ -95,6 +107,17 @@ class _FlashcardPageState extends State<FlashcardPage> {
           final shouldExit = await showExitDialog(context);
           if(shouldExit){
             HapticFeedback.heavyImpact();
+            await _dbService.createStatisticDay(
+              widget.selectedFolderId,
+              Statistics(
+                folderId: widget.selectedFolderId,
+                amountCorrectAnswers: amountCorrectAnswers,
+                amountIncorrectAnswers: amountIncorrectAnswers,
+                amountAnswersPerDay: amountAnswersPerDay,
+                wordsLearnedToday: wordsLearnedToday,
+                createdAt: DateTime.now().toString()
+              ),
+            );
             Navigator.pop(context);
           }
         }, icon: Icon(Icons.close)),
@@ -131,7 +154,7 @@ class _FlashcardPageState extends State<FlashcardPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if(_currentFlashcard == null)
-              Text('Слов нету')
+              Text(AppLocalizations.of(context)!.noMoreWords)
               else
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -139,12 +162,12 @@ class _FlashcardPageState extends State<FlashcardPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Слово: ${_currentFlashcard?.word ?? '...'}',
+                      '${AppLocalizations.of(context)!.wordInFlashcard} ${_currentFlashcard?.word ?? '...'}',
                       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     if (_showAnswer)
                       Text(
-                        'Перевод: ${_currentFlashcard?.translate}',
+                        '${AppLocalizations.of(context)!.translateInFlashcard} ${_currentFlashcard?.translate}',
                         style: const TextStyle(fontSize: 18),
                       ),
                   ],
@@ -158,9 +181,9 @@ class _FlashcardPageState extends State<FlashcardPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(onPressed: () async => await _setDifficulty('hard'), child: Text('Сложно',  textAlign: TextAlign.center)),
-                      ElevatedButton(onPressed: () async => await _setDifficulty('medium'), child: Text('Средне\n${showNextInDays(2)}', textAlign: TextAlign.center,)),
-                      ElevatedButton(onPressed: () async => await _setDifficulty('easy'), child: Text('Легко\n${showNextInDays(3)}',  textAlign: TextAlign.center)),
+                      ElevatedButton(onPressed: () async => await _setDifficulty('hard'), child: Text(AppLocalizations.of(context)!.highDifficulty,  textAlign: TextAlign.center)),
+                      ElevatedButton(onPressed: () async => await _setDifficulty('medium'), child: Text('${AppLocalizations.of(context)!.mediumDifficulty}\n${showNextInDays(2)}', textAlign: TextAlign.center,)),
+                      ElevatedButton(onPressed: () async => await _setDifficulty('easy'), child: Text('${AppLocalizations.of(context)!.lowDifficulty}\n${showNextInDays(3)}',  textAlign: TextAlign.center)),
                     ],
                   ),
                 )
@@ -171,7 +194,7 @@ class _FlashcardPageState extends State<FlashcardPage> {
                     onPressed: () {
                       setState(() => _showAnswer = true);
                     },
-                    child: const Text('Показать ответ'),
+                    child:  Text(AppLocalizations.of(context)!.showAnswer),
                   ),
                 ),
               ],

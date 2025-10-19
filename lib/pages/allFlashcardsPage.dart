@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:isky_new/database/sqfliteDatabase.dart';
 import 'package:isky_new/helpers/formatDayEnding.dart';
 import 'package:isky_new/helpers/showExitDialog.dart';
+import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/models/flashcardWithWord.dart';
+import 'package:isky_new/models/statistics.dart';
 import 'package:isky_new/models/words.dart';
 import 'package:intl/intl.dart';
 import 'package:isky_new/services/databaseService.dart';
@@ -28,6 +30,7 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
   List<Words> allFlashcards = [];
   List<Words>? pageFlashcards;
   int index = 0;
+  int wordsLearnedToday = 0;
 
   String showNextInDays(int days){
   newCounter = _currentFlashcard!.counter + days;
@@ -95,6 +98,7 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
           _currentFlashcard = null;
           _isLoading = false;
           _showAnswer = false;
+          wordsLearnedToday++;
         });
       }
       
@@ -119,6 +123,14 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
           final shouldExit = await showExitDialog(context);
           if(shouldExit){
             HapticFeedback.heavyImpact();
+            await _dbService.createStatisticDay(
+              widget.selectedFolderId,
+              Statistics(
+                folderId: widget.selectedFolderId,
+                wordsLearnedToday: wordsLearnedToday,
+                createdAt: DateTime.now().toString()
+              ),
+            );
             Navigator.pop(context);
           }
         }, icon: Icon(Icons.close)),
@@ -139,12 +151,12 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
                           Icon(Icons.warning, size: 48, color: Colors.grey),
                           const SizedBox(height: 16),
                           Text(
-                            'Слов нет',
+                            AppLocalizations.of(context)!.noWords,
                             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Слов для обучающих карточек нету, добавьте новые слова',
+                            AppLocalizations.of(context)!.noWordsDescription,
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.grey[600]),
                           ),
@@ -156,7 +168,7 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if(_currentFlashcard == null)
-              Text('Слов нету')
+              Text(AppLocalizations.of(context)!.noMoreWords)
               else
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -164,12 +176,12 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Слово: ${_currentFlashcard?.word ?? '...'}',
+                      '${AppLocalizations.of(context)!.wordInFlashcard} ${_currentFlashcard?.word ?? '...'}',
                       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     if (_showAnswer)
                       Text(
-                        'Перевод: ${_currentFlashcard?.translate}',
+                        '${AppLocalizations.of(context)!.translateInFlashcard} ${_currentFlashcard?.translate}',
                         style: const TextStyle(fontSize: 18),
                       ),
                   ],
@@ -180,12 +192,7 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
               if (_showAnswer)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(onPressed: () async => await _nextFlashcard(), child: Text('Следующее слово',  textAlign: TextAlign.center)),
-                    ],
-                  ),
+                  child: ElevatedButton(onPressed: () async => await _nextFlashcard(), child: Text(AppLocalizations.of(context)!.nextWord,  textAlign: TextAlign.center)),
                 )
               else
                 Padding(
@@ -194,7 +201,7 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
                     onPressed: () {
                       setState(() => _showAnswer = true);
                     },
-                    child: const Text('Показать ответ'),
+                    child:  Text(AppLocalizations.of(context)!.showAnswer),
                   ),
                 ),
               ],

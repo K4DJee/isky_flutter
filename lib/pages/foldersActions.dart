@@ -82,10 +82,9 @@ class _folderActionsPageState extends State<folderActionsPage>{
       ),
       body: ListView.separated(
         itemCount: _folders.length,
-        separatorBuilder: (context, index) => Divider( // <-- разделитель между элементами
+        separatorBuilder: (context, index) => Divider(
           height: 1,
           thickness: 1,
-          
         ),
         itemBuilder: (context, index){
           final _folder = _folders[index];

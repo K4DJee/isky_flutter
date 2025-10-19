@@ -287,6 +287,240 @@ abstract class AppLocalizations {
   /// **'Global synchronization'**
   String get globalSync;
 
+  /// No description provided for @receiveData.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive data'**
+  String get receiveData;
+
+  /// No description provided for @selectAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an action:'**
+  String get selectAction;
+
+  /// No description provided for @receivingBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving'**
+  String get receivingBtn;
+
+  /// No description provided for @sendingBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending'**
+  String get sendingBtn;
+
+  /// No description provided for @dataReceiveSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'The data was successfully received'**
+  String get dataReceiveSuccess;
+
+  /// No description provided for @dataReceiveLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Data is being received'**
+  String get dataReceiveLoad;
+
+  /// No description provided for @cancelSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelSend;
+
+  /// No description provided for @retrySend.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retrySend;
+
+  /// No description provided for @dataFailedSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t send data'**
+  String get dataFailedSent;
+
+  /// No description provided for @exitBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get exitBtn;
+
+  /// No description provided for @dataSentSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'The data has been sent successfully!'**
+  String get dataSentSuccessfully;
+
+  /// No description provided for @sendingDataToRecipent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending data to the recipient'**
+  String get sendingDataToRecipent;
+
+  /// No description provided for @sendData.
+  ///
+  /// In en, this message translates to:
+  /// **'Send data'**
+  String get sendData;
+
+  /// No description provided for @receiverIpAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient\'s IP address'**
+  String get receiverIpAddress;
+
+  /// No description provided for @qrScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'QR scanner is only available on mobile devices'**
+  String get qrScanTitle;
+
+  /// No description provided for @scanRecipientQRCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan the recipient\'s QR code'**
+  String get scanRecipientQRCode;
+
+  /// No description provided for @sendDataToLocalServerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send data to IP:'**
+  String get sendDataToLocalServerTitle;
+
+  /// No description provided for @localServerStatus2.
+  ///
+  /// In en, this message translates to:
+  /// **'The server is enabled'**
+  String get localServerStatus2;
+
+  /// No description provided for @localServerStatus1.
+  ///
+  /// In en, this message translates to:
+  /// **'The server is turned off'**
+  String get localServerStatus1;
+
+  /// No description provided for @urQRCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your QR code for transmission over IP:'**
+  String get urQRCodeTitle;
+
+  /// No description provided for @stopReceivingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop receiving data'**
+  String get stopReceivingData;
+
+  /// No description provided for @receiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Click \'Receive\' to generate a QR code'**
+  String get receiveTitle;
+
+  /// No description provided for @receive.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive'**
+  String get receive;
+
+  /// No description provided for @minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get minutes;
+
+  /// No description provided for @selectTimeForWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Сhoose the time you want to complete the workout'**
+  String get selectTimeForWorkout;
+
+  /// No description provided for @timePageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Spelling a word based on the translation of time'**
+  String get timePageTitle;
+
+  /// No description provided for @wordInFlashcard.
+  ///
+  /// In en, this message translates to:
+  /// **'Word:'**
+  String get wordInFlashcard;
+
+  /// No description provided for @translateInFlashcard.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate:'**
+  String get translateInFlashcard;
+
+  /// No description provided for @noMoreWords.
+  ///
+  /// In en, this message translates to:
+  /// **'No more words'**
+  String get noMoreWords;
+
+  /// No description provided for @highDifficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get highDifficulty;
+
+  /// No description provided for @mediumDifficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get mediumDifficulty;
+
+  /// No description provided for @lowDifficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy'**
+  String get lowDifficulty;
+
+  /// No description provided for @nextWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Next word'**
+  String get nextWord;
+
+  /// No description provided for @showAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Show answer'**
+  String get showAnswer;
+
+  /// No description provided for @totalNumberAnswers.
+  ///
+  /// In en, this message translates to:
+  /// **'Total number of answers: '**
+  String get totalNumberAnswers;
+
+  /// No description provided for @numberIncorrectAnswers.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of incorrect answers:'**
+  String get numberIncorrectAnswers;
+
+  /// No description provided for @numberCorrectAnswers.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of correct answers:'**
+  String get numberCorrectAnswers;
+
+  /// No description provided for @averageNumberTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Average number of answers per day:'**
+  String get averageNumberTitle;
+
+  /// No description provided for @wordsLearned.
+  ///
+  /// In en, this message translates to:
+  /// **'Words learned:'**
+  String get wordsLearned;
+
   /// No description provided for @searchWords.
   ///
   /// In en, this message translates to:

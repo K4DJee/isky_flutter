@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isky_new/helpers/formatDuration.dart';
 import 'package:isky_new/helpers/showExitDialog.dart';
+import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/models/statistics.dart';
 import 'package:isky_new/models/words.dart';
 import 'package:isky_new/services/databaseService.dart';
@@ -196,7 +197,7 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Написание слова по переводу на время'),
+        title:  Text(AppLocalizations.of(context)!.timePageTitle),
         elevation: 0,
         actions: [IconButton(icon: const Icon(Icons.help), onPressed: () {})],
         leading: IconButton(onPressed: ()async{
@@ -247,8 +248,8 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Выберите время, за которое будете проходить тренировку',
+                        Text(
+                          AppLocalizations.of(context)!.selectTimeForWorkout,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 20),
@@ -260,42 +261,42 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
                             ElevatedButton(
                               onPressed: () =>
                                   setTimerAndStart(Duration(minutes: 2)),
-                              child: const Text('2 мин'),
+                              child:  Text('2 ${AppLocalizations.of(context)!.minutes}'),
                             ),
                             ElevatedButton(
                               onPressed: () =>
                                   setTimerAndStart(Duration(minutes: 5)),
-                              child: const Text('5 мин'),
+                              child:  Text('5 ${AppLocalizations.of(context)!.minutes}'),
                             ),
                             ElevatedButton(
                               onPressed: () =>
                                   setTimerAndStart(Duration(minutes: 10)),
-                              child: const Text('10 мин'),
+                              child:  Text('10 ${AppLocalizations.of(context)!.minutes}'),
                             ),
                             ElevatedButton(
                               onPressed: () =>
                                   setTimerAndStart(Duration(minutes: 15)),
-                              child: const Text('15 мин'),
+                              child:  Text('15 ${AppLocalizations.of(context)!.minutes}'),
                             ),
                             ElevatedButton(
                               onPressed: () =>
                                   setTimerAndStart(Duration(minutes: 20)),
-                              child: const Text('20 мин'),
+                              child:  Text('20 ${AppLocalizations.of(context)!.minutes}'),
                             ),
                             ElevatedButton(
                               onPressed: () =>
                                   setTimerAndStart(Duration(minutes: 30)),
-                              child: const Text('30 мин'),
+                              child:  Text('30 ${AppLocalizations.of(context)!.minutes}'),
                             ),
                             ElevatedButton(
                               onPressed: () =>
                                   setTimerAndStart(Duration(minutes: 45)),
-                              child: const Text('45 мин'),
+                              child:  Text('45 ${AppLocalizations.of(context)!.minutes}'),
                             ),
                             ElevatedButton(
                               onPressed: () =>
                                   setTimerAndStart(Duration(minutes: 60)),
-                              child: const Text('60 мин'),
+                              child:  Text('60 ${AppLocalizations.of(context)!.minutes}'),
                             ),
                           ],
                         ),
@@ -316,8 +317,8 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
                                       color: Colors.grey,
                                     ),
                                     const SizedBox(height: 16),
-                                    const Text(
-                                      'Слов нет',
+                                     Text(
+                                      AppLocalizations.of(context)!.noWords,
                                       style: TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold,
@@ -325,7 +326,7 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      'Слов для обучающих карточек нету, добавьте новые слова',
+                                      AppLocalizations.of(context)!.noWordsDescription,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(color: Colors.grey[600]),
                                     ),

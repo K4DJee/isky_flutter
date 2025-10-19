@@ -462,14 +462,19 @@ Future<List<Statistics>> getStatistics(int folderId) async{
     final DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
     DateTime? lastDate;
 
-    for (final stat in stats) {
-    final currentDate = format.parse(stat.createdAt!);
+  for (int i = 0; i < stats.length; i++) {
+  final currentStat = stats[i];
+  final currentDate = format.parse(currentStat.createdAt!);
 
-    if (lastDate != null) {
-      // Проверим пропущенные дни между lastDate и currentDate
-      var nextDay = lastDate.add(const Duration(days: 1));
-      while (nextDay.isBefore(currentDate)) {
-        // Добавляем "пустой" день
+  filledStats.add(currentStat);
+
+  // Проверяем следующую дату, если она существует
+  if (i < stats.length - 1) {
+    final nextStat = stats[i + 1];
+    final tomorrowDay = format.parse(nextStat.createdAt!);
+    if (tomorrowDay.difference(currentDate).inDays > 1) { // Точный разрыв
+      var nextDay = currentDate.add(const Duration(days: 1));
+      while (nextDay.isBefore(tomorrowDay)) { // Добавляем дни до следующей даты
         filledStats.add(Statistics(
           folderId: folderId,
           correctWordsPerTime: 0,
@@ -482,11 +487,38 @@ Future<List<Statistics>> getStatistics(int folderId) async{
         nextDay = nextDay.add(const Duration(days: 1));
       }
     }
-
-    filledStats.add(stat);
-    lastDate = currentDate;
   }
+}
 
+  //   for (final stat in stats) {
+  //   final currentDate = format.parse(stat.createdAt!);
+
+  //   if (lastDate != null) {
+  //     // Проверим пропущенные дни между lastDate и currentDate
+  //     var nextDay = lastDate.add(const Duration(days: 1));
+  //     while (nextDay.isBefore(currentDate)) {
+  //       // Добавляем "пустой" день
+  //       filledStats.add(Statistics(
+  //         folderId: folderId,
+  //         correctWordsPerTime: 0,
+  //         amountCorrectAnswers: 0,
+  //         amountIncorrectAnswers: 0,
+  //         amountAnswersPerDay: 0,
+  //         wordsLearnedToday: 0,
+  //         createdAt: DateFormat('yyyy-MM-dd HH:mm:ss').format(nextDay),
+  //       ));
+  //       nextDay = nextDay.add(const Duration(days: 1));
+  //     }
+  //   }
+
+  //   filledStats.add(stat);
+  //   lastDate = currentDate;
+  //     print(currentDate.month);
+  // }
+  for(var i = 0; i <filledStats.length;i++){
+    print(filledStats[i].createdAt);
+  }
+  print(filledStats.length);
   return filledStats;
   }
   catch(e){

@@ -70,7 +70,6 @@ class _SettingsPageState extends State<SettingsPage>{
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-                const Divider(),
                   SwitchListTile(
                     value: themeProvider.isDark,
                     title:Text(AppLocalizations.of(context)!.bgColor,style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500  ),),
@@ -79,6 +78,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     },
                     activeColor: const Color.fromARGB(255, 77, 183, 58),
                     ),
+                    const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.interfaceAppColor,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
@@ -88,6 +88,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     
                   }
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.deletingAFolder,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
@@ -100,6 +101,7 @@ class _SettingsPageState extends State<SettingsPage>{
                 );
                   }
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.exportAndImportFoldersInExcel,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
@@ -109,6 +111,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     
                   }
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.removeAds,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
@@ -118,6 +121,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     
                   }
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 InkWell(
                   onTap: () {
                     _showLanguagePicker(context);
@@ -148,6 +152,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     ),
                   ),
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.shareApp, 
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
@@ -157,6 +162,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     
                   }
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.rateUs,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
@@ -166,6 +172,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     
                   }
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.feedback, 
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
@@ -175,6 +182,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     
                   }
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text('Тест', 
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
@@ -184,6 +192,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     Navigator.push(context,  MaterialPageRoute(builder: (context)=> TestPage()));
                   }
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.privacyPolicy, 
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
@@ -193,6 +202,7 @@ class _SettingsPageState extends State<SettingsPage>{
                     
                   }
                 ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.appVersion, 
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),

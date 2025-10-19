@@ -105,6 +105,123 @@ class AppLocalizationsEn extends AppLocalizations {
   String get globalSync => 'Global synchronization';
 
   @override
+  String get receiveData => 'Receive data';
+
+  @override
+  String get selectAction => 'Select an action:';
+
+  @override
+  String get receivingBtn => 'Receiving';
+
+  @override
+  String get sendingBtn => 'Sending';
+
+  @override
+  String get dataReceiveSuccess => 'The data was successfully received';
+
+  @override
+  String get dataReceiveLoad => 'Data is being received';
+
+  @override
+  String get cancelSend => 'Cancel';
+
+  @override
+  String get retrySend => 'Retry';
+
+  @override
+  String get dataFailedSent => 'Couldn\'t send data';
+
+  @override
+  String get exitBtn => 'Exit';
+
+  @override
+  String get dataSentSuccessfully => 'The data has been sent successfully!';
+
+  @override
+  String get sendingDataToRecipent => 'Sending data to the recipient';
+
+  @override
+  String get sendData => 'Send data';
+
+  @override
+  String get receiverIpAddress => 'Recipient\'s IP address';
+
+  @override
+  String get qrScanTitle => 'QR scanner is only available on mobile devices';
+
+  @override
+  String get scanRecipientQRCode => 'Scan the recipient\'s QR code';
+
+  @override
+  String get sendDataToLocalServerTitle => 'Send data to IP:';
+
+  @override
+  String get localServerStatus2 => 'The server is enabled';
+
+  @override
+  String get localServerStatus1 => 'The server is turned off';
+
+  @override
+  String get urQRCodeTitle => 'Your QR code for transmission over IP:';
+
+  @override
+  String get stopReceivingData => 'Stop receiving data';
+
+  @override
+  String get receiveTitle => 'Click \'Receive\' to generate a QR code';
+
+  @override
+  String get receive => 'Receive';
+
+  @override
+  String get minutes => 'min';
+
+  @override
+  String get selectTimeForWorkout => 'Сhoose the time you want to complete the workout';
+
+  @override
+  String get timePageTitle => 'Spelling a word based on the translation of time';
+
+  @override
+  String get wordInFlashcard => 'Word:';
+
+  @override
+  String get translateInFlashcard => 'Translate:';
+
+  @override
+  String get noMoreWords => 'No more words';
+
+  @override
+  String get highDifficulty => 'High';
+
+  @override
+  String get mediumDifficulty => 'Medium';
+
+  @override
+  String get lowDifficulty => 'Easy';
+
+  @override
+  String get nextWord => 'Next word';
+
+  @override
+  String get showAnswer => 'Show answer';
+
+  @override
+  String get totalNumberAnswers => 'Total number of answers: ';
+
+  @override
+  String get numberIncorrectAnswers => 'Number of incorrect answers:';
+
+  @override
+  String get numberCorrectAnswers => 'Number of correct answers:';
+
+  @override
+  String get averageNumberTitle => 'Average number of answers per day:';
+
+  @override
+  String get wordsLearned => 'Words learned:';
+
+  @override
   String get searchWords => 'Search words';
 
   @override

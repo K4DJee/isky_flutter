@@ -5,6 +5,8 @@ import 'dart:io';
 import 'dart:convert';
 
 class TcpReceiver {
+  ServerSocket? _server;
+
   Future<void> startServer() async{
     if(await Permission.location.request().isGranted){
       final info = NetworkInfo();
@@ -12,11 +14,11 @@ class TcpReceiver {
     String? localIp = await info.getWifiIP();
     print("Локальный IP: $localIp");
     try{
-    final server = await ServerSocket.bind(InternetAddress(localIp!), 8082);
+    _server = await ServerSocket.bind(InternetAddress(localIp!), 8082, shared: true,);
 
     print("📡 Сервер запущен на $localIp:8082. Ждём подключения...");
 
-    await for (Socket socket in server) {
+    await for (Socket socket in _server!) {
     print("✅ Подключено: ${socket.remoteAddress.address}");
 
     socket.listen(
@@ -26,7 +28,6 @@ class TcpReceiver {
         // Импортируйте в БД
         await SQLiteDatabase.instance.importJsonToDatabase(jsonString);
         socket.close();
-        server.close();
       },
       onDone: () => print("Соединение закрыто"),
       onError: (e) => print("Ошибка: $e"),
@@ -36,6 +37,7 @@ class TcpReceiver {
    catch(e, stack){
       print('Ошибка создания сервера: $e');
       print('Стек вызовов: $stack');
+      _server = null;
       rethrow;  
     }
     }
@@ -49,5 +51,10 @@ class TcpReceiver {
       final info = NetworkInfo();
       String? localIp = await info.getWifiIP();
       return localIp;
+  }
+
+  Future<void> stopServer() async{
+    await _server?.close();
+    _server = null;
   }
 }

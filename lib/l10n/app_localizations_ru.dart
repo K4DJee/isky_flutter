@@ -105,6 +105,123 @@ class AppLocalizationsRu extends AppLocalizations {
   String get globalSync => 'Глобальная синхронизация';
 
   @override
+  String get receiveData => 'Получение данных';
+
+  @override
+  String get selectAction => 'Выберите действие:';
+
+  @override
+  String get receivingBtn => 'Получение';
+
+  @override
+  String get sendingBtn => 'Отправка';
+
+  @override
+  String get dataReceiveSuccess => 'Данные успешно получены';
+
+  @override
+  String get dataReceiveLoad => 'Идёт получение данных';
+
+  @override
+  String get cancelSend => 'Отменить';
+
+  @override
+  String get retrySend => 'Повторить';
+
+  @override
+  String get dataFailedSent => 'Не удалось отправить данные';
+
+  @override
+  String get exitBtn => 'Выйти';
+
+  @override
+  String get dataSentSuccessfully => 'Данные успешно отправлены!';
+
+  @override
+  String get sendingDataToRecipent => 'Отправка данных получателю';
+
+  @override
+  String get sendData => 'Отправить данные';
+
+  @override
+  String get receiverIpAddress => 'IP адрес получителя';
+
+  @override
+  String get qrScanTitle => 'QR-сканер доступен только на мобильных устройствах';
+
+  @override
+  String get scanRecipientQRCode => 'Отсканируйте QR-код получателя';
+
+  @override
+  String get sendDataToLocalServerTitle => 'Отправить данные на IP:';
+
+  @override
+  String get localServerStatus2 => 'Сервер включён';
+
+  @override
+  String get localServerStatus1 => 'Сервер выключен';
+
+  @override
+  String get urQRCodeTitle => 'Ваш QR-код для передачи по IP';
+
+  @override
+  String get stopReceivingData => 'Прекратить получение данных';
+
+  @override
+  String get receiveTitle => 'Нажмите «Получить», чтобы сгенерировать QR-код';
+
+  @override
+  String get receive => 'Получить';
+
+  @override
+  String get minutes => 'мин';
+
+  @override
+  String get selectTimeForWorkout => 'Выберите время, за которое будете проходить тренировку';
+
+  @override
+  String get timePageTitle => 'Написание слова по переводу на время';
+
+  @override
+  String get wordInFlashcard => 'Слово:';
+
+  @override
+  String get translateInFlashcard => 'Перевод:';
+
+  @override
+  String get noMoreWords => 'Слов больше нету';
+
+  @override
+  String get highDifficulty => 'Сложно';
+
+  @override
+  String get mediumDifficulty => 'Средне';
+
+  @override
+  String get lowDifficulty => 'Легко';
+
+  @override
+  String get nextWord => 'Следующее слово';
+
+  @override
+  String get showAnswer => 'Показать ответ';
+
+  @override
+  String get totalNumberAnswers => 'Общее количество ответов';
+
+  @override
+  String get numberIncorrectAnswers => 'Количество неправильных ответов:';
+
+  @override
+  String get numberCorrectAnswers => 'Количество правильных ответов:';
+
+  @override
+  String get averageNumberTitle => 'Среднее количество ответов в день:';
+
+  @override
+  String get wordsLearned => 'Изучено слов:';
+
+  @override
   String get searchWords => 'Поиск слов';
 
   @override

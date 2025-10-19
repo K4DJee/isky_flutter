@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/models/folders.dart';
-import 'package:isky_new/pages/foldersActions.dart';
 
 class FolderNamePage extends StatefulWidget {
   final Folders folder;
