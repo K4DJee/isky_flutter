@@ -18,7 +18,7 @@ Isky — это кроссплатформенное приложение-сло
 Проект разработан студией K4DJE Studio (разработчик: K4DJE, Мищенко Дмитрий).
 
 ## Установка
-1. Клонируйте репозиторий: `git clone https://gitverse.ru/your-repo/isky.git`
+1. Клонируйте репозиторий: `git clone https://github.com/K4DJee/isky_flutter.git`
 2. Установите Flutter: Следуйте [официальной инструкции](https://flutter.dev/docs/get-started/install).
 3. Запустите: `flutter run` (для тестирования на устройстве/эмуляторе).
 
