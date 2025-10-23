@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:isky_new/database/sqfliteDatabase.dart';
 import 'package:flutter/material.dart';
 import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/models/words.dart';

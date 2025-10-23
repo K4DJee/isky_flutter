@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:isky_new/database/sqfliteDatabase.dart';
 import 'package:isky_new/helpers/themes.dart';
@@ -26,41 +25,42 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animations/animations.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Обязательно для async в main
+  WidgetsFlutterBinding.ensureInitialized(); //async в main
   final prefs = await SharedPreferences.getInstance();
+  bool onboardingShown = prefs.getBool('onboardingShown') ?? false;
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LocaleProvider(prefs)),
         ChangeNotifierProvider(
           create: (_) => ThemeProvider(prefs),
-        ), // <-- Добавили ThemeProvider
+        ), // ThemeProvider
         ChangeNotifierProvider(create: (_) => FolderUpdateProvider()),
       ],
-      child: MyApp(),
+      child: MyApp(onboardingShown: onboardingShown),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool onboardingShown;
+  const MyApp({super.key, required this.onboardingShown});
 
-  // This widget is the root of your application.  HEADER
   @override
   Widget build(BuildContext context) {
     return Consumer2<LocaleProvider, ThemeProvider>(
-      // <-- Consumer2 для двух провайдеров
       builder: (context, localeProvider, themeProvider, child) {
         return MaterialApp(
           title: 'Isky',
-
           theme: themeProvider.currentTheme,
           darkTheme: themeProvider.currentTheme,
           themeMode: themeProvider.themeMode,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: localeProvider.locale,
-          home: const MyHomePage(title: 'Isky'), //OnBoardingScreen()
+          home: onboardingShown
+            ? const MyHomePage(title: 'Isky')
+            : const OnBoardingScreen() //OnBoardingScreen()
         );
       },
     );
@@ -296,9 +296,10 @@ class _MyHomePageState extends State<MyHomePage> {
             .toList(),
         onFolderSelected: (id) {
           setState(() {
+            _selectedFolderIdForWord = id;
             _selectedFolder = _folders.firstWhere(
-              (folder) => folder.id == _selectedFolderIdForWord,
-              orElse: () => _selectedFolder ?? _folders.first,
+              (folder) => folder.id == id,
+              orElse: () => _folders.isNotEmpty ? _folders.first : throw Exception('No folders available'),
             );
           });
           print('Выбрана папка с ID: $id');
@@ -469,7 +470,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              //Статистика
               leading: const Icon(Icons.analytics_outlined),
               title: Text(AppLocalizations.of(context)!.statisticsPage),
               onTap: () {
@@ -482,7 +482,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              //Проверка знаний enky
               leading: ImageIcon(
                 AssetImage("assets/imgs/cards-svgrepo-com.png"),
               ),
@@ -519,8 +518,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(builder: (context) => const SettingsPage()),
                 );
-                // Можно открыть новую страницу:
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
               },
             ),
           ],
@@ -613,18 +610,18 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           PopupMenuButton(
             itemBuilder: (BuildContext context) => [
-              PopupMenuItem(
-                onTap: () {
-                  _adService.loadAd(context, setState);
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.ads_click),
-                    SizedBox(width: 8),
-                    Text('Реклама'),
-                  ],
-                ),
-              ),
+              // PopupMenuItem(
+              //   onTap: () {
+              //     _adService.loadAd(context, setState);
+              //   },
+              //   child: Row(
+              //     children: [
+              //       Icon(Icons.ads_click),
+              //       SizedBox(width: 8),
+              //       Text('Реклама'),
+              //     ],
+              //   ),
+              // ),
               PopupMenuItem(
                 onTap: () {
                   Navigator.push(

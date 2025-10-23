@@ -42,12 +42,12 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
   @override
   void initState() {
     super.initState();
-    controller = TextEditingController(); // Initialize the controller
+    controller = TextEditingController();
   }
 
   @override
   void dispose() {
-    controller.dispose(); // Dispose of the controller to prevent memory leaks
+    controller.dispose();
     super.dispose();
   }
 
@@ -204,7 +204,7 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
           final shouldExit = await showExitDialog(context);
           if(shouldExit){
             if (_isTimerStarted && !_isTimerFinished) {
-              _finishTimerEarly(); // сохранить статистику
+              _finishTimerEarly();
             }
             Navigator.pop(context);
           }

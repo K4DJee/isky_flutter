@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isky_new/l10n/app_localizations.dart';
 
-class AddWordModal extends StatelessWidget {
+class AddWordModal extends StatefulWidget {
   final TextEditingController controller1;
   final TextEditingController controller2;
   final TextEditingController controller3;
@@ -20,26 +20,38 @@ class AddWordModal extends StatelessWidget {
   this.selectedFolderId,
   });
   
-  void _submit(BuildContext context) {
+  State<AddWordModal> createState() => _AddWordModalState();
+
+}
+  
+  class _AddWordModalState extends State<AddWordModal>{
+    int? _selectedFolderId;
+
+    @override
+  void initState() {
+    super.initState();
+    _selectedFolderId = widget.selectedFolderId;
+  }
+
+    void _submit(BuildContext context) {
     print('Попытка отправки формы в модальном окне');
-    String word = controller1.text.trim();
-    String translate = controller2.text.trim();
-    String example = controller3.text.trim();
-    if (word.isNotEmpty && translate.isNotEmpty && selectedFolderId != null) {
-      print('Добавленное слово: $word, его перевод $translate, папка ID: $selectedFolderId');
+    String word = widget.controller1.text.trim();
+    String translate = widget.controller2.text.trim();
+    String example = widget.controller3.text.trim();
+    if (word.isNotEmpty && translate.isNotEmpty && _selectedFolderId != null) {
+      print('Добавленное слово: $word, его перевод $translate, папка ID: $_selectedFolderId');
       Navigator.pop(context);
-      if (onCreate != null) {
+      if (widget.onCreate != null) {
         print('Вызов onCreate...');
-        onCreate!();
+        widget.onCreate!();
       } else {
         print('onCreate не определён');
       }
     } else {
       print('Ошибка добавления слова: word, translate или folderId пустые');
-      print('word: $word, translate: $translate, example: $example, selectedFolderId: $selectedFolderId');
+      print('word: $word, translate: $translate, example: $example, selectedFolderId: $_selectedFolderId');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +65,7 @@ class AddWordModal extends StatelessWidget {
             Text(AppLocalizations.of(context)!.addWordModal, style:TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
             const SizedBox(height: 20),
             TextField(
-              controller: controller1,
+              controller: widget.controller1,
               autofocus: false,
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.wordInput,
@@ -63,7 +75,7 @@ class AddWordModal extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             TextField(
-              controller: controller2,
+              controller: widget.controller2,
               autofocus: false,
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.translateInput,
@@ -73,7 +85,7 @@ class AddWordModal extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             TextField(
-              controller: controller3,
+              controller: widget.controller3,
               autofocus: false,
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.exampleInput,
@@ -84,8 +96,8 @@ class AddWordModal extends StatelessWidget {
             const SizedBox(height: 20),
             DropdownButton(
               hint:  Text(AppLocalizations.of(context)!.selectFolder),
-              value: selectedFolderId,
-              items: folders.map((folder){
+              value: _selectedFolderId,
+              items: widget.folders.map((folder){
                 return DropdownMenuItem<int>(
                   value: folder['id'] as int,
                   child: Text(folder['name'] as String),
@@ -95,10 +107,13 @@ class AddWordModal extends StatelessWidget {
               
             
                onChanged: (int? newValue){
-                if(onFolderSelected != null && newValue != null){
-                  onFolderSelected!(newValue);
+                setState(() {
+                    _selectedFolderId = newValue;
+                  });
+                  if (widget.onFolderSelected != null) {
+                    widget.onFolderSelected!(newValue);
+                  }
                 }
-               }
                ),
             const SizedBox(height: 20),
             SizedBox(
@@ -128,4 +143,8 @@ class AddWordModal extends StatelessWidget {
       ),
     );
   }
-}
+
+  }
+
+  
+

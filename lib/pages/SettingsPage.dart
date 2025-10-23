@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:isky_new/helpers/themes.dart';
 import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/models/languages.dart';
+import 'package:isky_new/pages/export_import_actions_page.dart';
 import 'package:isky_new/pages/foldersActions.dart';
-import 'package:isky_new/pages/testPage.dart';
+import 'package:isky_new/pages/incomplete_page.dart';
+import 'package:isky_new/pages/onBoardingScreen.dart';
+import 'package:isky_new/pages/privacy_police_page.dart';
 import 'package:provider/provider.dart';
 import 'package:isky_new/providers/locale_provider.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -85,7 +87,7 @@ class _SettingsPageState extends State<SettingsPage>{
                   trailing: Icon(Icons.color_lens),
                   selectedTileColor: Colors.black,
                   onTap:(){
-                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
                   }
                 ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
@@ -108,7 +110,7 @@ class _SettingsPageState extends State<SettingsPage>{
                   trailing: Icon(Icons.folder_copy_rounded),
                   selectedTileColor: Colors.black,
                   onTap:(){
-                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ExportImportActionsPage()));
                   }
                 ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
@@ -118,7 +120,7 @@ class _SettingsPageState extends State<SettingsPage>{
                   trailing: Icon(Icons.close),
                   selectedTileColor: Colors.black,
                   onTap:(){
-                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
                   }
                 ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
@@ -159,7 +161,7 @@ class _SettingsPageState extends State<SettingsPage>{
                   trailing: Icon(Icons.share),
                   selectedTileColor: Colors.black,
                   onTap:(){
-                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
                   }
                 ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
@@ -169,7 +171,7 @@ class _SettingsPageState extends State<SettingsPage>{
                   trailing: Icon(Icons.reviews),
                   selectedTileColor: Colors.black,
                   onTap:(){
-                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
                   }
                 ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
@@ -179,19 +181,19 @@ class _SettingsPageState extends State<SettingsPage>{
                   trailing: Icon(Icons.feedback),
                   selectedTileColor: Colors.black,
                   onTap:(){
-                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
                   }
                 ),
-                const Divider(height: 1, thickness: 1, color: Colors.grey),
-                ListTile(
-                  title:Text('Тест', 
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
-                  trailing: Icon(Icons.feedback),
-                  selectedTileColor: Colors.black,
-                  onTap:(){
-                    Navigator.push(context,  MaterialPageRoute(builder: (context)=> TestPage()));
-                  }
-                ),
+                // const Divider(height: 1, thickness: 1, color: Colors.grey),
+                // ListTile(
+                //   title:Text('Тест', 
+                //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+                //   trailing: Icon(Icons.feedback),
+                //   selectedTileColor: Colors.black,
+                //   onTap:(){
+                //     Navigator.push(context,  MaterialPageRoute(builder: (context)=> OnBoardingScreen()));
+                //   }
+                // ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.privacyPolicy, 
@@ -199,7 +201,7 @@ class _SettingsPageState extends State<SettingsPage>{
                   trailing: Icon(Icons.privacy_tip),
                   selectedTileColor: Colors.black,
                   onTap:(){
-                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> PrivacyPolicePage()));
                   }
                 ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),

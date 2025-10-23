@@ -25,13 +25,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   bool _isLoading = true;
   void loadData() async {
-    // await Future.delayed(Duration(seconds: 1));
     final db = SQLiteDatabase.instance;
     final List<Statistics> stats = await db.getStatistics(widget.selectedFolderId);
     final generatedSpots = stats.asMap().entries.map((entry) {
-      final index = entry.key.toDouble(); // индекс = X
+      final index = entry.key.toDouble();
       final stat = entry.value;
-      final value = stat.wordsLearnedToday?.toDouble() ?? 0; // любое поле для Y
+      final value = stat.wordsLearnedToday?.toDouble() ?? 0;
       return FlSpot(index, value);
     }).toList();
     final generatedLabels = stats.map((stat) {
@@ -119,12 +118,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
                               lineBarsData: [
                                 LineChartBarData(
                                   spots: spots,
-                                  isCurved: false, // сглаживание
+                                  isCurved: false,
                                   color: Colors.orange,
                                   barWidth: 3,
                                   dotData: FlDotData(
                                     show: true,
-                                  ), // скрыть точки
+                                  ),
                                 ),
                               ],
                               lineTouchData: LineTouchData(

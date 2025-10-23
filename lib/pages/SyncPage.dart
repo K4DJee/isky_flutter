@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isky_new/l10n/app_localizations.dart';
 import 'package:isky_new/pages/LocalSyncPage.dart';
+import 'package:isky_new/pages/incomplete_page.dart';
 
 class SyncPage extends StatefulWidget{
   const SyncPage({super.key});
@@ -42,11 +43,11 @@ class _SyncPageState extends State<SyncPage>{
               trailing: Icon(Icons.keyboard_arrow_right),
               selectedTileColor: Colors.black,
               onTap:(){
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
               }
             ),
             ListTile(
-              title: Text('Передача папок со словами происходит через сервер, который служит посредником между двумя устройствами. Сервер не хранит никакие данные, он только переотправляет базу данных',
+              title: Text(AppLocalizations.of(context)!.globalSyncDescription,
               style: TextStyle(fontSize: 18),),
             ),
           ],

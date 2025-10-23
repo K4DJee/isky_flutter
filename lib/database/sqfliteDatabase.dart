@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:isky_new/models/flashcardWithWord.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:isky_new/models/statistics.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -245,12 +246,21 @@ class SQLiteDatabase {
       allWords[folder.id!] = await getWords(folder.id!);
     }
 
+    final allStatistics = <int, List<Statistics>>{};
+  for (final folder in folders) {
+    allStatistics[folder.id!] = await getStatistics(folder.id!);
+  }
+
     final exportData = {
       'folders':folders.map((f)=>f.toMap()).toList(),
       'words': allWords.entries.map((e)=>{
         'folderId':e.key,
         'words':e.value.map((w)=>w.toMap()).toList(),
       }).toList(),
+      'statistics': allStatistics.entries.map((e) => {
+          'folderId': e.key,
+          'statistics': e.value.map((s) => s.toMap()).toList(),
+        }).toList(),
     };
 
     return jsonEncode(exportData);
@@ -261,26 +271,77 @@ class SQLiteDatabase {
     final db = await instance.database;
     await db.transaction((txn) async{
       //Очистка таблиц
+      await txn.delete('statistics');
       await txn.delete('words');
       await txn.delete('folders');
 
       final data = jsonDecode(jsonString) as Map<String, dynamic>;
 
-      //Вставка folders
-      for (final folderMap in data['folders'] as List){
-        final folder = Folders.fromMap(folderMap);
-        await txn.insert('folders', folder.toMap());
-      }
+      // 1. Восстановление папок
+    final Map<int, int> oldToNewFolderId = {};
+    for (final folderMap in data['folders'] as List) {
+      final folder = Folders.fromMap(folderMap);
+      final newId = await txn.insert('folders', folder.toMap());
+      final oldId = folderMap['id'] as int;
+      oldToNewFolderId[oldId] = newId;
+    }
 
-      //Вставка words
-      for(final entry in data['words'] as List){
-        final folderId = entry['folderId'] as int;
-        for(final wordMap in entry['words'] as List){
-          final word = Words.fromMap({...wordMap, 'folderId': folderId});
-          await txn.insert('words', word.toMap());
-        }
+    // 2. Восстановление слов
+    for (final entry in data['words'] as List) {
+      final oldFolderId = entry['folderId'] as int;
+      final newFolderId = oldToNewFolderId[oldFolderId];
+      if (newFolderId == null) continue;
+
+      for (final wordMap in entry['words'] as List) {
+        final word = Words.fromMap({...wordMap, 'folderId': newFolderId});
+        await txn.insert('words', word.toMap());
       }
+    }
+
+      for (final entry in data['statistics'] as List) {
+    final oldFolderId = entry['folderId'] as int;
+    final newFolderId = oldToNewFolderId[oldFolderId];
+    if (newFolderId == null) continue;
+
+    for (final statMap in entry['statistics'] as List) {
+      final stat = Statistics.fromMap({...statMap, 'folderId': newFolderId});
+      await txn.insert('statistics', stat.toMap());
+    }
+    }
     });
+  }
+
+  Future<File> exportDatabaseToFile() async {
+     final jsonString = await exportDatabaseToJson();
+
+  late Directory? baseDir;
+
+  if (Platform.isAndroid) {
+    baseDir = await getDownloadsDirectory();
+    if (baseDir == null) {
+      baseDir = await getExternalStorageDirectory();
+    }
+  } else if (Platform.isIOS) {
+    baseDir = await getApplicationDocumentsDirectory();
+  } else {
+    baseDir = await getApplicationDocumentsDirectory();
+  }
+
+  final file = File(join(baseDir!.path, 'isky_backup.json'));
+  await file.writeAsString(jsonString, encoding: utf8);
+  return file;
+  }
+
+  Future<void> importDatabaseFromFile(File file) async {
+    try{
+      final jsonString = await file.readAsString(encoding: utf8);
+      await importJsonToDatabase(jsonString);
+      print('Данные импортировались!');
+    }
+    catch(e){
+      print(e);
+      rethrow;
+    }
   }
 
   // Импорт файла БД (замена)

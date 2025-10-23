@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isky_new/database/sqfliteDatabase.dart';
 import 'package:isky_new/helpers/formatDayEnding.dart';
 import 'package:isky_new/helpers/showExitDialog.dart';
 import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/models/flashcardWithWord.dart';
 import 'package:isky_new/models/statistics.dart';
 import 'package:isky_new/models/words.dart';
-import 'package:intl/intl.dart';
 import 'package:isky_new/services/databaseService.dart';
 
 class AllFlashcardsPage extends StatefulWidget {
