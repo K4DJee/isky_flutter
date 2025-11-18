@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/pages/export_data_page.dart';
-import 'package:isky_new/pages/import_data_page.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/pages/export_data_page.dart';
+import 'package:iskai/pages/import_data_page.dart';
 
 class ExportImportActionsPage extends StatefulWidget{
   const ExportImportActionsPage({super.key});
@@ -48,7 +48,7 @@ class _ExportImportActionsPageState extends State<ExportImportActionsPage>{
       Positioned(
             left:0,
             right: 0,
-            bottom:40,
+            bottom:50,
             child: Text(AppLocalizations.of(context)!.exportAndImportTitle, textAlign: TextAlign.center,))
         ],
       ) 

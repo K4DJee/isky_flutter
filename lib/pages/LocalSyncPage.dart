@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/widgets/userReceiverLocal.dart';
-import 'package:isky_new/widgets/userSenderLocal.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/widgets/userReceiverLocal.dart';
+import 'package:iskai/widgets/userSenderLocal.dart';
 class LocalSyncPage extends StatefulWidget{
   const LocalSyncPage({super.key});
 

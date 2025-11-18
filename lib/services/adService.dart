@@ -13,7 +13,7 @@ class AdService {
   void loadAd(BuildContext context, Function setState) async {
     try {
       banner = _createBanner(context);
-      await banner?.loadAd();
+      await banner.loadAd();
       if (context.mounted) {
         setState(() {
           isBannerAlreadyCreated = true;
@@ -60,12 +60,12 @@ class AdService {
   }
 
   Widget? getAdWidget() {
-    return isBannerAlreadyCreated && banner != null
-        ? AdWidget(bannerAd: banner!)
+    return isBannerAlreadyCreated
+        ? AdWidget(bannerAd: banner)
         : null;
   }
 
   void dispose() {
-    banner?.destroy();
+    banner.destroy();
   }
 }

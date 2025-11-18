@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
+import 'package:iskai/l10n/app_localizations.dart';
 
 class ReceiveDataPage extends StatefulWidget {
   final bool receiveStatus;
@@ -96,13 +96,13 @@ class _ReceiveDataPageState extends State<ReceiveDataPage>{
         ),
         SizedBox(height: 8),
         Text(
-          _errorMessage ?? 'Неизвестная ошибка',
+          _errorMessage ?? AppLocalizations.of(context)!.unknownError,
           style: TextStyle(color: Colors.grey),
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 20),
         ElevatedButton(
-          onPressed: ()=> Navigator.pop, // повторить
+          onPressed: ()=> Navigator.pop, // retry
           child: Text(AppLocalizations.of(context)!.retrySend),
         ),
         TextButton(

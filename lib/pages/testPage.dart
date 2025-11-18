@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:isky_new/database/sqfliteDatabase.dart';
-import 'package:isky_new/models/statistics.dart';
+import 'package:iskai/database/sqfliteDatabase.dart';
+import 'package:iskai/models/statistics.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
 class TestPage extends StatefulWidget {
@@ -104,8 +104,9 @@ class _TestPageState extends State<TestPage> {
                                     getTitlesWidget: (value, meta) {
                                       final index = value.toInt();
                                       if (index < 0 ||
-                                          index >= dateLabels.length)
+                                          index >= dateLabels.length) {
                                         return const SizedBox();
+                                      }
                                       return Text(
                                         dateLabels[index],
                                         style: const TextStyle(fontSize: 10),

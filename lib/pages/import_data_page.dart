@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:isky_new/database/sqfliteDatabase.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
+import 'package:iskai/database/sqfliteDatabase.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/providers/FolderUpdateProvider.dart';
+import 'package:provider/provider.dart';
 
 class ImportDataPage extends StatefulWidget{
   const ImportDataPage({super.key});
@@ -14,7 +16,7 @@ class ImportDataPage extends StatefulWidget{
 class _ImportDataPageState extends State<ImportDataPage>{
   bool _isLoading = false;
   bool _isSuccess = false;
-  bool _isError = false;
+  final bool _isError = false;
   String? errorMessage;
 
    bool isFile = false;
@@ -43,9 +45,11 @@ class _ImportDataPageState extends State<ImportDataPage>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(AppLocalizations.of(context)!.selectFileForImport, style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold
+            Text(AppLocalizations.of(context)!.selectFileForImport,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold
             ),),
             SizedBox(height:8),
             ElevatedButton(onPressed: 
@@ -58,6 +62,7 @@ class _ImportDataPageState extends State<ImportDataPage>{
                 });
                 File file = File(result.files.single.path!);
                 await SQLiteDatabase.instance.importDatabaseFromFile(file);
+                context.read<FolderUpdateProvider>().notifyFolderUpdated();
                 setState(() {
                   _isLoading = false;
                   _isSuccess = true;

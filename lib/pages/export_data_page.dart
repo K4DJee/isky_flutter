@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
-import 'package:isky_new/database/sqfliteDatabase.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
+import 'package:iskai/database/sqfliteDatabase.dart';
+import 'package:iskai/l10n/app_localizations.dart';
 
 class ExportDataPage extends StatefulWidget{
   const ExportDataPage({super.key});

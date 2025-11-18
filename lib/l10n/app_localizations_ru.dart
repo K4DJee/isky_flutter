@@ -9,7 +9,19 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get appTitle => 'Isky';
+  String get languageNameEn => 'Английский';
+
+  @override
+  String get languageNameRu => 'Русский';
+
+  @override
+  String get languageNameFr => 'Французский';
+
+  @override
+  String get languageNameEs => 'Испанский';
+
+  @override
+  String get appTitle => 'Iskai';
 
   @override
   String get menuTitle => 'Меню';
@@ -105,16 +117,127 @@ class AppLocalizationsRu extends AppLocalizations {
   String get globalSync => 'Глобальная синхронизация';
 
   @override
+  String get supportUs => 'Поддержите нас';
+
+  @override
+  String get createFolder => 'Создайте папку';
+
+  @override
+  String get errorSwitchingToTheNextCard => 'Ошибка перехода к следующей карточке:';
+
+  @override
+  String get folderModalError2 => 'Пожалуйста, введите название папки.';
+
+  @override
+  String get folderModalError1 => 'название папки не может быть пустым!';
+
+  @override
+  String get dataSuccessfullyAccepted => 'Данные успешно приняты!';
+
+  @override
+  String get errorGettingIpStatus => 'Ошибка получения IP адреса';
+
+  @override
+  String get errorGettingIp => 'Ошибка получения IP. Проверьте Wifi соединение';
+
+  @override
+  String get countOfTime => 'Время:';
+
+  @override
+  String get countOfMistakes => 'Ошибок:';
+
+  @override
+  String get countOfcorrectWords => 'Правильно:';
+
+  @override
+  String get totalWords => 'Всего слов:';
+
+  @override
+  String get timeIsUp => 'Время закончилось!';
+
+  @override
+  String get unknownError => 'Неизвестная ошибка';
+
+  @override
+  String get folderNamePage => 'Изменение названия папки';
+
+  @override
+  String get errorLoadingFlashcards => 'Ошибка загрузки обучающей карточек:';
+
+  @override
+  String get errorLoadingFlashcard => 'Ошибка загрузки обучающей карточки:';
+
+  @override
+  String get wordSetsTooltip => 'Перейти в наборы слов';
+
+  @override
+  String get amountOfWords => 'Количество слов:';
+
+  @override
+  String get downloadSelectedWordsBtn => 'Загрузить выбранные файлы';
+
+  @override
+  String get downloadAllWordsBtn => 'Загрузить все';
+
+  @override
+  String get errorAddingWords => 'Ошибка при добавлении слов:';
+
+  @override
+  String get selectLang => 'Выберите язык';
+
+  @override
+  String get successAddedWordsToFolders => 'Слова добавлены в папку!';
+
+  @override
+  String get notSelectedWordsForAdd => 'Нет выбранных слов';
+
+  @override
+  String get errorLoadJsonFromWordSet => 'Ошибка загрузки JSON:';
+
+  @override
+  String get wordSetsPage => 'Наборы слов';
+
+  @override
+  String get numbersSetDescription => 'Числа';
+
+  @override
+  String get animalsSetDescription => 'Названия животных';
+
+  @override
+  String get foodSetDescription => 'Названия продуктов питания';
+
+  @override
+  String get educationSetDescription => 'Слова, связанные с образованием и обучением.';
+
+  @override
+  String get numbersSetName => 'Числа';
+
+  @override
+  String get animalsSetName => 'Животные';
+
+  @override
+  String get foodSetName => 'Еда';
+
+  @override
+  String get educationSetName => 'Образование';
+
+  @override
+  String get minigamesPage => 'Мини-игры';
+
+  @override
+  String get achievementsPage => 'Достижения';
+
+  @override
   String get privacyPolicyTitle => 'Политика конфиденциальности';
 
   @override
-  String get privacyPolicyHeader => 'Политика конфиденциальности приложения Isky';
+  String get privacyPolicyHeader => 'Политика конфиденциальности приложения Iskai';
 
   @override
-  String get privacyPolicyLastUpdated => 'Дата последнего обновления: 23 октября 2025 года';
+  String get privacyPolicyLastUpdated => 'Дата последнего обновления: 13 ноября 2025 года';
 
   @override
-  String get privacyPolicyWelcome => 'Добро пожаловать в политику конфиденциальности приложения Isky (\"Приложение\"). Эта политика описывает, как мы собираем, используем, храним и защищаем вашу личную информацию при использовании Приложения. Приложение Isky разработано студией K4DJE Studio (разработчик: K4DJE, Мищенко Дмитрий) и доступно на платформах MacOS, Linux, Windows, Android и iOS. Мы стремимся к максимальной прозрачности и защите вашей конфиденциальности.';
+  String get privacyPolicyWelcome => 'Добро пожаловать в политику конфиденциальности приложения Iskai (далее - Приложение). Эта политика описывает, как мы собираем, используем, храним и защищаем вашу личную информацию при использовании Приложения. Приложение Iskai разработано студией K4DJE Studio (разработчик: K4DJE, Мищенко Дмитрий) и доступно на платформах MacOS, Linux, Windows, Android и iOS. Мы стремимся к максимальной прозрачности и защите вашей конфиденциальности.';
 
   @override
   String get privacyPolicyAgreement => 'Используя Приложение, вы соглашаетесь с условиями этой политики. Если вы не согласны, пожалуйста, не используйте Приложение.';
@@ -123,7 +246,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get privacyPolicySection1Title => '1. Информация, которую мы собираем';
 
   @override
-  String get privacyPolicySection1Description => 'Приложение Isky предназначено для создания словарей, организации слов в папки, экспорта и импорта данных через JSON-файлы, а также синхронизации данных между устройствами. Мы минимизируем сбор личных данных и не храним их на наших серверах без необходимости.';
+  String get privacyPolicySection1Description => 'Приложение Iskai предназначено для создания словарей, организации слов в папки, экспорта и импорта данных через JSON-файлы, а также синхронизации данных между устройствами. Мы минимизируем сбор личных данных и не храним их на наших серверах без необходимости.';
 
   @override
   String get privacyPolicySection1_1Title => '1.1. Данные, предоставляемые пользователем';
@@ -171,7 +294,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get privacyPolicySection3Title => '3. Раскрытие информации третьим сторонам';
 
   @override
-  String get privacyPolicySection3YandexAds => '- Yandex Ads: Для интеграции рекламы мы делимся минимальными техническими данными (например, идентификаторами устройства) с Yandex. Подробности обработки данных Yandex доступны в их политике конфиденциальности[](https://yandex.com/legal/confidential/).';
+  String get privacyPolicySection3YandexAds => '- Yandex Ads: Для интеграции рекламы мы делимся минимальными техническими данными (например, идентификаторами устройства) с Yandex. Подробности обработки данных Yandex доступны в их политике конфиденциальности: https://yandex.com/legal/confidential/.';
 
   @override
   String get privacyPolicySection3SyncServers => '- Серверы синхронизации: При глобальной синхронизации данные передаются через наши серверы, но не сохраняются на них. Мы можем использовать облачные провайдеры (например, AWS или аналогичные) для хостинга, которые обязуются соблюдать стандарты безопасности.';
@@ -210,28 +333,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get privacyPolicySection5Deletion => '- Удаление данных (например, через экспорт и очистку в Приложении).';
 
   @override
-  String get privacyPolicySection5OptOut => '- Отказ от обработки (включая отключение рекламы, если возможно).';
-
-  @override
   String get privacyPolicySection5Complaint => '- Жалоба в надзорный орган.';
 
   @override
-  String get privacyPolicySection5Contact => 'Для行使 этих прав свяжитесь с нами по контактам ниже.';
-
-  @override
-  String get privacyPolicySection6Title => '6. Данные детей';
-
-  @override
-  String get privacyPolicySection6Children => 'Приложение не предназначено для детей младше 13 лет (или эквивалентного возраста по местному законодательству). Мы не собираем данные от детей сознательно. Если вы родитель и считаете, что ваш ребенок предоставил нам данные, свяжитесь с нами для удаления.';
-
-  @override
-  String get privacyPolicySection7Title => '7. Изменения в политике';
+  String get privacyPolicySection7Title => '6. Изменения в политике';
 
   @override
   String get privacyPolicySection7Changes => 'Мы можем обновлять эту политику. Изменения будут опубликованы в Приложении или на нашем сайте. Продолжение использования Приложения после обновления означает согласие с изменениями.';
 
   @override
-  String get privacyPolicySection8Title => '8. Контакты';
+  String get privacyPolicySection8Title => '7. Контакты';
 
   @override
   String get privacyPolicySection8Questions => 'Если у вас есть вопросы или запросы, свяжитесь с нами:';
@@ -246,7 +357,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get privacyPolicySection8Studio => '- Студия: K4DJE Studio';
 
   @override
-  String get privacyPolicyThanks => 'Спасибо за использование Isky! Мы ценим ваше доверие.';
+  String get privacyPolicyThanks => 'Спасибо за использование Iskai! Мы ценим ваше доверие.';
 
   @override
   String get stillInDevelopment => 'Ещё в разработке';
@@ -285,7 +396,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get onboardingSubtitle1 => 'Это приложение специализируется в улучшении процесса изучения слов иностранных языков';
 
   @override
-  String get onboardingTitle1 => 'Добро пожаловать в приложение Isky';
+  String get onboardingTitle1 => 'Добро пожаловать в приложение Iskai';
 
   @override
   String get errorTitle => 'Ошибка:';
@@ -519,7 +630,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get deletingAFolder => 'Удаление папки';
 
   @override
-  String get exportAndImportFoldersInExcel => 'Экспорт и импорт папки в Excel';
+  String get exportAndImportFoldersInExcel => 'Экспорт и импорт папки';
 
   @override
   String get removeAds => 'Убрать рекламу';
@@ -531,7 +642,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get shareApp => 'Поделиться приложением';
 
   @override
-  String get rateUs => 'Оцените нас';
+  String get rateUs => 'Оценить приложение';
 
   @override
   String get feedback => 'Обратная связь';
@@ -540,5 +651,5 @@ class AppLocalizationsRu extends AppLocalizations {
   String get privacyPolicy => 'Политика конфиденциальности';
 
   @override
-  String get appVersion => 'Версия 1.00';
+  String get appVersion => 'Версия 1.0.1';
 }

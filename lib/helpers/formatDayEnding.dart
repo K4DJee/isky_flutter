@@ -1,4 +1,4 @@
-import 'package:isky_new/l10n/app_localizations.dart';
+import 'package:iskai/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 String formatDayEnding(int days, BuildContext context) {
@@ -12,8 +12,8 @@ String formatDayEnding(int days, BuildContext context) {
 
   switch (days % 10) {
     case 1: return ' ${loc.day}';
-    case 2:
-    case 3:
+    case 2: return ' ${loc.daysGenitive}';
+    case 3: return ' ${loc.daysGenitive}';
     case 4: return ' ${loc.daysGenitive}';
     default: return ' ${loc.days}';
   }

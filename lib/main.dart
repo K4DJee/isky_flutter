@@ -1,26 +1,28 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:isky_new/database/sqfliteDatabase.dart';
-import 'package:isky_new/helpers/themes.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/modals/AddWordModal.dart';
-import 'package:isky_new/models/folders.dart';
-import 'package:isky_new/models/words.dart';
-import 'package:isky_new/pages/StatisticPage.dart';
-import 'package:isky_new/pages/allFlashCardsPage.dart';
-import 'package:isky_new/pages/flashCardsPage.dart';
-import 'package:isky_new/pages/onBoardingScreen.dart';
-import 'package:isky_new/pages/timeFlashcardsPage.dart';
-import 'package:isky_new/pages/wordActionsPage.dart';
-import 'package:isky_new/providers/FolderUpdateProvider.dart';
-import 'package:isky_new/services/adService.dart';
-import 'package:isky_new/services/databaseService.dart';
+import 'package:iskai/database/sqfliteDatabase.dart';
+import 'package:iskai/helpers/themes.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/modals/AddWordModal.dart';
+import 'package:iskai/models/folders.dart';
+import 'package:iskai/models/words.dart';
+import 'package:iskai/pages/StatisticPage.dart';
+import 'package:iskai/pages/achievements_page.dart';
+import 'package:iskai/pages/allFlashCardsPage.dart';
+import 'package:iskai/pages/flashCardsPage.dart';
+import 'package:iskai/pages/onBoardingScreen.dart';
+import 'package:iskai/pages/timeFlashcardsPage.dart';
+import 'package:iskai/pages/wordActionsPage.dart';
+import 'package:iskai/pages/word_sets_page.dart';
+import 'package:iskai/providers/FolderUpdateProvider.dart';
+import 'package:iskai/services/adService.dart';
+import 'package:iskai/services/databaseService.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 import 'pages/SettingsPage.dart';
 import 'pages/SyncPage.dart';
 import 'modals/AddFolderModal.dart';
 import 'package:provider/provider.dart';
-import 'package:isky_new/providers/locale_provider.dart';
+import 'package:iskai/providers/locale_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animations/animations.dart';
 
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
     return Consumer2<LocaleProvider, ThemeProvider>(
       builder: (context, localeProvider, themeProvider, child) {
         return MaterialApp(
-          title: 'Isky',
+          title: 'Iskai',
           theme: themeProvider.currentTheme,
           darkTheme: themeProvider.currentTheme,
           themeMode: themeProvider.themeMode,
@@ -59,8 +61,8 @@ class MyApp extends StatelessWidget {
           supportedLocales: AppLocalizations.supportedLocales,
           locale: localeProvider.locale,
           home: onboardingShown
-            ? const MyHomePage(title: 'Isky')
-            : const OnBoardingScreen() //OnBoardingScreen()
+              ? const MyHomePage(title: 'Iskai')
+              : const OnBoardingScreen(), //OnBoardingScreen()
         );
       },
     );
@@ -99,14 +101,14 @@ class _MyHomePageState extends State<MyHomePage> {
     searchController.addListener(() => _filterWords());
     _loadFolders();
 
-    if (Platform.isWindows || Platform.isLinux) {
-      return;
-    }
-    MobileAds.initialize().then((_) {
-      if (mounted) {
-        _adService.loadAd(context, setState);
-      }
-    });
+    // if (Platform.isWindows || Platform.isLinux) {
+    //   return;
+    // }
+    // MobileAds.initialize().then((_) {
+    //   if (mounted) {
+    //     _adService.loadAd(context, setState);
+    //   }
+    // });
   }
 
   void _filterWords() {
@@ -226,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.pop(context);
     } catch (e) {
       print('Ошибка удаления слова: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -235,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
       final result = await _dbService.changeWord(word);
     } catch (e) {
       print('Ошибка изменения слова: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -248,13 +250,12 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       constraints: BoxConstraints(
         maxHeight:
-            MediaQuery.of(context).size.height * 0.7, // Половина высоты экрана
+            MediaQuery.of(context).size.height * 0.7,
       ),
       builder: (context) => AddFolderModal(
         controller: _folderNameController,
         onCreate: () async {
           print('Кнопка "Создать" нажата в модальном окне');
-          // Получаем текст из контроллера и вызываем _CreateNewFolder
           String folderName = _folderNameController.text.trim();
           if (folderName.isNotEmpty) {
             print('Имя папки: $folderName');
@@ -299,7 +300,9 @@ class _MyHomePageState extends State<MyHomePage> {
             _selectedFolderIdForWord = id;
             _selectedFolder = _folders.firstWhere(
               (folder) => folder.id == id,
-              orElse: () => _folders.isNotEmpty ? _folders.first : throw Exception('No folders available'),
+              orElse: () => _folders.isNotEmpty
+                  ? _folders.first
+                  : throw Exception('No folders available'),
             );
           });
           print('Выбрана папка с ID: $id');
@@ -310,26 +313,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Внимание!'),
-        content: const Text('Вы точно хотите это сделать?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Отмена'),
-          ),
-        ],
-      ),
-    );
-  }
-
   void _showBottomSheet(Words word) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // ← Позволяет контролировать размер
+      isScrollControlled: true,
       useSafeArea: false,
       builder: (context) {
         return Container(
@@ -381,6 +368,18 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
   }
+  
+  Future<void> _openDonationUrl() async{
+    final url = Uri.parse("https://yoomoney.ru/to/4100119234375386");
+
+    try {
+  await launchUrl(url);
+} catch (e) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text('Не удалось открыть страницу доната')),
+  );
+}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -405,12 +404,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(radius: 25,
-                  backgroundColor: Colors.transparent,
-                  child: Image.asset('assets/imgs/app_icon2.png'),),
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.transparent,
+                    child: Image.asset('assets/imgs/app_icon2.png'),
+                  ),
 
                   Text(
-                    '${AppLocalizations.of(context)!.selectedFolderTitle} ${_selectedFolder?.name != null ? _selectedFolder?.name : AppLocalizations.of(context)!.folderAbsent}',
+                    '${AppLocalizations.of(context)!.selectedFolderTitle} ${_selectedFolder?.name ?? AppLocalizations.of(context)!.folderAbsent}',
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                   Text(
@@ -475,7 +476,11 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => StatisticsPage(selectedFolderId: _selectedFolderIdForWord!,)),
+                  MaterialPageRoute(
+                    builder: (context) => StatisticsPage(
+                      selectedFolderId: _selectedFolderIdForWord!,
+                    ),
+                  ),
                 );
                 // Можно открыть новую страницу:
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
@@ -511,6 +516,19 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              leading: ImageIcon(
+                AssetImage("assets/imgs/cards-svgrepo-com.png"),
+              ),
+              title: Text(AppLocalizations.of(context)!.achievementsPage),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AchievementsPage(),
+                  ),
+                );
+              },
+            ),            ListTile(
               leading: const Icon(Icons.settings),
               title: Text(AppLocalizations.of(context)!.settingsPage),
               onTap: () {
@@ -531,28 +549,27 @@ class _MyHomePageState extends State<MyHomePage> {
             onSelected: (String value) {},
             itemBuilder: (BuildContext context) => [
               PopupMenuItem(
-                onTap: (){
+                onTap: () {
                   if (_selectedFolderIdForWord == null) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        AppLocalizations.of(context)!.selectFolder,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          AppLocalizations.of(context)!.selectFolder,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        backgroundColor: Colors.red,
                       ),
-                      backgroundColor: Colors.red,
+                    );
+                    return;
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FlashcardPage(
+                        selectedFolderId: _selectedFolderIdForWord!,
+                      ),
                     ),
                   );
-                  return;
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FlashcardPage(
-                      selectedFolderId: _selectedFolderIdForWord!,
-                    ),
-                  ),
-                );
                 },
                 child: Row(
                   children: [
@@ -563,28 +580,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               PopupMenuItem(
-                onTap: (){
+                onTap: () {
                   if (_selectedFolderIdForWord == null) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        AppLocalizations.of(context)!.selectFolder,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          AppLocalizations.of(context)!.selectFolder,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        backgroundColor: Colors.red,
                       ),
-                      backgroundColor: Colors.red,
+                    );
+                    return;
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AllFlashcardsPage(
+                        selectedFolderId: _selectedFolderIdForWord!,
+                      ),
                     ),
                   );
-                  return;
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AllFlashcardsPage(
-                      selectedFolderId: _selectedFolderIdForWord!,
-                    ),
-                  ),
-                );
                 },
                 child: Row(
                   children: [
@@ -595,14 +611,71 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               PopupMenuItem(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TimeFlashcardsPage(selectedFolderId: _selectedFolderIdForWord!)));
+                onTap: () {
+                  if (_selectedFolderIdForWord == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          AppLocalizations.of(context)!.selectFolder,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TimeFlashcardsPage(
+                        selectedFolderId: _selectedFolderIdForWord!,
+                      ),
+                    ),
+                  );
                 },
                 child: Row(
                   children: [
                     Icon(Icons.timelapse),
                     SizedBox(width: 8),
                     Text(AppLocalizations.of(context)!.timePage),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          PopupMenuButton(
+            tooltip: AppLocalizations.of(context)!.wordSetsTooltip,
+            icon: ImageIcon(AssetImage('assets/imgs/addWordSets.png')),
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                onTap: () {
+                  if(_selectedFolderIdForWord != null){
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WordSetsPage(
+                        selectedFolderId: _selectedFolderIdForWord!,
+                      ),
+                    ),
+                  );
+                  }
+                  else{
+                     ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        AppLocalizations.of(context)!.createFolder,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                  }
+                },
+                child: Row(
+                  children: [
+                    ImageIcon(AssetImage('assets/imgs/addWordSets.png')),
+                    SizedBox(width: 8),
+                    Text(AppLocalizations.of(context)!.wordSetsPage),
                   ],
                 ),
               ),
@@ -706,7 +779,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   context,
                                 ).scaffoldBackgroundColor,
                                 transitionType: ContainerTransitionType.fade,
-                                transitionDuration: Duration(milliseconds: 50),
+                                transitionDuration: Duration(milliseconds: 10),
                                 openBuilder: (context, action) {
                                   return WordActionsPage(
                                     word: word,
@@ -768,9 +841,78 @@ class _MyHomePageState extends State<MyHomePage> {
                             },
                           ),
                   ),
+                  // Align(
+                  //   alignment: Alignment.bottomCenter,
+                  //   child: _adService.getAdWidget(),
+                  // ),
                   Align(
-                    alignment: Alignment.bottomCenter,
-                    child: _adService.getAdWidget(),
+                    alignment: Alignment(1.0, -0.4),
+                    child: SafeArea(
+                      child: Container(
+                      width: double.infinity,
+                      height: 60,
+                      // margin: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            const Color(0xFF4DB74A),
+                            const Color(0xFF77B73A),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 10,
+                            offset: const Offset(0, -2),
+                          ),
+                        ],
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                          onTap: () async{
+                           await _openDonationUrl();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.favorite,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
+                                const SizedBox(width: 8),
+                                 Text(
+                                  AppLocalizations.of(context)!.supportUs,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                const Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.white,
+                                  size: 16,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    )
                   ),
                 ],
               ),

@@ -1,11 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isky_new/helpers/formatDayEnding.dart';
-import 'package:isky_new/helpers/showExitDialog.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/models/statistics.dart';
-import 'package:isky_new/models/words.dart';
-import 'package:isky_new/services/databaseService.dart';
+import 'package:iskai/helpers/formatDayEnding.dart';
+import 'package:iskai/helpers/showExitDialog.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/models/statistics.dart';
+import 'package:iskai/models/words.dart';
+import 'package:iskai/services/databaseService.dart';
 
 class AllFlashcardsPage extends StatefulWidget {
   final int selectedFolderId;
@@ -31,7 +33,7 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
 
   String showNextInDays(int days){
   newCounter = _currentFlashcard!.counter + days;
-  return '${newCounter} ${formatDayEnding(days, context)}';
+  return '$newCounter ${formatDayEnding(days, context)}';
   }
 
 
@@ -56,6 +58,8 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
       }
       while(pageFlashcards != null && pageFlashcards!.isNotEmpty);
 
+      allFlashcards.shuffle(Random());
+
 
       if (mounted) {
         setState(() {
@@ -69,13 +73,10 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
         setState(() {
           _isLoading = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ошибка загрузки карточек: $e')),
-      );
       }
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Ошибка загрузки карточки: $e')));
+      ).showSnackBar(SnackBar(content: Text('${AppLocalizations.of(context)!.errorLoadingFlashcards} $e')));
     }
   }
 
@@ -106,7 +107,7 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
         });
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ошибка перехода к следующей карточке: $e')),
+        SnackBar(content: Text('${AppLocalizations.of(context)!.errorSwitchingToTheNextCard} $e')),
       );
     }
   }
@@ -115,7 +116,7 @@ class _AllFlashcardsPageState extends State<AllFlashcardsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All words'),
+        title: Text(AppLocalizations.of(context)!.allFlashcards),
         leading: IconButton(onPressed: ()async{
           final shouldExit = await showExitDialog(context);
           if(shouldExit){

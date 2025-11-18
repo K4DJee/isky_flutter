@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
+import 'package:iskai/l10n/app_localizations.dart';
 
 class AddFolderModal extends StatelessWidget {
   final TextEditingController controller;
@@ -11,25 +11,25 @@ class AddFolderModal extends StatelessWidget {
   });
   
   void _submit(BuildContext context) {
-    print('Попытка отправки формы в модальном окне');
+    // print('Попытка отправки формы в модальном окне');
     String folderName = controller.text.trim();
     String? errorText;
     if (folderName.isNotEmpty) {
-      print('Имя папки: $folderName');
+      // print('Имя папки: $folderName');
       errorText = null;
       Navigator.pop(context);
       if (onCreate != null) {
-        print('Вызов onCreate...');
+        // print('Вызов onCreate...');
         onCreate!();
       } else {
-        print('onCreate не определён');
+        // print('onCreate не определён');
       }
     } else {
-      print('Имя папки пустое, отправка отменена');
-      errorText = 'Пожалуйста, введите название папки';
+      // print('Имя папки пустое, отправка отменена');
+      errorText = AppLocalizations.of(context)!.folderModalError2;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Ошибка: Название папки не может быть пустым'),
+         SnackBar(
+          content: Text('${AppLocalizations.of(context)!.errorTitle} ${AppLocalizations.of(context)!.folderModalError1}'),
           backgroundColor: Colors.red,
           duration: Duration(seconds: 2),
         ),
@@ -40,10 +40,10 @@ class AddFolderModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? errorText; // Локальная переменная для ошибки
+    String? errorText;
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: Column(
           children: [

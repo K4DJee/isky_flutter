@@ -1,15 +1,16 @@
 //Settings Page
 import 'package:flutter/material.dart';
-import 'package:isky_new/helpers/themes.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/models/languages.dart';
-import 'package:isky_new/pages/export_import_actions_page.dart';
-import 'package:isky_new/pages/foldersActions.dart';
-import 'package:isky_new/pages/incomplete_page.dart';
-import 'package:isky_new/pages/onBoardingScreen.dart';
-import 'package:isky_new/pages/privacy_police_page.dart';
+import 'package:iskai/helpers/themes.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/models/languages.dart';
+import 'package:iskai/pages/export_import_actions_page.dart';
+import 'package:iskai/pages/foldersActions.dart';
+import 'package:iskai/pages/minigames_page.dart';
+import 'package:iskai/pages/privacy_police_page.dart';
 import 'package:provider/provider.dart';
-import 'package:isky_new/providers/locale_provider.dart';
+import 'package:iskai/providers/locale_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -22,12 +23,68 @@ class _SettingsPageState extends State<SettingsPage>{
     bool light = false;
     Languages? _selectedLanguageItem;
     late String _selectedCodeLanguage;
-    static final List<Languages> _languages = [
-      Languages(lang: 'English', code: 'en'),
-      Languages(lang: 'Русский', code: 'ru'),
-    ];
+
+    Future<void> _openFeedbackUrl() async{
+    final url = Uri.parse("https://t.me/k4dje_feedback");
+
+    try {
+  await launchUrl(url);
+} catch (e) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text('Не удалось открыть ссылку')),
+  );
+}
+  }
+
+  Future<void> _openRateUsUrl() async{
+    final url = Uri.parse("https://www.rustore.ru/catalog/app/studio.k4dje.iskai");
+
+    try {
+  await launchUrl(url);
+} catch (e) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text('Не удалось открыть ссылку')),
+  );
+}
+  }
+
+  Future<void> _shareApp() async{
+    final text = 'Попробуйте Isky — удобный словарь для изучения иностранных языков!\n\n'
+      'Доступно в RuStore: https://apps.rustore.ru/app/ru.k4dje.iskai';
+    SharePlus.instance.share(
+      ShareParams(text: 'Попробуйте Iskai https://apps.rustore.ru/app/ru.k4dje.iskai')
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  
+
+  String _getLanguageNameByCode(String code, BuildContext context) {
+    switch (code) {
+      case 'en':
+        return AppLocalizations.of(context)!.languageNameEn;
+      case 'ru':
+        return AppLocalizations.of(context)!.languageNameRu;
+      case 'fr':
+        return AppLocalizations.of(context)!.languageNameFr;
+      case 'es':
+        return AppLocalizations.of(context)!.languageNameEs;
+      default:
+        return AppLocalizations.of(context)!.selectLanguage;
+    }
+  }
     
     void _showLanguagePicker(BuildContext context) {
+       final List<Languages> _languages = [
+      Languages(lang: AppLocalizations.of(context)!.languageNameEn, code: 'en'),
+      Languages(lang: AppLocalizations.of(context)!.languageNameRu, code: 'ru'),
+      Languages(lang: AppLocalizations.of(context)!.languageNameFr, code: 'fr'),
+      Languages(lang: AppLocalizations.of(context)!.languageNameEs, code: 'es'),
+    ];
       final localeProvider = Provider.of<LocaleProvider>(context, listen: false);
   showModalBottomSheet(
     context: context,
@@ -62,9 +119,12 @@ class _SettingsPageState extends State<SettingsPage>{
   );
 }
 
+
     @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final localeProvider = Provider.of<LocaleProvider>(context);
+    final currentLanguageCode = localeProvider.locale?.languageCode ?? 'en';
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.settingsPage),
@@ -78,18 +138,18 @@ class _SettingsPageState extends State<SettingsPage>{
                     onChanged: (value){
                     themeProvider.toggleTheme();
                     },
-                    activeColor: const Color.fromARGB(255, 77, 183, 58),
+                    activeThumbColor: const Color.fromARGB(255, 77, 183, 58),
                     ),
-                    const Divider(height: 1, thickness: 1, color: Colors.grey),
-                ListTile(
-                  title:Text(AppLocalizations.of(context)!.interfaceAppColor,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
-                  trailing: Icon(Icons.color_lens),
-                  selectedTileColor: Colors.black,
-                  onTap:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
-                  }
-                ),
+                //     const Divider(height: 1, thickness: 1, color: Colors.grey), //interface
+                // ListTile(
+                //   title:Text(AppLocalizations.of(context)!.interfaceAppColor,
+                //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+                //   trailing: Icon(Icons.color_lens),
+                //   selectedTileColor: Colors.black,
+                //   onTap:(){
+                //     Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
+                //   }
+                // ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.deletingAFolder,
@@ -113,16 +173,16 @@ class _SettingsPageState extends State<SettingsPage>{
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> ExportImportActionsPage()));
                   }
                 ),
-                const Divider(height: 1, thickness: 1, color: Colors.grey),
-                ListTile(
-                  title:Text(AppLocalizations.of(context)!.removeAds,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
-                  trailing: Icon(Icons.close),
-                  selectedTileColor: Colors.black,
-                  onTap:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
-                  }
-                ),
+                // const Divider(height: 1, thickness: 1, color: Colors.grey),
+                // ListTile(//remove ads
+                //   title:Text(AppLocalizations.of(context)!.removeAds,
+                //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+                //   trailing: Icon(Icons.close),
+                //   selectedTileColor: Colors.black,
+                //   onTap:(){
+                //     Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
+                //   }
+                // ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
                 InkWell(
                   onTap: () {
@@ -142,10 +202,10 @@ class _SettingsPageState extends State<SettingsPage>{
                         ),
                         Row(
                           children: [
-                            Text(
-                              _selectedLanguageItem?.lang ?? AppLocalizations.of(context)!.selectLanguage,
-                              style: TextStyle( fontSize: 16),
-                            ),
+                           Text(
+                            _getLanguageNameByCode(localeProvider.locale?.languageCode ?? AppLocalizations.of(context)!.selectLang, context),
+                            style: const TextStyle(fontSize: 16),
+                          ),
                             const SizedBox(width: 8),
                             Icon(Icons.arrow_drop_down),
                           ],
@@ -154,25 +214,21 @@ class _SettingsPageState extends State<SettingsPage>{
                     ),
                   ),
                 ),
-                const Divider(height: 1, thickness: 1, color: Colors.grey),
+                const Divider(height: 1, thickness: 1, color: Colors.grey), //Share app
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.shareApp, 
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
                   trailing: Icon(Icons.share),
                   selectedTileColor: Colors.black,
-                  onTap:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
-                  }
+                  onTap: () => _shareApp(),
                 ),
-                const Divider(height: 1, thickness: 1, color: Colors.grey),
+                const Divider(height: 1, thickness: 1, color: Colors.grey), //rate us
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.rateUs,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
                   trailing: Icon(Icons.reviews),
                   selectedTileColor: Colors.black,
-                  onTap:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
-                  }
+                  onTap:() => _openRateUsUrl()
                 ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
@@ -180,20 +236,20 @@ class _SettingsPageState extends State<SettingsPage>{
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
                   trailing: Icon(Icons.feedback),
                   selectedTileColor: Colors.black,
-                  onTap:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const IncompletePage()));
+                  onTap:()async{
+                    await _openFeedbackUrl();
                   }
                 ),
-                // const Divider(height: 1, thickness: 1, color: Colors.grey),
-                // ListTile(
-                //   title:Text('Тест', 
-                //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
-                //   trailing: Icon(Icons.feedback),
-                //   selectedTileColor: Colors.black,
-                //   onTap:(){
-                //     Navigator.push(context,  MaterialPageRoute(builder: (context)=> OnBoardingScreen()));
-                //   }
-                // ),
+                const Divider(height: 1, thickness: 1, color: Colors.grey),
+                ListTile(
+                  title:Text('Тест', 
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+                  trailing: Icon(Icons.feedback),
+                  selectedTileColor: Colors.black,
+                  onTap:(){
+                    Navigator.push(context,  MaterialPageRoute(builder: (context)=> MinigamesPage(selectedFolderId: 8,)));
+                  }
+                ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),
                 ListTile(
                   title:Text(AppLocalizations.of(context)!.privacyPolicy, 

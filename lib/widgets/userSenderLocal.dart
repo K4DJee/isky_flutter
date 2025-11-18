@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/pages/sending_data_page.dart';
-import 'package:isky_new/widgets/scanner_overlay_painter.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/pages/sending_data_page.dart';
+import 'package:iskai/widgets/scanner_overlay_painter.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class UserSenderLocal extends StatefulWidget {
@@ -51,6 +51,7 @@ class _UserSenderLocalState extends State<UserSenderLocal>
 
   @override
   late String barCode;
+  @override
   Widget build(BuildContext context) {
     final isMobile = isMobilePlatform;
     return Scaffold(
@@ -71,16 +72,16 @@ class _UserSenderLocalState extends State<UserSenderLocal>
                 onDetect: (capture) {
                   final List<Barcode> barcodes = capture.barcodes;
                   if (barcodes.isNotEmpty) {
-                    print("Detected ${barcodes.length} barcodes");
+                    // print("Detected ${barcodes.length} barcodes");
                     setState(() {
                       isDetectScanner = true;
                     });
                     for (final barcode in barcodes) {
                       barCode = barcode.rawValue!;
-                      print("Barcode found! Value: ${barcode.rawValue}");
+                      // print("Barcode found! Value: ${barcode.rawValue}");
                     }
                   } else {
-                    print("No barcodes detected in this capture");
+                    // print("No barcodes detected in this capture");
                   }
                 },
                 fit: BoxFit.cover,
@@ -117,13 +118,6 @@ class _UserSenderLocalState extends State<UserSenderLocal>
                         color: Colors.black,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        // shadows: [
-                        //   Shadow(
-                        //     blurRadius: 10,
-                        //     color: Colors.black.withOpacity(0.5),
-                        //     offset: const Offset(0, 2),
-                        //   ),
-                        // ],
                       ),
                     ),)
                   ),
@@ -168,7 +162,7 @@ class _UserSenderLocalState extends State<UserSenderLocal>
               child: TextField(
                 controller: _ipController,
               decoration: InputDecoration(
-                labelText: "Ip адрес получителя",
+                labelText: AppLocalizations.of(context)!.receiverIpAddress,
                 border: OutlineInputBorder()
               ),
             ),
@@ -181,7 +175,7 @@ class _UserSenderLocalState extends State<UserSenderLocal>
                if(result == true){
                         setState(() {
                           _ipController.clear();
-                          FocusScope.of(context).unfocus();//убрать клавиатуру
+                          FocusScope.of(context).unfocus();
                         });
                       }
             }, child: Text(AppLocalizations.of(context)!.sendData)),

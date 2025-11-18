@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
+import 'package:iskai/l10n/app_localizations.dart';
 
 class PrivacyPolicePage extends StatefulWidget{
   const PrivacyPolicePage({super.key});
@@ -95,16 +95,7 @@ class _PrivacyPolicePageState extends State<PrivacyPolicePage>{
             Text(l10n.privacyPolicySection5Access),
             Text(l10n.privacyPolicySection5Correction),
             Text(l10n.privacyPolicySection5Deletion),
-            Text(l10n.privacyPolicySection5OptOut),
             Text(l10n.privacyPolicySection5Complaint),
-            const SizedBox(height: 8),
-            Text(l10n.privacyPolicySection5Contact),
-            const SizedBox(height: 16),
-            Text(
-              l10n.privacyPolicySection6Title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(l10n.privacyPolicySection6Children),
             const SizedBox(height: 16),
             Text(
               l10n.privacyPolicySection7Title,

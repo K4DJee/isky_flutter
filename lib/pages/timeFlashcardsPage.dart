@@ -1,13 +1,13 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isky_new/helpers/formatDuration.dart';
-import 'package:isky_new/helpers/showExitDialog.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/models/statistics.dart';
-import 'package:isky_new/models/words.dart';
-import 'package:isky_new/services/databaseService.dart';
-import 'package:isky_new/widgets/timeProgressBar.dart';
+import 'package:iskai/helpers/formatDuration.dart';
+import 'package:iskai/helpers/showExitDialog.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/models/statistics.dart';
+import 'package:iskai/models/words.dart';
+import 'package:iskai/services/databaseService.dart';
+import 'package:iskai/widgets/timeProgressBar.dart';
 
 class TimeFlashcardsPage extends StatefulWidget {
   final int selectedFolderId;
@@ -56,7 +56,7 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
     print('Таймер пошёл');
     setState(() {
       _isTimerStarted = true;
-      this._selectedDuration = timer;
+      _selectedDuration = timer;
       _startTime = DateTime.now();
     });
   }
@@ -378,20 +378,20 @@ class _TimeFlashcardsPageState extends State<TimeFlashcardsPage> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Text('Время закончилось!', style: TextStyle(fontWeight: FontWeight.bold),),
+                                                    Text(AppLocalizations.of(context)!.timeIsUp, style: TextStyle(fontWeight: FontWeight.bold),),
                                                     Text(
-                                                      'Всего слов: $amountAnswersPerDay',
+                                                      '${AppLocalizations.of(context)!.totalWords} $amountAnswersPerDay',
                                                     ),
                                                     Text(
-                                                      'Правильно: $amountCorrectAnswers',
+                                                      '${AppLocalizations.of(context)!.countOfcorrectWords} $amountCorrectAnswers',
                                                       style: TextStyle(color: Colors.green[400])
                                                     ),
                                                     Text(
-                                                      'Ошибок: $amountIncorrectAnswers',
+                                                      '${AppLocalizations.of(context)!.countOfMistakes} $amountIncorrectAnswers',
                                                       style: TextStyle(color: Colors.red)
                                                     ),
                                                     Text(
-                                                      'Время: ${formatDuration(_elapsedTime)}',
+                                                      '${AppLocalizations.of(context)!.countOfTime} ${formatDuration(_elapsedTime)}',
                                                     ),
                                                   ],
                                                 ),

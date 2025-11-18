@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/sync/tcpSender.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/sync/tcpSender.dart';
 
 class SendingDataPage extends StatefulWidget {
   final String ipAddress;
@@ -101,7 +101,7 @@ class _SendingDataPageState extends State<SendingDataPage>{
         ),
         SizedBox(height: 8),
         Text(
-          _errorMessage ?? 'Неизвестная ошибка',
+          _errorMessage ?? AppLocalizations.of(context)!.unknownError,
           style: TextStyle(color: Colors.grey),
           textAlign: TextAlign.center,
         ),

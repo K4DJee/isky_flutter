@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:intl/intl.dart';
-import 'package:isky_new/models/flashcardWithWord.dart';
+import 'package:iskai/models/flashcardWithWord.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:isky_new/models/statistics.dart';
+import 'package:iskai/models/statistics.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -48,7 +48,7 @@ class SQLiteDatabase {
       print('Полный путь к файлу базы: $path');
       return await openDatabase(
         path,
-        version: 13,
+        version: 14,
         onCreate: _createDB,
         onUpgrade: _onUpgrade, // Добавляем для будущих миграций
       );
@@ -61,22 +61,34 @@ class SQLiteDatabase {
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     print('Миграция БД: с $oldVersion на $newVersion');
     if (oldVersion < newVersion) {
-      await db.execute('DROP TABLE IF EXISTS statistics ');
-     await db.execute('''
-    CREATE TABLE statistics(
+    //   await db.execute('DROP TABLE IF EXISTS statistics ');
+    //  await db.execute('''
+    // CREATE TABLE statistics(
+    //   id INTEGER PRIMARY KEY AUTOINCREMENT,
+    //   folderId INTEGER NOT NULL,  
+    //   correctWordsPerTime INTEGER NULL,
+    //   amountCorrectAnswers INTEGER NULL,
+    //   amountIncorrectAnswers INTEGER NULL,
+    //   amountAnswersPerDay INTEGER NULL,
+    //   wordsLearnedToday INTEGER NULL,
+    //   createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+    //   FOREIGN KEY (folderId) REFERENCES folders (id) ON DELETE CASCADE
+    // )
+    // '''
+    // );
+
+    await db.execute('''
+    CREATE TABLE achievements(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      folderId INTEGER NOT NULL,  
-      correctWordsPerTime INTEGER NULL,
-      amountCorrectAnswers INTEGER NULL,
-      amountIncorrectAnswers INTEGER NULL,
-      amountAnswersPerDay INTEGER NULL,
-      wordsLearnedToday INTEGER NULL,
-      createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (folderId) REFERENCES folders (id) ON DELETE CASCADE
-    )
-    '''
-    );
-    print('Таблица statistics создана');
+      name TEXT NOT NULL,
+      description TEXT NOT NULL,
+      icon TEXT NOT NULL,
+      progress INTEGER NOT NULL,
+      unlocked INTEGER NOT NULL,
+      dateUnlocked INTEGER NULL
+      )
+    ''');
+    print('Таблица achievements создана');
     }
   }
 
@@ -124,6 +136,17 @@ class SQLiteDatabase {
     )
     '''
     );
+    await db.execute('''
+    CREATE TABLE achievements(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      description TEXT NOT NULL,
+      icon TEXT NOT NULL,
+      progress INTEGER NOT NULL,
+      unlocked INTEGER NOT NULL,
+      dateUnlocked INTEGER NULL
+      )
+    ''');
     print('Поле difficulty добавлено в words, таблица flashcards удалена');
     await db.execute('PRAGMA foreign_keys = ON;');
   }
@@ -204,7 +227,7 @@ class SQLiteDatabase {
       return result;
     }
     catch(e){
-      throw(e);
+      rethrow;
     }
   }
 
@@ -236,7 +259,7 @@ class SQLiteDatabase {
   }
 
 
-  //wifi and bluetooth
+  //wifi
   //Экспорт всей БД в Json строку или файл
   Future<String> exportDatabaseToJson() async{
     final db = await instance.database;
@@ -318,9 +341,7 @@ class SQLiteDatabase {
 
   if (Platform.isAndroid) {
     baseDir = await getDownloadsDirectory();
-    if (baseDir == null) {
-      baseDir = await getExternalStorageDirectory();
-    }
+    baseDir ??= await getExternalStorageDirectory();
   } else if (Platform.isIOS) {
     baseDir = await getApplicationDocumentsDirectory();
   } else {
@@ -550,32 +571,6 @@ Future<List<Statistics>> getStatistics(int folderId) async{
     }
   }
 }
-
-  //   for (final stat in stats) {
-  //   final currentDate = format.parse(stat.createdAt!);
-
-  //   if (lastDate != null) {
-  //     // Проверим пропущенные дни между lastDate и currentDate
-  //     var nextDay = lastDate.add(const Duration(days: 1));
-  //     while (nextDay.isBefore(currentDate)) {
-  //       // Добавляем "пустой" день
-  //       filledStats.add(Statistics(
-  //         folderId: folderId,
-  //         correctWordsPerTime: 0,
-  //         amountCorrectAnswers: 0,
-  //         amountIncorrectAnswers: 0,
-  //         amountAnswersPerDay: 0,
-  //         wordsLearnedToday: 0,
-  //         createdAt: DateFormat('yyyy-MM-dd HH:mm:ss').format(nextDay),
-  //       ));
-  //       nextDay = nextDay.add(const Duration(days: 1));
-  //     }
-  //   }
-
-  //   filledStats.add(stat);
-  //   lastDate = currentDate;
-  //     print(currentDate.month);
-  // }
   for(var i = 0; i <filledStats.length;i++){
     print(filledStats[i].createdAt);
   }

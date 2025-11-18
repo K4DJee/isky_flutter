@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
+import 'package:iskai/l10n/app_localizations.dart';
 
 class AddWordModal extends StatefulWidget {
   final TextEditingController controller1;
@@ -20,6 +20,7 @@ class AddWordModal extends StatefulWidget {
   this.selectedFolderId,
   });
   
+  @override
   State<AddWordModal> createState() => _AddWordModalState();
 
 }
@@ -34,22 +35,22 @@ class AddWordModal extends StatefulWidget {
   }
 
     void _submit(BuildContext context) {
-    print('Попытка отправки формы в модальном окне');
+    // print('Попытка отправки формы в модальном окне');
     String word = widget.controller1.text.trim();
     String translate = widget.controller2.text.trim();
     String example = widget.controller3.text.trim();
     if (word.isNotEmpty && translate.isNotEmpty && _selectedFolderId != null) {
-      print('Добавленное слово: $word, его перевод $translate, папка ID: $_selectedFolderId');
+      // print('Добавленное слово: $word, его перевод $translate, папка ID: $_selectedFolderId');
       Navigator.pop(context);
       if (widget.onCreate != null) {
-        print('Вызов onCreate...');
+        // print('Вызов onCreate...');
         widget.onCreate!();
       } else {
-        print('onCreate не определён');
+        // print('onCreate не определён');
       }
     } else {
-      print('Ошибка добавления слова: word, translate или folderId пустые');
-      print('word: $word, translate: $translate, example: $example, selectedFolderId: $_selectedFolderId');
+      // print('Ошибка добавления слова: word, translate или folderId пустые');
+      // print('word: $word, translate: $translate, example: $example, selectedFolderId: $_selectedFolderId');
     }
   }
 
@@ -57,7 +58,7 @@ class AddWordModal extends StatefulWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: Column(
           children: [

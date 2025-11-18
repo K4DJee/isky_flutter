@@ -1,5 +1,5 @@
-name: isky_new
-description: "A new Flutter project."
+name: iskai #изменил на iskai, было isky_new
+description: "Iskai is a dictionary application for learning foreign languages"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.1+4
 
 environment:
   sdk: ^3.9.2
@@ -59,6 +59,9 @@ dependencies:
   fl_chart: ^1.1.1
   file_picker: ^10.3.3
   file_saver: ^0.3.1
+  url_launcher: ^6.3.2
+  rename: ^3.1.0
+  share_plus: ^12.0.1
 
 dev_dependencies:
   flutter_test:
@@ -77,7 +80,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/imgs/app_icon2.png"
+  image_path: "assets/imgs/isky-icon3.jpg"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
@@ -102,8 +105,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/sets/
+    - assets/imgs/addWordSets.png
     - ./assets/imgs/cards-svgrepo-com.png
     - ./assets/imgs/app_icon2.png
+    - ./assets/imgs/isky-icon3.jpg
     - assets/audio/timeFinishedSound.mp3
     - assets/gifs/clock(60fps).gif
     - assets/gifs/clock(24fps).gif

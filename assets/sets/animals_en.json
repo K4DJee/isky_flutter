@@ -1,0 +1,77 @@
+[
+    {
+      "word": "dog",
+      "translate": "собака",
+      "example": "The dog happily greeted its owner."
+    },
+    {
+      "word": "cat",
+      "translate": "кошка",
+      "example": "The cat is sleeping on the windowsill."
+    },
+    {
+      "word": "horse",
+      "translate": "лошадь",
+      "example": "Horses are running across the field."
+    },
+    {
+      "word": "cow",
+      "translate": "корова",
+      "example": "The cow gives milk."
+    },
+    {
+      "word": "pig",
+      "translate": "свинья",
+      "example": "The pig loves rolling in the mud."
+    },
+    {
+      "word": "chicken",
+      "translate": "курица",
+      "example": "The chicken lays eggs every day."
+    },
+    {
+      "word": "bear",
+      "translate": "медведь",
+      "example": "The bear lives in the forest."
+    },
+    {
+      "word": "wolf",
+      "translate": "волк",
+      "example": "The wolf howls at the moon."
+    },
+    {
+      "word": "fox",
+      "translate": "лиса",
+      "example": "The fox is very clever."
+    },
+    {
+      "word": "hare",
+      "translate": "заяц",
+      "example": "The hare jumps quickly across the field."
+    },
+    {
+      "word": "elephant",
+      "translate": "слон",
+      "example": "The elephant is the largest land animal."
+    },
+    {
+      "word": "lion",
+      "translate": "лев",
+      "example": "The lion is the king of the jungle."
+    },
+    {
+      "word": "tiger",
+      "translate": "тигр",
+      "example": "The tiger is striped and very strong."
+    },
+    {
+      "word": "bird",
+      "translate": "птица",
+      "example": "Birds sing early in the morning."
+    },
+    {
+      "word": "fish",
+      "translate": "рыба",
+      "example": "Fish swim in the aquarium."
+    }
+  ]

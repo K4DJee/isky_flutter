@@ -1,0 +1,77 @@
+[
+    {
+      "word": "собака",
+      "translate": "dog",
+      "example": "Собака радостно встретила хозяина."
+    },
+    {
+      "word": "кошка",
+      "translate": "cat",
+      "example": "Кошка спит на подоконнике."
+    },
+    {
+      "word": "лошадь",
+      "translate": "horse",
+      "example": "Лошади бегают по полю."
+    },
+    {
+      "word": "корова",
+      "translate": "cow",
+      "example": "Корова даёт молоко."
+    },
+    {
+      "word": "свинья",
+      "translate": "pig",
+      "example": "Свинья любит валяться в грязи."
+    },
+    {
+      "word": "курица",
+      "translate": "chicken",
+      "example": "Курица несёт яйца каждый день."
+    },
+    {
+      "word": "медведь",
+      "translate": "bear",
+      "example": "Медведь живёт в лесу."
+    },
+    {
+      "word": "волк",
+      "translate": "wolf",
+      "example": "Волк воет на луну."
+    },
+    {
+      "word": "лиса",
+      "translate": "fox",
+      "example": "Лиса очень хитрая."
+    },
+    {
+      "word": "заяц",
+      "translate": "hare",
+      "example": "Заяц быстро прыгает по полю."
+    },
+    {
+      "word": "слон",
+      "translate": "elephant",
+      "example": "Слон — самое крупное наземное животное."
+    },
+    {
+      "word": "лев",
+      "translate": "lion",
+      "example": "Лев — царь зверей."
+    },
+    {
+      "word": "тигр",
+      "translate": "tiger",
+      "example": "Тигр полосатый и очень сильный."
+    },
+    {
+      "word": "птица",
+      "translate": "bird",
+      "example": "Птицы поют рано утром."
+    },
+    {
+      "word": "рыба",
+      "translate": "fish",
+      "example": "Рыбы плавают в аквариуме."
+    }
+  ]

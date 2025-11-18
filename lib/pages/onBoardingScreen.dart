@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/main.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
 
+  @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
 
@@ -196,14 +197,14 @@ class OnBoardContent extends StatelessWidget {
                       text1,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       text2,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

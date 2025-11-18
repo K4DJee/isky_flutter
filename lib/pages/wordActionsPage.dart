@@ -1,13 +1,13 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/models/words.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/models/words.dart';
 
 class WordActionsPage  extends StatefulWidget{
   final Words word;
   final Function(Words) onSave;
   final Function(int) onDelete; 
-  const WordActionsPage({
+  const WordActionsPage({super.key, 
     required this.word,
     required this.onSave,
     required this.onDelete,
@@ -36,7 +36,7 @@ class _WordActionsPageState extends State<WordActionsPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).appBarTheme?.backgroundColor ?? Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor ?? Theme.of(context).colorScheme.primary,
       appBar: AppBar(
       title: Text(AppLocalizations.of(context)!.wordActionsTitle), 
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,

@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/pages/allFlashCardsPage.dart';
+import 'package:iskai/pages/flashCardsPage.dart';
+import 'package:iskai/pages/timeFlashcardsPage.dart';
+
+class MinigamesPage extends StatefulWidget {
+  final int selectedFolderId;
+  const MinigamesPage({super.key, required this.selectedFolderId});
+
+  @override
+  State<MinigamesPage> createState() => _MinigamesPageState();
+}
+
+class _MinigamesPageState extends State<MinigamesPage>{
+  @override
+  Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> minigames = [
+      {
+        "title": AppLocalizations.of(context)!.educationAnki,
+        "image": "",
+        "page": () => FlashcardPage(selectedFolderId: widget.selectedFolderId,)
+      },
+      {
+        "title": AppLocalizations.of(context)!.allFlashcards,
+        "image": "",
+        "page": () => AllFlashcardsPage(selectedFolderId: widget.selectedFolderId,)
+      },
+      {
+        "title": AppLocalizations.of(context)!.timePage,
+        "image": "",
+        "page": ()=> TimeFlashcardsPage(selectedFolderId: widget.selectedFolderId,)
+      },
+      
+     ];
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.minigamesPage),
+      ),
+      body: ListView.separated(
+        itemCount: minigames.length,
+        padding: EdgeInsets.only(left:10, right:10),
+        separatorBuilder: (context, index) => SizedBox(height: 16),
+        itemBuilder: (context, index){
+           return minigameContainer(context, minigames[index], minigames[index]['page'] as Widget Function());
+        },
+      ),
+    );
+  }
+}
+
+
+Widget minigameContainer(BuildContext context, minigame, Widget Function() pageBuilder,){
+  return Container(
+    width: double.infinity,
+    padding: EdgeInsets.all(2),
+    decoration: BoxDecoration(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(
+        color:Colors.white,
+        width:2
+      )
+    ),
+    child:ListTile(
+      title:  Text(minigame['title'], textAlign: TextAlign.left,  style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),),
+      onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> pageBuilder())),
+      leading: ImageIcon(
+                AssetImage("assets/imgs/cards-svgrepo-com.png"),
+      ),
+    )
+  );
+}

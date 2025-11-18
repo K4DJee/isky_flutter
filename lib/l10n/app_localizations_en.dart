@@ -9,7 +9,19 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Isky';
+  String get languageNameEn => 'English';
+
+  @override
+  String get languageNameRu => 'Russian';
+
+  @override
+  String get languageNameFr => 'French';
+
+  @override
+  String get languageNameEs => 'Spanish';
+
+  @override
+  String get appTitle => 'Iskai';
 
   @override
   String get menuTitle => 'Menu';
@@ -105,136 +117,235 @@ class AppLocalizationsEn extends AppLocalizations {
   String get globalSync => 'Global synchronization';
 
   @override
+  String get supportUs => 'Support us';
+
+  @override
+  String get createFolder => 'Create a folder';
+
+  @override
+  String get errorSwitchingToTheNextCard => 'Error switching to the next card:';
+
+  @override
+  String get folderModalError2 => 'Please enter the folder name.';
+
+  @override
+  String get folderModalError1 => 'the folder name cannot be empty!';
+
+  @override
+  String get dataSuccessfullyAccepted => 'The data was successfully accepted!';
+
+  @override
+  String get errorGettingIpStatus => 'Error receiving the IP address';
+
+  @override
+  String get errorGettingIp => 'Error receiving the IP. Check your Wifi connection';
+
+  @override
+  String get countOfTime => 'Time:';
+
+  @override
+  String get countOfMistakes => 'Mistakes:';
+
+  @override
+  String get countOfcorrectWords => 'Correctly::';
+
+  @override
+  String get totalWords => 'Total words:';
+
+  @override
+  String get timeIsUp => 'Time\'s up!';
+
+  @override
+  String get unknownError => 'Unknown error';
+
+  @override
+  String get folderNamePage => 'Changing the folder name';
+
+  @override
+  String get errorLoadingFlashcards => 'Error loading the flashcards:';
+
+  @override
+  String get errorLoadingFlashcard => 'Error loading the flashcard:';
+
+  @override
+  String get wordSetsTooltip => 'Go to Word sets';
+
+  @override
+  String get amountOfWords => 'Amount of words:';
+
+  @override
+  String get downloadSelectedWordsBtn => 'Download selected files';
+
+  @override
+  String get downloadAllWordsBtn => 'Download all words';
+
+  @override
+  String get errorAddingWords => 'Error adding words:';
+
+  @override
+  String get selectLang => 'Select a language';
+
+  @override
+  String get successAddedWordsToFolders => 'Words added to folder!';
+
+  @override
+  String get notSelectedWordsForAdd => 'There are no selected words';
+
+  @override
+  String get errorLoadJsonFromWordSet => 'Error loading JSON:';
+
+  @override
+  String get wordSetsPage => 'Set of words';
+
+  @override
+  String get numbersSetDescription => 'Numbers';
+
+  @override
+  String get animalsSetDescription => 'Animal names';
+
+  @override
+  String get foodSetDescription => 'Food names';
+
+  @override
+  String get educationSetDescription => 'Words related to education and learning.';
+
+  @override
+  String get numbersSetName => 'Numbers';
+
+  @override
+  String get animalsSetName => 'Animals';
+
+  @override
+  String get foodSetName => 'Food';
+
+  @override
+  String get educationSetName => 'Education';
+
+  @override
+  String get minigamesPage => 'Mini-games';
+
+  @override
+  String get achievementsPage => 'Achievements';
+
+  @override
   String get privacyPolicyTitle => 'Privacy Policy';
 
   @override
-  String get privacyPolicyHeader => 'Privacy Policy of the Isky Application';
+  String get privacyPolicyHeader => 'Privacy Policy of the Iskai App';
 
   @override
-  String get privacyPolicyLastUpdated => 'Last Updated: October 23, 2025';
+  String get privacyPolicyLastUpdated => 'Last updated: November 13, 2025';
 
   @override
-  String get privacyPolicyWelcome => 'Welcome to the privacy policy of the Isky application (\"Application\"). This policy describes how we collect, use, store, and protect your personal information when using the Application. The Isky application is developed by K4DJE Studio (developer: K4DJE, Dmitry Mishchenko) and is available on MacOS, Linux, Windows, Android, and iOS platforms. We strive for maximum transparency and protection of your privacy.';
+  String get privacyPolicyWelcome => 'Welcome to the Privacy Policy of the Iskai app (\"App\"). This policy explains how we collect, use, store, and protect your personal information when using the App. Iskai is developed by K4DJE Studio (developer: K4DJE, Dmitry Mishchenko) and is available on MacOS, Linux, Windows, Android, and iOS. We are committed to transparency and protecting your privacy.';
 
   @override
-  String get privacyPolicyAgreement => 'By using the Application, you agree to the terms of this policy. If you do not agree, please do not use the Application.';
+  String get privacyPolicyAgreement => 'By using the App, you agree to the terms of this policy. If you do not agree, please do not use the App.';
 
   @override
   String get privacyPolicySection1Title => '1. Information We Collect';
 
   @override
-  String get privacyPolicySection1Description => 'The Isky application is designed for creating dictionaries, organizing words into folders, exporting and importing data via JSON files, as well as synchronizing data between devices. We minimize the collection of personal data and do not store it on our servers unless necessary.';
+  String get privacyPolicySection1Description => 'Iskai is designed to create dictionaries, organize words into folders, export and import data via JSON files, and synchronize data between devices. We minimize the collection of personal data and do not store it on our servers unless necessary.';
 
   @override
-  String get privacyPolicySection1_1Title => '1.1. User-Provided Data';
+  String get privacyPolicySection1_1Title => '1.1. Data Provided by the User';
 
   @override
-  String get privacyPolicySection1_1DictionaryContent => '- Dictionary Content: Words, folders, and related data that you enter into the Application. This data is stored locally on your device.';
+  String get privacyPolicySection1_1DictionaryContent => '- Dictionary content: Words, folders, and related data you enter in the App. This data is stored locally on your device.';
 
   @override
-  String get privacyPolicySection1_1SyncData => '- Sync Data: During local synchronization (via Wi-Fi on the same network) or global synchronization (via a intermediary server), only your dictionary data is transmitted. The server does not store this data; it acts solely as a temporary intermediary for transmission between devices.';
+  String get privacyPolicySection1_1SyncData => '- Synchronization data: During local sync (via Wi-Fi within the same network) or global sync (via an intermediary server), only your dictionary data is transmitted. The server does not store these data; it acts solely as a temporary bridge between devices.';
 
   @override
   String get privacyPolicySection1_2Title => '1.2. Automatically Collected Data';
 
   @override
-  String get privacyPolicySection1_2TechnicalInfo => '- Technical Information: IP address, device type, OS version, unique device identifier (for synchronization and debugging errors).';
+  String get privacyPolicySection1_2TechnicalInfo => '- Technical information: IP address, device type, OS version, and unique device ID (for synchronization and debugging purposes).';
 
   @override
-  String get privacyPolicySection1_2UsageData => '- Usage Data: Information about interactions with the Application, such as frequency of feature usage, for product improvement (anonymized).';
+  String get privacyPolicySection1_2UsageData => '- Usage data: Information about how you interact with the App, such as feature usage frequency, used to improve the product (anonymized).';
 
   @override
-  String get privacyPolicySection1_2AdData => '- Advertising Data: The Application integrates ads via Yandex Ads. Yandex may collect data for ad personalization, including device identifiers, approximate location (based on IP), and behavior in the Application. We do not have access to this data; it is processed by Yandex in accordance with their privacy policy.';
+  String get privacyPolicySection1_2AdData => '- Advertising data: The App integrates ads via Yandex Ads. Yandex may collect data for ad personalization, including device identifiers, approximate location (based on IP), and in-app behavior. We do not have access to this data; it is processed by Yandex according to their Privacy Policy.';
 
   @override
-  String get privacyPolicyNoSensitiveData => 'We do not collect sensitive information such as biometric data, financial information, or health data.';
+  String get privacyPolicyNoSensitiveData => 'We do not collect sensitive information such as biometric data, financial details, or health information.';
 
   @override
   String get privacyPolicySection2Title => '2. How We Use Your Information';
 
   @override
-  String get privacyPolicySection2Services => '- For Providing Services: Storing and synchronizing your dictionary data between devices.';
+  String get privacyPolicySection2Services => '- To provide services: Storing and synchronizing your dictionary data between devices.';
 
   @override
-  String get privacyPolicySection2Improvement => '- For Improving the Application: Analyzing anonymized usage data to identify errors and optimize features.';
+  String get privacyPolicySection2Improvement => '- To improve the App: Analyzing anonymized usage data to identify bugs and optimize features.';
 
   @override
-  String get privacyPolicySection2Ads => '- For Advertising: Yandex Ads uses collected data to display relevant ads. We do not participate in this process directly.';
+  String get privacyPolicySection2Ads => '- For advertising: Yandex Ads uses collected data to display relevant ads. We are not directly involved in this process.';
 
   @override
-  String get privacyPolicySection2Legal => '- For Legal Compliance: If necessary, to fulfill legal obligations, such as responding to requests from authorities.';
+  String get privacyPolicySection2Legal => '- To comply with laws: When required to fulfill legal obligations, such as responding to requests from authorities.';
 
   @override
-  String get privacyPolicyNoSellingData => 'We do not sell your personal information to third parties.';
+  String get privacyPolicyNoSellingData => 'We do not sell your personal data to third parties.';
 
   @override
-  String get privacyPolicySection3Title => '3. Disclosure of Information to Third Parties';
+  String get privacyPolicySection3Title => '3. Disclosure to Third Parties';
 
   @override
-  String get privacyPolicySection3YandexAds => '- Yandex Ads: For ad integration, we share minimal technical data (e.g., device identifiers) with Yandex. Details of Yandex data processing are available in their privacy policy[](https://yandex.com/legal/confidential/).';
+  String get privacyPolicySection3YandexAds => '- Yandex Ads: To enable ads, we share minimal technical data (e.g., device identifiers) with Yandex. Details about Yandex’s data processing are available in their Privacy Policy: https://yandex.com/legal/confidential/.';
 
   @override
-  String get privacyPolicySection3SyncServers => '- Sync Servers: During global synchronization, data is transmitted through our servers but not stored on them. We may use cloud providers (e.g., AWS or similar) for hosting, which are committed to security standards.';
+  String get privacyPolicySection3SyncServers => '- Sync servers: During global synchronization, data passes through our servers but is not stored. We may use cloud providers (e.g., AWS or similar) that comply with security standards.';
 
   @override
-  String get privacyPolicySection3OtherCases => '- Other Cases: We may disclose information if required by law, to protect our rights, or in the event of a merger/acquisition of K4DJE Studio.';
+  String get privacyPolicySection3OtherCases => '- Other cases: We may disclose information if required by law, to protect our rights, or in case of a merger/acquisition of K4DJE Studio.';
 
   @override
   String get privacyPolicySection4Title => '4. Data Storage and Security';
 
   @override
-  String get privacyPolicySection4LocalStorage => '- Local Storage: Most data is stored on your device. We recommend using passwords and device encryption for protection.';
+  String get privacyPolicySection4LocalStorage => '- Local storage: Most data is stored on your device. We recommend using device encryption and passwords for protection.';
 
   @override
-  String get privacyPolicySection4Sync => '- Synchronization: Data is transmitted in encrypted form (using HTTPS). The server does not store data after transmission.';
+  String get privacyPolicySection4Sync => '- Synchronization: Data is transmitted securely (via HTTPS). The server does not store data after transfer.';
 
   @override
-  String get privacyPolicySection4Retention => '- Retention Period: We do not store your data on servers. Local data is deleted upon uninstallation of the Application or at your request.';
+  String get privacyPolicySection4Retention => '- Data retention: We do not store your data on servers. Local data is deleted when the App is uninstalled or upon your request.';
 
   @override
-  String get privacyPolicySection4Security => '- Security Measures: We apply standard measures such as encryption, firewalls, and regular audits to protect against unauthorized access. However, no system is completely secure, and we cannot guarantee absolute protection.';
+  String get privacyPolicySection4Security => '- Security measures: We apply standard protection measures such as encryption, firewalls, and regular audits to prevent unauthorized access. However, no system is completely secure, and we cannot guarantee absolute protection.';
 
   @override
   String get privacyPolicySection5Title => '5. Your Rights';
 
   @override
-  String get privacyPolicySection5RightsIntro => 'Depending on your location (e.g., in accordance with GDPR in the EU or the Russian Federal Law \"On Personal Data\"), you have rights:';
+  String get privacyPolicySection5RightsIntro => 'Depending on your location (for example, under GDPR in the EU or the Russian Federal Law on Personal Data), you have the right to:';
 
   @override
-  String get privacyPolicySection5Access => '- Access to your data.';
+  String get privacyPolicySection5Access => '- Access your data.';
 
   @override
-  String get privacyPolicySection5Correction => '- Correction or update of data.';
+  String get privacyPolicySection5Correction => '- Correct or update your data.';
 
   @override
-  String get privacyPolicySection5Deletion => '- Deletion of data (e.g., via export and cleanup in the Application).';
+  String get privacyPolicySection5Deletion => '- Delete your data (for example, via export and clearing within the App).';
 
   @override
-  String get privacyPolicySection5OptOut => '- Opt-out from processing (including disabling ads if possible).';
+  String get privacyPolicySection5Complaint => '- File a complaint with a supervisory authority.';
 
   @override
-  String get privacyPolicySection5Complaint => '- Complaint to a supervisory authority.';
+  String get privacyPolicySection7Title => '6. Changes to This Policy';
 
   @override
-  String get privacyPolicySection5Contact => 'To exercise these rights, contact us at the details below.';
+  String get privacyPolicySection7Changes => 'We may update this policy. Updates will be published in the App or on our website. Continuing to use the App after an update constitutes acceptance of the changes.';
 
   @override
-  String get privacyPolicySection6Title => '6. Children\'s Data';
+  String get privacyPolicySection8Title => '7. Contact Us';
 
   @override
-  String get privacyPolicySection6Children => 'The Application is not intended for children under 13 years old (or equivalent age under local law). We do not knowingly collect data from children. If you are a parent and believe your child has provided us with data, contact us for deletion.';
-
-  @override
-  String get privacyPolicySection7Title => '7. Changes to the Policy';
-
-  @override
-  String get privacyPolicySection7Changes => 'We may update this policy. Changes will be published in the Application or on our website. Continued use of the Application after updates means agreement with the changes.';
-
-  @override
-  String get privacyPolicySection8Title => '8. Contacts';
-
-  @override
-  String get privacyPolicySection8Questions => 'If you have questions or requests, contact us:';
+  String get privacyPolicySection8Questions => 'If you have any questions or requests, please contact us:';
 
   @override
   String get privacyPolicySection8Developer => '- Developer: Dmitry Mishchenko (K4DJE)';
@@ -246,7 +357,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicySection8Studio => '- Studio: K4DJE Studio';
 
   @override
-  String get privacyPolicyThanks => 'Thank you for using Isky! We appreciate your trust.';
+  String get privacyPolicyThanks => 'Thank you for using Iskai! We appreciate your trust.';
 
   @override
   String get stillInDevelopment => 'Still in development';
@@ -285,7 +396,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingSubtitle1 => 'This application specializes in improving the learning process of foreign language words.';
 
   @override
-  String get onboardingTitle1 => 'Welcome to the Isky app';
+  String get onboardingTitle1 => 'Welcome to the Iskai app';
 
   @override
   String get errorTitle => 'Error:';
@@ -519,7 +630,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deletingAFolder => 'Deleting a folder';
 
   @override
-  String get exportAndImportFoldersInExcel => 'Export and import folder in Excel';
+  String get exportAndImportFoldersInExcel => 'Export and import folder';
 
   @override
   String get removeAds => 'Remove Ads';
@@ -531,7 +642,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareApp => 'Share app';
 
   @override
-  String get rateUs => 'Rate us';
+  String get rateUs => 'Rate the app';
 
   @override
   String get feedback => 'Feedback';
@@ -540,5 +651,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicy => 'Privacy Policy';
 
   @override
-  String get appVersion => 'Version 1.00';
+  String get appVersion => 'Version 1.0.1';
 }

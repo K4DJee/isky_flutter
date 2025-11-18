@@ -1,0 +1,77 @@
+[
+    {
+      "word": "яблоко",
+      "translate": "apple",
+      "example": "Она съела сочное яблоко на завтрак."
+    },
+    {
+      "word": "хлеб",
+      "translate": "bread",
+      "example": "Свежий хлеб пахнет особенно вкусно."
+    },
+    {
+      "word": "молоко",
+      "translate": "milk",
+      "example": "Дети пьют молоко каждое утро."
+    },
+    {
+      "word": "сыр",
+      "translate": "cheese",
+      "example": "Этот сыр имеет острый вкус."
+    },
+    {
+      "word": "мясо",
+      "translate": "meat",
+      "example": "Мясо нужно хорошо прожаривать."
+    },
+    {
+      "word": "рыба",
+      "translate": "fish",
+      "example": "Рыба — полезный продукт для здоровья."
+    },
+    {
+      "word": "яйцо",
+      "translate": "egg",
+      "example": "Он сварил яйцо всмятку."
+    },
+    {
+      "word": "вода",
+      "translate": "water",
+      "example": "Важно пить достаточно воды в день."
+    },
+    {
+      "word": "кофе",
+      "translate": "coffee",
+      "example": "Многие начинают день с чашки кофе."
+    },
+    {
+      "word": "чай",
+      "translate": "tea",
+      "example": "Тёплый чай помогает расслабиться."
+    },
+    {
+      "word": "суп",
+      "translate": "soup",
+      "example": "На обед мы ели овощной суп."
+    },
+    {
+      "word": "пицца",
+      "translate": "pizza",
+      "example": "Мы заказали пиццу с грибами и сыром."
+    },
+    {
+      "word": "мороженое",
+      "translate": "ice cream",
+      "example": "Летом дети любят есть мороженое."
+    },
+    {
+      "word": "сахар",
+      "translate": "sugar",
+      "example": "Добавь немного сахара в чай."
+    },
+    {
+      "word": "соль",
+      "translate": "salt",
+      "example": "Не забудь посолить суп."
+    }
+  ]

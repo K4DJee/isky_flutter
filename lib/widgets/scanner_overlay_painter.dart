@@ -9,7 +9,7 @@ class ScannerOverlayPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Затемняем весь экран, кроме области сканирования (опционально, но помогает фокусироваться)
+    // Затемнение экрана
     final paint = Paint()
       ..color = Colors.black.withOpacity(0.5)
       ..style = PaintingStyle.fill;
@@ -20,14 +20,14 @@ class ScannerOverlayPainter extends CustomPainter {
     final path = Path.combine(PathOperation.difference, outer, inner);
     canvas.drawPath(path, paint);
 
-    // Рисуем линии по углам квадрата
+    //Линии по углам квадрата
     final cornerPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4;
 
     const cornerLength = 30.0;
-    const cornerOffset = 0.0; // Смещение для точного прилегания к краям
+    const cornerOffset = 0.0;
 
     // Левый верхний угол
     canvas.drawLine(

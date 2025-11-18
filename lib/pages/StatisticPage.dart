@@ -1,9 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:isky_new/database/sqfliteDatabase.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/models/statistics.dart';
+import 'package:iskai/database/sqfliteDatabase.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/models/statistics.dart';
 
 class StatisticsPage extends StatefulWidget {
   final int selectedFolderId;
@@ -105,8 +104,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                     getTitlesWidget: (value, meta) {
                                       final index = value.toInt();
                                       if (index < 0 ||
-                                          index >= dateLabels.length)
+                                          index >= dateLabels.length) {
                                         return const SizedBox();
+                                      }
                                       return Text(
                                         dateLabels[index],
                                         style: const TextStyle(fontSize: 10),

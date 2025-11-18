@@ -1,0 +1,77 @@
+[
+    {
+      "word": "ноль",
+      "translate": "zero",
+      "example": "Температура опустилась до нуля градусов."
+    },
+    {
+      "word": "один",
+      "translate": "one",
+      "example": "У меня есть один брат."
+    },
+    {
+      "word": "два",
+      "translate": "two",
+      "example": "В комнате стоят два стула."
+    },
+    {
+      "word": "три",
+      "translate": "three",
+      "example": "Три друга пошли в кино."
+    },
+    {
+      "word": "четыре",
+      "translate": "four",
+      "example": "В году четыре времени года."
+    },
+    {
+      "word": "пять",
+      "translate": "five",
+      "example": "У звезды пять концов."
+    },
+    {
+      "word": "шесть",
+      "translate": "six",
+      "example": "В коробке шесть карандашей."
+    },
+    {
+      "word": "семь",
+      "translate": "seven",
+      "example": "В неделе семь дней."
+    },
+    {
+      "word": "восемь",
+      "translate": "eight",
+      "example": "У осьминога восемь щупалец."
+    },
+    {
+      "word": "девять",
+      "translate": "nine",
+      "example": "Девять учеников получили пятёрки."
+    },
+    {
+      "word": "десять",
+      "translate": "ten",
+      "example": "Я знаю десять слов на английском."
+    },
+    {
+      "word": "двадцать",
+      "translate": "twenty",
+      "example": "Ему исполнилось двадцать лет."
+    },
+    {
+      "word": "тридцать",
+      "translate": "thirty",
+      "example": "В классе тридцать учеников."
+    },
+    {
+      "word": "сто",
+      "translate": "one hundred",
+      "example": "В книге сто страниц."
+    },
+    {
+      "word": "тысяча",
+      "translate": "one thousand",
+      "example": "Городу исполнилась тысяча лет."
+    }
+  ]

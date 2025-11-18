@@ -6,6 +6,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
 import 'app_localizations_ru.dart';
 
 // ignore_for_file: type=lint
@@ -92,13 +94,39 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
+    Locale('es'),
+    Locale('fr'),
     Locale('ru')
   ];
+
+  /// No description provided for @languageNameEn.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageNameEn;
+
+  /// No description provided for @languageNameRu.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get languageNameRu;
+
+  /// No description provided for @languageNameFr.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get languageNameFr;
+
+  /// No description provided for @languageNameEs.
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get languageNameEs;
 
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Isky'**
+  /// **'Iskai'**
   String get appTitle;
 
   /// No description provided for @menuTitle.
@@ -287,6 +315,228 @@ abstract class AppLocalizations {
   /// **'Global synchronization'**
   String get globalSync;
 
+  /// No description provided for @supportUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Support us'**
+  String get supportUs;
+
+  /// No description provided for @createFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a folder'**
+  String get createFolder;
+
+  /// No description provided for @errorSwitchingToTheNextCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Error switching to the next card:'**
+  String get errorSwitchingToTheNextCard;
+
+  /// No description provided for @folderModalError2.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the folder name.'**
+  String get folderModalError2;
+
+  /// No description provided for @folderModalError1.
+  ///
+  /// In en, this message translates to:
+  /// **'the folder name cannot be empty!'**
+  String get folderModalError1;
+
+  /// No description provided for @dataSuccessfullyAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'The data was successfully accepted!'**
+  String get dataSuccessfullyAccepted;
+
+  /// No description provided for @errorGettingIpStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Error receiving the IP address'**
+  String get errorGettingIpStatus;
+
+  /// No description provided for @errorGettingIp.
+  ///
+  /// In en, this message translates to:
+  /// **'Error receiving the IP. Check your Wifi connection'**
+  String get errorGettingIp;
+
+  /// No description provided for @countOfTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time:'**
+  String get countOfTime;
+
+  /// No description provided for @countOfMistakes.
+  ///
+  /// In en, this message translates to:
+  /// **'Mistakes:'**
+  String get countOfMistakes;
+
+  /// No description provided for @countOfcorrectWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Correctly::'**
+  String get countOfcorrectWords;
+
+  /// No description provided for @totalWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Total words:'**
+  String get totalWords;
+
+  /// No description provided for @timeIsUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Time\'s up!'**
+  String get timeIsUp;
+
+  /// No description provided for @unknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get unknownError;
+
+  /// No description provided for @folderNamePage.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing the folder name'**
+  String get folderNamePage;
+
+  /// No description provided for @errorLoadingFlashcards.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading the flashcards:'**
+  String get errorLoadingFlashcards;
+
+  /// No description provided for @errorLoadingFlashcard.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading the flashcard:'**
+  String get errorLoadingFlashcard;
+
+  /// No description provided for @wordSetsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Word sets'**
+  String get wordSetsTooltip;
+
+  /// No description provided for @amountOfWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount of words:'**
+  String get amountOfWords;
+
+  /// No description provided for @downloadSelectedWordsBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Download selected files'**
+  String get downloadSelectedWordsBtn;
+
+  /// No description provided for @downloadAllWordsBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Download all words'**
+  String get downloadAllWordsBtn;
+
+  /// No description provided for @errorAddingWords.
+  ///
+  /// In en, this message translates to:
+  /// **'Error adding words:'**
+  String get errorAddingWords;
+
+  /// No description provided for @selectLang.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a language'**
+  String get selectLang;
+
+  /// No description provided for @successAddedWordsToFolders.
+  ///
+  /// In en, this message translates to:
+  /// **'Words added to folder!'**
+  String get successAddedWordsToFolders;
+
+  /// No description provided for @notSelectedWordsForAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no selected words'**
+  String get notSelectedWordsForAdd;
+
+  /// No description provided for @errorLoadJsonFromWordSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading JSON:'**
+  String get errorLoadJsonFromWordSet;
+
+  /// No description provided for @wordSetsPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Set of words'**
+  String get wordSetsPage;
+
+  /// No description provided for @numbersSetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Numbers'**
+  String get numbersSetDescription;
+
+  /// No description provided for @animalsSetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Animal names'**
+  String get animalsSetDescription;
+
+  /// No description provided for @foodSetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Food names'**
+  String get foodSetDescription;
+
+  /// No description provided for @educationSetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Words related to education and learning.'**
+  String get educationSetDescription;
+
+  /// No description provided for @numbersSetName.
+  ///
+  /// In en, this message translates to:
+  /// **'Numbers'**
+  String get numbersSetName;
+
+  /// No description provided for @animalsSetName.
+  ///
+  /// In en, this message translates to:
+  /// **'Animals'**
+  String get animalsSetName;
+
+  /// No description provided for @foodSetName.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get foodSetName;
+
+  /// No description provided for @educationSetName.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get educationSetName;
+
+  /// No description provided for @minigamesPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Mini-games'**
+  String get minigamesPage;
+
+  /// No description provided for @achievementsPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get achievementsPage;
+
   /// No description provided for @privacyPolicyTitle.
   ///
   /// In en, this message translates to:
@@ -296,25 +546,25 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicyHeader.
   ///
   /// In en, this message translates to:
-  /// **'Privacy Policy of the Isky Application'**
+  /// **'Privacy Policy of the Iskai App'**
   String get privacyPolicyHeader;
 
   /// No description provided for @privacyPolicyLastUpdated.
   ///
   /// In en, this message translates to:
-  /// **'Last Updated: October 23, 2025'**
+  /// **'Last updated: November 13, 2025'**
   String get privacyPolicyLastUpdated;
 
   /// No description provided for @privacyPolicyWelcome.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to the privacy policy of the Isky application (\"Application\"). This policy describes how we collect, use, store, and protect your personal information when using the Application. The Isky application is developed by K4DJE Studio (developer: K4DJE, Dmitry Mishchenko) and is available on MacOS, Linux, Windows, Android, and iOS platforms. We strive for maximum transparency and protection of your privacy.'**
+  /// **'Welcome to the Privacy Policy of the Iskai app (\"App\"). This policy explains how we collect, use, store, and protect your personal information when using the App. Iskai is developed by K4DJE Studio (developer: K4DJE, Dmitry Mishchenko) and is available on MacOS, Linux, Windows, Android, and iOS. We are committed to transparency and protecting your privacy.'**
   String get privacyPolicyWelcome;
 
   /// No description provided for @privacyPolicyAgreement.
   ///
   /// In en, this message translates to:
-  /// **'By using the Application, you agree to the terms of this policy. If you do not agree, please do not use the Application.'**
+  /// **'By using the App, you agree to the terms of this policy. If you do not agree, please do not use the App.'**
   String get privacyPolicyAgreement;
 
   /// No description provided for @privacyPolicySection1Title.
@@ -326,25 +576,25 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicySection1Description.
   ///
   /// In en, this message translates to:
-  /// **'The Isky application is designed for creating dictionaries, organizing words into folders, exporting and importing data via JSON files, as well as synchronizing data between devices. We minimize the collection of personal data and do not store it on our servers unless necessary.'**
+  /// **'Iskai is designed to create dictionaries, organize words into folders, export and import data via JSON files, and synchronize data between devices. We minimize the collection of personal data and do not store it on our servers unless necessary.'**
   String get privacyPolicySection1Description;
 
   /// No description provided for @privacyPolicySection1_1Title.
   ///
   /// In en, this message translates to:
-  /// **'1.1. User-Provided Data'**
+  /// **'1.1. Data Provided by the User'**
   String get privacyPolicySection1_1Title;
 
   /// No description provided for @privacyPolicySection1_1DictionaryContent.
   ///
   /// In en, this message translates to:
-  /// **'- Dictionary Content: Words, folders, and related data that you enter into the Application. This data is stored locally on your device.'**
+  /// **'- Dictionary content: Words, folders, and related data you enter in the App. This data is stored locally on your device.'**
   String get privacyPolicySection1_1DictionaryContent;
 
   /// No description provided for @privacyPolicySection1_1SyncData.
   ///
   /// In en, this message translates to:
-  /// **'- Sync Data: During local synchronization (via Wi-Fi on the same network) or global synchronization (via a intermediary server), only your dictionary data is transmitted. The server does not store this data; it acts solely as a temporary intermediary for transmission between devices.'**
+  /// **'- Synchronization data: During local sync (via Wi-Fi within the same network) or global sync (via an intermediary server), only your dictionary data is transmitted. The server does not store these data; it acts solely as a temporary bridge between devices.'**
   String get privacyPolicySection1_1SyncData;
 
   /// No description provided for @privacyPolicySection1_2Title.
@@ -356,25 +606,25 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicySection1_2TechnicalInfo.
   ///
   /// In en, this message translates to:
-  /// **'- Technical Information: IP address, device type, OS version, unique device identifier (for synchronization and debugging errors).'**
+  /// **'- Technical information: IP address, device type, OS version, and unique device ID (for synchronization and debugging purposes).'**
   String get privacyPolicySection1_2TechnicalInfo;
 
   /// No description provided for @privacyPolicySection1_2UsageData.
   ///
   /// In en, this message translates to:
-  /// **'- Usage Data: Information about interactions with the Application, such as frequency of feature usage, for product improvement (anonymized).'**
+  /// **'- Usage data: Information about how you interact with the App, such as feature usage frequency, used to improve the product (anonymized).'**
   String get privacyPolicySection1_2UsageData;
 
   /// No description provided for @privacyPolicySection1_2AdData.
   ///
   /// In en, this message translates to:
-  /// **'- Advertising Data: The Application integrates ads via Yandex Ads. Yandex may collect data for ad personalization, including device identifiers, approximate location (based on IP), and behavior in the Application. We do not have access to this data; it is processed by Yandex in accordance with their privacy policy.'**
+  /// **'- Advertising data: The App integrates ads via Yandex Ads. Yandex may collect data for ad personalization, including device identifiers, approximate location (based on IP), and in-app behavior. We do not have access to this data; it is processed by Yandex according to their Privacy Policy.'**
   String get privacyPolicySection1_2AdData;
 
   /// No description provided for @privacyPolicyNoSensitiveData.
   ///
   /// In en, this message translates to:
-  /// **'We do not collect sensitive information such as biometric data, financial information, or health data.'**
+  /// **'We do not collect sensitive information such as biometric data, financial details, or health information.'**
   String get privacyPolicyNoSensitiveData;
 
   /// No description provided for @privacyPolicySection2Title.
@@ -386,55 +636,55 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicySection2Services.
   ///
   /// In en, this message translates to:
-  /// **'- For Providing Services: Storing and synchronizing your dictionary data between devices.'**
+  /// **'- To provide services: Storing and synchronizing your dictionary data between devices.'**
   String get privacyPolicySection2Services;
 
   /// No description provided for @privacyPolicySection2Improvement.
   ///
   /// In en, this message translates to:
-  /// **'- For Improving the Application: Analyzing anonymized usage data to identify errors and optimize features.'**
+  /// **'- To improve the App: Analyzing anonymized usage data to identify bugs and optimize features.'**
   String get privacyPolicySection2Improvement;
 
   /// No description provided for @privacyPolicySection2Ads.
   ///
   /// In en, this message translates to:
-  /// **'- For Advertising: Yandex Ads uses collected data to display relevant ads. We do not participate in this process directly.'**
+  /// **'- For advertising: Yandex Ads uses collected data to display relevant ads. We are not directly involved in this process.'**
   String get privacyPolicySection2Ads;
 
   /// No description provided for @privacyPolicySection2Legal.
   ///
   /// In en, this message translates to:
-  /// **'- For Legal Compliance: If necessary, to fulfill legal obligations, such as responding to requests from authorities.'**
+  /// **'- To comply with laws: When required to fulfill legal obligations, such as responding to requests from authorities.'**
   String get privacyPolicySection2Legal;
 
   /// No description provided for @privacyPolicyNoSellingData.
   ///
   /// In en, this message translates to:
-  /// **'We do not sell your personal information to third parties.'**
+  /// **'We do not sell your personal data to third parties.'**
   String get privacyPolicyNoSellingData;
 
   /// No description provided for @privacyPolicySection3Title.
   ///
   /// In en, this message translates to:
-  /// **'3. Disclosure of Information to Third Parties'**
+  /// **'3. Disclosure to Third Parties'**
   String get privacyPolicySection3Title;
 
   /// No description provided for @privacyPolicySection3YandexAds.
   ///
   /// In en, this message translates to:
-  /// **'- Yandex Ads: For ad integration, we share minimal technical data (e.g., device identifiers) with Yandex. Details of Yandex data processing are available in their privacy policy[](https://yandex.com/legal/confidential/).'**
+  /// **'- Yandex Ads: To enable ads, we share minimal technical data (e.g., device identifiers) with Yandex. Details about Yandex’s data processing are available in their Privacy Policy: https://yandex.com/legal/confidential/.'**
   String get privacyPolicySection3YandexAds;
 
   /// No description provided for @privacyPolicySection3SyncServers.
   ///
   /// In en, this message translates to:
-  /// **'- Sync Servers: During global synchronization, data is transmitted through our servers but not stored on them. We may use cloud providers (e.g., AWS or similar) for hosting, which are committed to security standards.'**
+  /// **'- Sync servers: During global synchronization, data passes through our servers but is not stored. We may use cloud providers (e.g., AWS or similar) that comply with security standards.'**
   String get privacyPolicySection3SyncServers;
 
   /// No description provided for @privacyPolicySection3OtherCases.
   ///
   /// In en, this message translates to:
-  /// **'- Other Cases: We may disclose information if required by law, to protect our rights, or in the event of a merger/acquisition of K4DJE Studio.'**
+  /// **'- Other cases: We may disclose information if required by law, to protect our rights, or in case of a merger/acquisition of K4DJE Studio.'**
   String get privacyPolicySection3OtherCases;
 
   /// No description provided for @privacyPolicySection4Title.
@@ -446,25 +696,25 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicySection4LocalStorage.
   ///
   /// In en, this message translates to:
-  /// **'- Local Storage: Most data is stored on your device. We recommend using passwords and device encryption for protection.'**
+  /// **'- Local storage: Most data is stored on your device. We recommend using device encryption and passwords for protection.'**
   String get privacyPolicySection4LocalStorage;
 
   /// No description provided for @privacyPolicySection4Sync.
   ///
   /// In en, this message translates to:
-  /// **'- Synchronization: Data is transmitted in encrypted form (using HTTPS). The server does not store data after transmission.'**
+  /// **'- Synchronization: Data is transmitted securely (via HTTPS). The server does not store data after transfer.'**
   String get privacyPolicySection4Sync;
 
   /// No description provided for @privacyPolicySection4Retention.
   ///
   /// In en, this message translates to:
-  /// **'- Retention Period: We do not store your data on servers. Local data is deleted upon uninstallation of the Application or at your request.'**
+  /// **'- Data retention: We do not store your data on servers. Local data is deleted when the App is uninstalled or upon your request.'**
   String get privacyPolicySection4Retention;
 
   /// No description provided for @privacyPolicySection4Security.
   ///
   /// In en, this message translates to:
-  /// **'- Security Measures: We apply standard measures such as encryption, firewalls, and regular audits to protect against unauthorized access. However, no system is completely secure, and we cannot guarantee absolute protection.'**
+  /// **'- Security measures: We apply standard protection measures such as encryption, firewalls, and regular audits to prevent unauthorized access. However, no system is completely secure, and we cannot guarantee absolute protection.'**
   String get privacyPolicySection4Security;
 
   /// No description provided for @privacyPolicySection5Title.
@@ -476,79 +726,55 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicySection5RightsIntro.
   ///
   /// In en, this message translates to:
-  /// **'Depending on your location (e.g., in accordance with GDPR in the EU or the Russian Federal Law \"On Personal Data\"), you have rights:'**
+  /// **'Depending on your location (for example, under GDPR in the EU or the Russian Federal Law on Personal Data), you have the right to:'**
   String get privacyPolicySection5RightsIntro;
 
   /// No description provided for @privacyPolicySection5Access.
   ///
   /// In en, this message translates to:
-  /// **'- Access to your data.'**
+  /// **'- Access your data.'**
   String get privacyPolicySection5Access;
 
   /// No description provided for @privacyPolicySection5Correction.
   ///
   /// In en, this message translates to:
-  /// **'- Correction or update of data.'**
+  /// **'- Correct or update your data.'**
   String get privacyPolicySection5Correction;
 
   /// No description provided for @privacyPolicySection5Deletion.
   ///
   /// In en, this message translates to:
-  /// **'- Deletion of data (e.g., via export and cleanup in the Application).'**
+  /// **'- Delete your data (for example, via export and clearing within the App).'**
   String get privacyPolicySection5Deletion;
-
-  /// No description provided for @privacyPolicySection5OptOut.
-  ///
-  /// In en, this message translates to:
-  /// **'- Opt-out from processing (including disabling ads if possible).'**
-  String get privacyPolicySection5OptOut;
 
   /// No description provided for @privacyPolicySection5Complaint.
   ///
   /// In en, this message translates to:
-  /// **'- Complaint to a supervisory authority.'**
+  /// **'- File a complaint with a supervisory authority.'**
   String get privacyPolicySection5Complaint;
-
-  /// No description provided for @privacyPolicySection5Contact.
-  ///
-  /// In en, this message translates to:
-  /// **'To exercise these rights, contact us at the details below.'**
-  String get privacyPolicySection5Contact;
-
-  /// No description provided for @privacyPolicySection6Title.
-  ///
-  /// In en, this message translates to:
-  /// **'6. Children\'s Data'**
-  String get privacyPolicySection6Title;
-
-  /// No description provided for @privacyPolicySection6Children.
-  ///
-  /// In en, this message translates to:
-  /// **'The Application is not intended for children under 13 years old (or equivalent age under local law). We do not knowingly collect data from children. If you are a parent and believe your child has provided us with data, contact us for deletion.'**
-  String get privacyPolicySection6Children;
 
   /// No description provided for @privacyPolicySection7Title.
   ///
   /// In en, this message translates to:
-  /// **'7. Changes to the Policy'**
+  /// **'6. Changes to This Policy'**
   String get privacyPolicySection7Title;
 
   /// No description provided for @privacyPolicySection7Changes.
   ///
   /// In en, this message translates to:
-  /// **'We may update this policy. Changes will be published in the Application or on our website. Continued use of the Application after updates means agreement with the changes.'**
+  /// **'We may update this policy. Updates will be published in the App or on our website. Continuing to use the App after an update constitutes acceptance of the changes.'**
   String get privacyPolicySection7Changes;
 
   /// No description provided for @privacyPolicySection8Title.
   ///
   /// In en, this message translates to:
-  /// **'8. Contacts'**
+  /// **'7. Contact Us'**
   String get privacyPolicySection8Title;
 
   /// No description provided for @privacyPolicySection8Questions.
   ///
   /// In en, this message translates to:
-  /// **'If you have questions or requests, contact us:'**
+  /// **'If you have any questions or requests, please contact us:'**
   String get privacyPolicySection8Questions;
 
   /// No description provided for @privacyPolicySection8Developer.
@@ -572,7 +798,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicyThanks.
   ///
   /// In en, this message translates to:
-  /// **'Thank you for using Isky! We appreciate your trust.'**
+  /// **'Thank you for using Iskai! We appreciate your trust.'**
   String get privacyPolicyThanks;
 
   /// No description provided for @stillInDevelopment.
@@ -650,7 +876,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTitle1.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to the Isky app'**
+  /// **'Welcome to the Iskai app'**
   String get onboardingTitle1;
 
   /// No description provided for @errorTitle.
@@ -1118,7 +1344,7 @@ abstract class AppLocalizations {
   /// No description provided for @exportAndImportFoldersInExcel.
   ///
   /// In en, this message translates to:
-  /// **'Export and import folder in Excel'**
+  /// **'Export and import folder'**
   String get exportAndImportFoldersInExcel;
 
   /// No description provided for @removeAds.
@@ -1142,7 +1368,7 @@ abstract class AppLocalizations {
   /// No description provided for @rateUs.
   ///
   /// In en, this message translates to:
-  /// **'Rate us'**
+  /// **'Rate the app'**
   String get rateUs;
 
   /// No description provided for @feedback.
@@ -1160,7 +1386,7 @@ abstract class AppLocalizations {
   /// No description provided for @appVersion.
   ///
   /// In en, this message translates to:
-  /// **'Version 1.00'**
+  /// **'Version 1.0.1'**
   String get appVersion;
 }
 
@@ -1173,7 +1399,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'es', 'fr', 'ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1185,6 +1411,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en': return AppLocalizationsEn();
+    case 'es': return AppLocalizationsEs();
+    case 'fr': return AppLocalizationsFr();
     case 'ru': return AppLocalizationsRu();
   }
 

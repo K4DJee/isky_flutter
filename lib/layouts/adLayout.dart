@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
-import 'package:isky_new/providers/adProvider.dart';
+import 'package:iskai/providers/adProvider.dart';
 
 Widget buildAdBannerBottom(BuildContext context) {
   return Consumer<AdProvider>(

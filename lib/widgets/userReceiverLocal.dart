@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/pages/receive_data_page.dart';
-import 'package:isky_new/sync/tcpReceiver.dart';
-import 'package:isky_new/sync/tcpSender.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/pages/receive_data_page.dart';
+import 'package:iskai/providers/FolderUpdateProvider.dart';
+import 'package:iskai/sync/tcpReceiver.dart';
+import 'package:iskai/sync/tcpSender.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class UserReceiverLocal extends StatefulWidget{
@@ -31,14 +33,14 @@ void didChangeDependencies() {
   if (localizations != null) {
     _status = localizations.localServerStatus1;
   } else {
-    _status = 'Сервер выключен';
+    _status = AppLocalizations.of(context)!.localServerStatus1;
   }
 }
 
   Future<void> receiveData() async{
     uIpHost = await receiver.getServerIp();
     if(uIpHost != null){
-      print("Получен IP: $uIpHost");
+      // print("Получен IP: $uIpHost");
       setState(() {
         _status = '${AppLocalizations.of(context)!.localServerStatus2}. IP: $uIpHost';
       });
@@ -46,16 +48,17 @@ void didChangeDependencies() {
         await receiver.startServer();
         ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('✅ Данные успешно приняты'),
+          content: Text(AppLocalizations.of(context)!.dataSuccessfullyAccepted),
           backgroundColor: Colors.green,
         ),
     );
+    context.read<FolderUpdateProvider>().notifyFolderUpdated();
     Navigator.push(context, MaterialPageRoute(builder: (context)=> ReceiveDataPage(receiveStatus: true)));
       }
       catch(e){
         ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('❌ Ошибка: $e'),
+          content: Text('${AppLocalizations.of(context)!.errorTitle} $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -64,10 +67,10 @@ void didChangeDependencies() {
     }
     else{
       ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Не удалось получить IP. Проверьте Wi-Fi.'),),
+      SnackBar(content: Text(AppLocalizations.of(context)!.errorGettingIp),),
     );
       setState(() {
-        _status = 'Ошибка получения IP';
+        _status = AppLocalizations.of(context)!.errorGettingIpStatus;
       });
     }
   }
@@ -84,7 +87,7 @@ void didChangeDependencies() {
     catch(e){
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('❌ Ошибка: $e'),
+          content: Text('${AppLocalizations.of(context)!.errorTitle} $e'),
           backgroundColor: Colors.red,
         ),
       );

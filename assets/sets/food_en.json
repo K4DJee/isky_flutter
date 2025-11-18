@@ -1,0 +1,77 @@
+[
+    {
+      "word": "apple",
+      "translate": "яблоко",
+      "example": "She ate a juicy apple for breakfast."
+    },
+    {
+      "word": "bread",
+      "translate": "хлеб",
+      "example": "Fresh bread smells especially delicious."
+    },
+    {
+      "word": "milk",
+      "translate": "молоко",
+      "example": "Children drink milk every morning."
+    },
+    {
+      "word": "cheese",
+      "translate": "сыр",
+      "example": "This cheese has a sharp taste."
+    },
+    {
+      "word": "meat",
+      "translate": "мясо",
+      "example": "Meat should be cooked thoroughly."
+    },
+    {
+      "word": "fish",
+      "translate": "рыба",
+      "example": "Fish is a healthy food choice."
+    },
+    {
+      "word": "egg",
+      "translate": "яйцо",
+      "example": "He boiled an egg soft-boiled."
+    },
+    {
+      "word": "water",
+      "translate": "вода",
+      "example": "It’s important to drink enough water every day."
+    },
+    {
+      "word": "coffee",
+      "translate": "кофе",
+      "example": "Many people start their day with a cup of coffee."
+    },
+    {
+      "word": "tea",
+      "translate": "чай",
+      "example": "Warm tea helps you relax."
+    },
+    {
+      "word": "soup",
+      "translate": "суп",
+      "example": "We had vegetable soup for lunch."
+    },
+    {
+      "word": "pizza",
+      "translate": "пицца",
+      "example": "We ordered a pizza with mushrooms and cheese."
+    },
+    {
+      "word": "ice cream",
+      "translate": "мороженое",
+      "example": "Children love eating ice cream in summer."
+    },
+    {
+      "word": "sugar",
+      "translate": "сахар",
+      "example": "Add a little sugar to your tea."
+    },
+    {
+      "word": "salt",
+      "translate": "соль",
+      "example": "Don’t forget to salt the soup."
+    }
+  ]

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isky_new/database/sqfliteDatabase.dart';
-import 'package:isky_new/helpers/formatDayEnding.dart';
-import 'package:isky_new/helpers/showExitDialog.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/models/statistics.dart';
-import 'package:isky_new/models/words.dart';
-import 'package:isky_new/services/databaseService.dart';
+import 'package:iskai/database/sqfliteDatabase.dart';
+import 'package:iskai/helpers/formatDayEnding.dart';
+import 'package:iskai/helpers/showExitDialog.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/models/statistics.dart';
+import 'package:iskai/models/words.dart';
+import 'package:iskai/services/databaseService.dart';
 
 class FlashcardPage extends StatefulWidget {
   final int selectedFolderId;
@@ -31,7 +31,7 @@ class _FlashcardPageState extends State<FlashcardPage> {
 
   String showNextInDays(int days){
   newCounter = _currentFlashcard!.counter + days;
-  return '${newCounter} ${formatDayEnding(days, context)}';
+  return '$newCounter ${formatDayEnding(days, context)}';
   }
 
 
@@ -61,21 +61,22 @@ class _FlashcardPageState extends State<FlashcardPage> {
       }
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Ошибка загрузки карточки: $e')));
+      ).showSnackBar(SnackBar(content: Text('${AppLocalizations.of(context)!.errorLoadingFlashcard} $e')));
     }
   }
 
   Future<void> _setDifficulty(difficulty) async {
     try {
       if (_currentFlashcard == null) {
-        return print('Отсутствует flashcard');
+        // print('Отсутствует flashcard');
+        return;
       }
       final rowAffected = await SQLiteDatabase.instance.changeWordDifficulty(
         _currentFlashcard?.id,
         difficulty!,
       );
       if (rowAffected == 0) {
-        print('Слова не существует');
+        // print('Слова не существует');
         return;
       }
       setState(() {
@@ -83,9 +84,9 @@ class _FlashcardPageState extends State<FlashcardPage> {
         amountAnswersPerDay++;
         wordsLearnedToday++;
       });
-      print(
-        'Сложность слова ${_currentFlashcard?.word} была успешна изменена на ${difficulty}}',
-      );
+      // print(
+      //   'Сложность слова ${_currentFlashcard?.word} была успешна изменена на ${difficulty}}',
+      // );
       await _loadFlashcard();
     } catch (e) {
       if (mounted) {

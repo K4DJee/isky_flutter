@@ -1,7 +1,7 @@
-import 'package:isky_new/database/sqfliteDatabase.dart';
-import 'package:isky_new/models/folders.dart';
-import 'package:isky_new/models/statistics.dart';
-import 'package:isky_new/models/words.dart';
+import 'package:iskai/database/sqfliteDatabase.dart';
+import 'package:iskai/models/folders.dart';
+import 'package:iskai/models/statistics.dart';
+import 'package:iskai/models/words.dart';
 
 class DatabaseService {
   final SQLiteDatabase _db = SQLiteDatabase.instance;
@@ -13,7 +13,7 @@ class DatabaseService {
       return folders;
     } catch (e) {
       print('Ошибка загрузки папок: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -25,7 +25,7 @@ class DatabaseService {
       return words;
     } catch (e) {
       print('Ошибка загрузки слов: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -42,7 +42,7 @@ class DatabaseService {
       return folderId;
     } catch (e) {
       print('Ошибка создания папки $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -52,7 +52,7 @@ class DatabaseService {
       await _db.addWord(word);
     } catch (e) {
       print('Ошибка добавления слова: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -76,7 +76,7 @@ class DatabaseService {
       }
     } catch (e) {
       print('Ошибка удаления слова: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -89,7 +89,7 @@ class DatabaseService {
       print('Слово успешно изменилось c ID$result');
     } catch (e) {
       print('Ошибка изменения слова: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -107,6 +107,7 @@ class DatabaseService {
     catch(e){
       print('Ошибка получения flashcards: $e');
     }
+    return null;
   }
 
   Future<void> createStatisticDay(int folderId, Statistics statistic)async{
@@ -124,4 +125,24 @@ class DatabaseService {
 
     }
   }
+
+  Future<void> importWordsToFolder(int folderId, List<Map<String, dynamic>> wordsData)async{
+  try{
+    for(var data in wordsData){
+      final word = Words(
+        folderId: folderId,
+        word: data['word'],
+        translate: data['translate'],
+        example: data['example']
+      );
+
+      await _db.addWord(word);
+    }
+  }
+  catch(e){
+    print('Ошибка: $e');
+    rethrow;
+  }
+}
+
 }

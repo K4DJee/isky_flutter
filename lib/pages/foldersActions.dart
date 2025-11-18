@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:isky_new/database/sqfliteDatabase.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/models/folders.dart';
-import 'package:isky_new/pages/folderNamePage.dart';
-import 'package:isky_new/providers/FolderUpdateProvider.dart';
+import 'package:iskai/database/sqfliteDatabase.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/models/folders.dart';
+import 'package:iskai/pages/folderNamePage.dart';
+import 'package:iskai/providers/FolderUpdateProvider.dart';
 import 'package:provider/provider.dart';
 
 class folderActionsPage extends StatefulWidget{
@@ -24,15 +24,15 @@ class _folderActionsPageState extends State<folderActionsPage>{
   }
 
   Future<void> _loadFolders() async {
-    print('Начало загрузки папок...');
+    // print('Начало загрузки папок...');
     try {
       final folders = await _sqfliteDatabase.getFolders();
-      print('Получен список папок: ${folders.map((f) => f.name).join(', ')}');
+      // print('Получен список папок: ${folders.map((f) => f.name).join(', ')}');
       setState(() {
         _folders = folders;
       });
     } catch (e) {
-      print('Ошибка загрузки папок: $e');
+      // print('Ошибка загрузки папок: $e');
       setState(() {
 
       });
@@ -40,37 +40,37 @@ class _folderActionsPageState extends State<folderActionsPage>{
   }
 
   Future<void> _deleteFolder(int? id) async{
-    print('Начало удаления папки');
+    // print('Начало удаления папки');
     try{
       final deletedFolder = await _sqfliteDatabase.deleteFolder(id!);
       if(deletedFolder == 0){
-        print('Ошибка удаления папки, папка не существует');
+        // print('Ошибка удаления папки, папка не существует');
       }
       else{
-        print('Папка с ID #$id была успешно удалена');
+        // print('Папка с ID #$id была успешно удалена');
         await _loadFolders();
       }
     }
     catch(e){
-      print('Ошибка удаления папки: $e');
+      // print('Ошибка удаления папки: $e');
     }
   }
 
   Future<void> saveNewFolderName(int? id, String name)async{
-    print('Начало сохранения нового имени папки');
+    // print('Начало сохранения нового имени папки');
     try{
       //changeFolderName
       final changeFolder = await _sqfliteDatabase.changeFolderName(id!, name);
       if(changeFolder == 0){
-        print('Ошибка изменения папки. Папки может не существует');
+        // print('Ошибка изменения папки. Папки может не существует');
       }
       else{
         _loadFolders();
-        print('Название папки было успешно изменено');
+        // print('Название папки было успешно изменено');
       }
     }
     catch(e){
-      print('Ошибка изменения папки: $e');
+      // print('Ошибка изменения папки: $e');
     }
   }
 
@@ -87,18 +87,18 @@ class _folderActionsPageState extends State<folderActionsPage>{
           thickness: 1,
         ),
         itemBuilder: (context, index){
-          final _folder = _folders[index];
-          final folderName = _folder.name;
+          final folder = _folders[index];
+          final folderName = folder.name;
           return ListTile(
             title:Text(folderName, style:TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
             trailing: PopupMenuButton<String>(
               icon: Icon(Icons.more_vert),
               onSelected: (value)async{
-                final controller = TextEditingController(text: _folder.name);
+                final controller = TextEditingController(text: folder.name);
                 if(value == "rename"){
                  Navigator.push(context, MaterialPageRoute(builder: (context) => 
                  FolderNamePage(
-                  folder: _folder,
+                  folder: folder,
                   controller: controller, 
                   onSave: (updatedFolder) async{
                   await saveNewFolderName(updatedFolder.id, updatedFolder.name);
@@ -107,7 +107,7 @@ class _folderActionsPageState extends State<folderActionsPage>{
                  }))); 
                 }
                 else if(value == "delete"){
-                 await _deleteFolder(_folder.id);
+                 await _deleteFolder(folder.id);
                  context.read<FolderUpdateProvider>().notifyFolderUpdated();
                 }
               },

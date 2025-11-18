@@ -1,0 +1,77 @@
+[
+    {
+      "word": "zero",
+      "translate": "ноль",
+      "example": "The temperature dropped to zero degrees."
+    },
+    {
+      "word": "one",
+      "translate": "один",
+      "example": "I have one brother."
+    },
+    {
+      "word": "two",
+      "translate": "два",
+      "example": "There are two chairs in the room."
+    },
+    {
+      "word": "three",
+      "translate": "три",
+      "example": "Three friends went to the cinema."
+    },
+    {
+      "word": "four",
+      "translate": "четыре",
+      "example": "There are four seasons in a year."
+    },
+    {
+      "word": "five",
+      "translate": "пять",
+      "example": "A star has five points."
+    },
+    {
+      "word": "six",
+      "translate": "шесть",
+      "example": "There are six pencils in the box."
+    },
+    {
+      "word": "seven",
+      "translate": "семь",
+      "example": "There are seven days in a week."
+    },
+    {
+      "word": "eight",
+      "translate": "восемь",
+      "example": "An octopus has eight tentacles."
+    },
+    {
+      "word": "nine",
+      "translate": "девять",
+      "example": "Nine students got top marks."
+    },
+    {
+      "word": "ten",
+      "translate": "десять",
+      "example": "I know ten words in Russian."
+    },
+    {
+      "word": "twenty",
+      "translate": "двадцать",
+      "example": "He turned twenty years old."
+    },
+    {
+      "word": "thirty",
+      "translate": "тридцать",
+      "example": "There are thirty students in the class."
+    },
+    {
+      "word": "one hundred",
+      "translate": "сто",
+      "example": "The book has one hundred pages."
+    },
+    {
+      "word": "one thousand",
+      "translate": "тысяча",
+      "example": "The city is one thousand years old."
+    }
+  ]

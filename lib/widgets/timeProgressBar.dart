@@ -27,11 +27,10 @@ class _TimerProgressBarState extends State<TimerProgressBar>
     super.initState();
     _secondsRemaining = widget.testDuration.inSeconds;
 
-    //Инициализация AnimationController
     _controller = AnimationController(
       vsync: this,
     duration: widget.testDuration
-    )..forward();// Запускаем анимацию
+    )..forward();
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer){
       setState(() {

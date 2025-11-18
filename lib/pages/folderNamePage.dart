@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:isky_new/l10n/app_localizations.dart';
-import 'package:isky_new/models/folders.dart';
+import 'package:iskai/l10n/app_localizations.dart';
+import 'package:iskai/models/folders.dart';
 
 class FolderNamePage extends StatefulWidget {
   final Folders folder;
   final Function(Folders) onSave;
   final TextEditingController controller;
-  const FolderNamePage({
+  const FolderNamePage({super.key, 
   required this.folder,
   required this.controller,
   required this.onSave,
@@ -29,7 +29,7 @@ class _FolderNamePageState extends State<FolderNamePage>{
   Widget build(BuildContext context) {
    return Scaffold(
     appBar: AppBar(
-      title: Text('Изменение названия папки'),
+      title: Text(AppLocalizations.of(context)!.folderNamePage),
     ),
     body: Padding(
       padding: EdgeInsets.all(16),
