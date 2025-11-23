@@ -1,6 +1,9 @@
 import 'package:iskai/database/sqfliteDatabase.dart';
+import 'package:iskai/models/achivement_update_result.dart';
 import 'package:iskai/models/folders.dart';
 import 'package:iskai/models/statistics.dart';
+import 'package:iskai/models/streak_update_result.dart';
+import 'package:iskai/models/user_statistics.dart';
 import 'package:iskai/models/words.dart';
 
 class DatabaseService {
@@ -142,6 +145,48 @@ class DatabaseService {
   catch(e){
     print('Ошибка: $e');
     rethrow;
+  }
+}
+
+Future<AchievementUpdateResult> updateProcessOfAchievement(int id, int newProgress)async{
+  try{
+    int result = await _db.updateProcessOfAchievement(id, newProgress);
+    if(result != -1 && result != 0 ){
+      print('Достижение разблокировано!');
+      return AchievementUpdateResult.success(
+          unlocked: true,
+          message: 'Достижение разблокировано!',
+      );
+    } 
+    else{
+      print('Прогресс достижения обновлён');
+      return AchievementUpdateResult.success(
+          unlocked: false,
+          message: 'Прогресс обновлён!',
+        );
+    }
+    
+  }
+  catch(e){
+    print("Ошибка updateProccessOfAchievement: $e");
+    return AchievementUpdateResult.failure(
+        message: 'Достижение разблокировано!',
+    );
+  }
+}
+
+Future<StreakUpdateResult> createUserStatistics(UserStatistics userStatistics)async{
+  try{
+    int result = await _db.createUserStatistics(userStatistics);
+    if(result == 0){
+      print('Стрик не надо ещё обновлять');
+    }
+
+    return StreakUpdateResult.success(streak: result);
+  }
+  catch(e){
+    print('Ошибка работы с ударным режимом: $e');
+    return StreakUpdateResult.failure(message: 'Ошибка в работе с ударным режимом');
   }
 }
 

@@ -1,0 +1,112 @@
+[
+    {
+      "id": 1,
+      "name": "Первый запуск приложения",
+      "description": "Первый запуск приложения. Добро пожаловать в мир знаний!",
+      "icon": "assets/imgs/app_icon2.png",
+      "progress": 0,
+      "goal": 1,
+      "unlocked": 0,
+      "dateUnlocked": null 
+    },
+    {
+      "id": 2,
+      "name": "Первое слово",
+      "description": "Добавь первое слово в свой словарь.",
+      "icon": "assets/imgs/first_word.png",
+      "progress": 0,
+      "goal": 5,
+      "unlocked": 0,
+      "dateUnlocked": null
+    },
+    {
+      "id": 3,
+      "name": "Хочу всё знать!",
+      "description": "Изучи все слова за день",
+      "icon": "assets/imgs/app_icon2.png",
+      "progress": 0,
+      "goal": 0,
+      "unlocked": 0,
+      "dateUnlocked": null
+    },
+    {
+      "id": 4,
+      "name": "Новичок-исследователь",
+      "description": "Изучи 10 новых слов.",
+      "icon": "assets/imgs/novice.png",
+      "progress": 0,
+      "goal": 10,
+      "unlocked": 0,
+      "dateUnlocked": null
+    },
+    {
+      "id": 5,
+      "name": "Ценитель",
+      "description": "Оставь отзыв о нашем приложении и помоги ему обрести популярность.",
+      "icon": "assets/imgs/star.png",
+      "progress": 0,
+      "goal": 0,
+      "unlocked": 0,
+      "dateUnlocked": null
+    },
+    {
+      "id": 6,
+      "name": "Энтузиаст",
+      "description": "Держи ударную серию 5 дней подряд.",
+      "icon": "assets/imgs/antuziast.png",
+      "progress": 0,
+      "goal": 5,
+      "unlocked": 0,
+      "dateUnlocked": null
+    },
+    {
+      "id":7,
+      "name": "50 дней",
+      "description": "Держи ударную серию 50 дней подряд.",
+      "icon": "assets/imgs/antuziast.png",
+      "progress": 0,
+      "goal": 50,
+      "unlocked": 0,
+      "dateUnlocked": null
+    },
+    {
+      "id": 8,
+      "name": "Человек-дисциплина",
+      "description": "Держи ударную серию 100 дней подряд.",
+      "icon": "assets/imgs/antuziast.png",
+      "progress": 0,
+      "goal": 100,
+      "unlocked": 0,
+      "dateUnlocked": null
+    },
+    {
+      "id": 9,
+      "name": "Мудрец",
+      "description": "Изучи 500 слов.",
+      "icon": "assets/imgs/mudrezh.png",
+      "progress": 0,
+      "goal": 500,
+      "unlocked": 0,
+      "dateUnlocked": null
+    },
+    {
+      "id": 10,
+      "name": "Мастер",
+      "description": "Повтори 100 слов без ошибок.",
+      "icon": "assets/imgs/knowledge.png",
+      "progress": 0,
+      "goal": 100,
+      "unlocked": 0,
+      "dateUnlocked": null
+    },
+    {
+      "id": 11,
+      "name": "Социальный гуру",
+      "description": "Поделись достижением в соцсетях.",
+      "icon": "assets/imgs/guru.png",
+      "progress": 0,
+      "goal": 1,
+      "unlocked": 0,
+      "dateUnlocked": null
+    }
+  ]

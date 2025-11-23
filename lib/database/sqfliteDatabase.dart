@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:iskai/models/achievement.dart';
 import 'package:iskai/models/flashcardWithWord.dart';
+import 'package:iskai/models/user_statistics.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:iskai/models/statistics.dart';
 import 'package:sqflite/sqflite.dart';
@@ -48,9 +51,9 @@ class SQLiteDatabase {
       print('Полный путь к файлу базы: $path');
       return await openDatabase(
         path,
-        version: 14,
+        version: 28,
         onCreate: _createDB,
-        onUpgrade: _onUpgrade, // Добавляем для будущих миграций
+        onUpgrade: _onUpgrade,
       );
     } catch (e) {
       print('Ошибка открытия базы данных: $e');
@@ -61,7 +64,8 @@ class SQLiteDatabase {
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     print('Миграция БД: с $oldVersion на $newVersion');
     if (oldVersion < newVersion) {
-    //   await db.execute('DROP TABLE IF EXISTS statistics ');
+      // await db.execute('DROP TABLE IF EXISTS achievements ');
+      await db.execute('DROP TABLE IF EXISTS userStatistics ');
     //  await db.execute('''
     // CREATE TABLE statistics(
     //   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -78,17 +82,28 @@ class SQLiteDatabase {
     // );
 
     await db.execute('''
-    CREATE TABLE achievements(
+    CREATE TABLE IF NOT EXISTS userStatistics(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      description TEXT NOT NULL,
-      icon TEXT NOT NULL,
-      progress INTEGER NOT NULL,
-      unlocked INTEGER NOT NULL,
-      dateUnlocked INTEGER NULL
+      dailyStreak INTEGER NULL,
+      createdAt TEXT DEFAULT CURRENT_TIMESTAMP
       )
     ''');
-    print('Таблица achievements создана');
+
+    // await db.execute('''
+    // CREATE TABLE achievements(
+    //   id INTEGER PRIMARY KEY AUTOINCREMENT,
+    //   name TEXT NOT NULL,
+    //   description TEXT NOT NULL,
+    //   icon TEXT NOT NULL,
+    //   goal INTEGER NOT NULL,
+    //   progress INTEGER NOT NULL,
+    //   unlocked INTEGER NOT NULL,
+    //   dateUnlocked INTEGER NULL
+    //   )
+    // ''');
+    // await loadAchievementsFromJson(db);
+    // print('Достижения загружены');
+    // print('Таблица achievements создана');
     }
   }
 
@@ -142,13 +157,24 @@ class SQLiteDatabase {
       name TEXT NOT NULL,
       description TEXT NOT NULL,
       icon TEXT NOT NULL,
+      goal INTEGER NOT NULL,
       progress INTEGER NOT NULL,
       unlocked INTEGER NOT NULL,
       dateUnlocked INTEGER NULL
       )
     ''');
-    print('Поле difficulty добавлено в words, таблица flashcards удалена');
+
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS userStatistics(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      dailyStreak INTEGER NULL,
+      createdAt TEXT DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
     await db.execute('PRAGMA foreign_keys = ON;');
+
+    await loadAchievementsFromJson(db);
+    print('Достижения загружены');
   }
 
 
@@ -482,7 +508,7 @@ Future<int> changeWordDifficulty(int? id, String difficulty) async{
 
 
 //Statistics
-Future<int> createStatisticDay(int   folderId, Statistics statistic)async{
+Future<int> createStatisticDay(int folderId, Statistics statistic)async{
   try{
     final now = DateTime.now();
     final dateString = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
@@ -492,7 +518,7 @@ Future<int> createStatisticDay(int   folderId, Statistics statistic)async{
     //Если нет, то создание статистики этого дня
     final List<Map<String, Object?>> existStatistic = await db.query('statistics',where: 'date(createdAt) = ? AND folderId = ?', whereArgs: [dateString, folderId], orderBy: 'id DESC');
     if(existStatistic.isEmpty){
-      print('Статистики на этот день не существует');//'
+      print('Статистики на этот день не существует');
       //Создание статистики
       final newStatistic = await db.insert('statistics', statistic.toMap());
       return newStatistic;
@@ -582,4 +608,159 @@ Future<List<Statistics>> getStatistics(int folderId) async{
     rethrow;
   }
 }
+
+
+//achievements
+Future  insertAchievement()async{
+try{
+  final db = await instance.database;
+}
+catch(e){
+
+}
+}
+
+Future <int> updateProcessOfAchievement(int id, int newProgress)async{
+try{
+  final db = await instance.database;
+  List result = await db.query('achievements', where:'id = ?', whereArgs: [id]);
+  if (result.isEmpty) return 0;
+  Achievement achievement = Achievement.fromMap(result.first);
+  int updatedProgress = achievement.progress + newProgress;
+
+  if(achievement.goal == achievement.progress){
+    return 0;  
+  }
+
+  if(achievement.goal <= updatedProgress){
+    updatedProgress = achievement.goal;
+    unlockAchievement(achievement);
+    return await db.update('achievements', {
+      'progress': updatedProgress
+    },
+    where: 'id = ?', whereArgs: [id]);
+  }
+  else{
+     await db.update('achievements', {
+    'progress': updatedProgress,
+  }, where: 'id = ?', whereArgs: [id],);
+    return -1;
+  }
+}
+catch(e){
+  rethrow;
+}
+}
+
+Future <int> unlockAchievement(Achievement achievement)async{
+try{
+  final db = await instance.database;
+  return await db.update('achievements', {
+    'unlocked': 1,
+    'dateUnlocked': DateTime.now().millisecondsSinceEpoch
+  }, where: 'id = ?', whereArgs: [achievement.id]);
+}
+catch(e){
+  print('Ошибка: $e');
+  return -1;
+}
+}
+
+Future <List<Achievement>> getAllAchievements()async{
+try{
+  final db = await instance.database;
+  List<Map<String, Object?>> maps = await db.query('achievements', orderBy: 'id ASC');
+
+  return maps.map((map) => Achievement.fromMap(map)).toList();
+}
+catch(e){
+  print('Ошибка при получении достижений: $e');
+  return [];
+  }
+}
+
+Future<void> loadAchievementsFromJson(Database db)async{
+  final jsonString = await rootBundle.loadString("assets/data/achievements.json");
+  final List<dynamic> jsonList = await json.decode(jsonString);
+  print(jsonList);
+
+
+  for(var item in jsonList){
+    await db.insert('achievements', {
+      'id': item['id'],
+      'name': item['name'],
+      'description': item['description'],
+      'icon': item['icon'],
+      'goal': item['goal'],
+      'progress': item['progress'],
+      'unlocked': item['unlocked'] == true ? 1 : 0,
+      'dateUnlocked': item['dateUnlocked'],
+
+    }, conflictAlgorithm: ConflictAlgorithm.ignore, );
+  }
+}
+
+//userStatistics
+Future<int> createUserStatistics(UserStatistics userStatistics)async{
+  try{
+    final db = await instance.database;
+
+    final List<Map<String, Object?>> lastStatisticsRow = await db.query('userStatistics', orderBy: 'id DESC', limit: 1,);
+    UserStatistics lastStatistic;
+    if(lastStatisticsRow.isNotEmpty){
+    lastStatistic = UserStatistics.fromMap(lastStatisticsRow.first);
+    final DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    DateTime? lastDate = format.parse(lastStatistic.createdAt);
+    DateTime? currentDate = format.parse(userStatistics.createdAt);
+
+    final lastDay = DateTime(lastDate.year, lastDate.month, lastDate.day);
+    final currentDay = DateTime(currentDate.year, currentDate.month, currentDate.day);
+ 
+    int diff = currentDay.difference(lastDay).inDays;
+
+    if(diff == 1){
+    final result = await db.insert('userStatistics', {
+      'dailyStreak': lastStatistic.dailyStreak + 1,
+      'createdAt': userStatistics.createdAt,
+    });
+    return lastStatistic.dailyStreak + 1;
+    }
+    else if(diff > 1){
+      final result = await db.insert('userStatistics', {
+      'dailyStreak': 1,
+      'createdAt': userStatistics.createdAt,
+    });
+    return 1;
+    }
+    return 0;
+    }
+    else{
+     final result = await db.insert('userStatistics', {
+        'dailyStreak': 1,
+        'createdAt': userStatistics.createdAt,
+      });
+      return 1;
+    }
+  }
+  catch(e){
+    rethrow;
+  }
+}
+
+Future<int> getMaxDailyStreak()async{
+  try{
+    final db = await instance.database;
+    final result = await db.rawQuery('SELECT MAX(dailyStreak) as maxDailyStreak FROM userStatistics LIMIT 1');
+    if(result.isEmpty || result.first['maxDailyStreak'] == null){
+      return 0;
+    }
+    else{
+      return result.first['maxDailyStreak'] as int;
+    }
+  }
+  catch(e){
+    rethrow;
+  }
+}
+
 }

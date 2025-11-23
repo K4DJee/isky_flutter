@@ -360,6 +360,81 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicyThanks => 'Thank you for using Iskai! We appreciate your trust.';
 
   @override
+  String get achievementName1 => 'First App Launch';
+
+  @override
+  String get achievementDescription1 => 'First launch of the app. Welcome to the world of knowledge!';
+
+  @override
+  String get achievementName2 => 'First Word';
+
+  @override
+  String get achievementDescription2 => 'Add your first word to your dictionary.';
+
+  @override
+  String get achievementName3 => 'I Want to Know Everything!';
+
+  @override
+  String get achievementDescription3 => 'Study all the words for the day.';
+
+  @override
+  String get achievementName4 => 'Novice Explorer';
+
+  @override
+  String get achievementDescription4 => 'Learn 10 new words.';
+
+  @override
+  String get achievementName5 => 'Connoisseur';
+
+  @override
+  String get achievementDescription5 => 'Leave a review of our app and help it gain popularity.';
+
+  @override
+  String get achievementName6 => 'Enthusiast';
+
+  @override
+  String get achievementDescription6 => 'Maintain a 5-day streak.';
+
+  @override
+  String get achievementName7 => '50 Days';
+
+  @override
+  String get achievementDescription7 => 'Maintain a 50-day streak.';
+
+  @override
+  String get achievementName8 => 'Discipline Master';
+
+  @override
+  String get achievementDescription8 => 'Maintain a 100-day streak.';
+
+  @override
+  String get achievementName9 => 'Sage';
+
+  @override
+  String get achievementDescription9 => 'Learn 500 words.';
+
+  @override
+  String get achievementName10 => 'Master';
+
+  @override
+  String get achievementDescription10 => 'Learn 100 words.';
+
+  @override
+  String get achievementName11 => 'Social Guru';
+
+  @override
+  String get achievementDescription11 => 'Share an achievement on social media.';
+
+  @override
+  String get unlockedStatus => 'Unlocked';
+
+  @override
+  String get streakTitle => 'in a row';
+
+  @override
+  String get comparisonMinigameTitle => 'Word comparison and translation';
+
+  @override
   String get stillInDevelopment => 'Still in development';
 
   @override

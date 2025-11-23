@@ -360,6 +360,81 @@ class AppLocalizationsEs extends AppLocalizations {
   String get privacyPolicyThanks => '¡Gracias por usar Iskai! Agradecemos su confianza.';
 
   @override
+  String get achievementName1 => 'Primer inicio de la aplicación';
+
+  @override
+  String get achievementDescription1 => 'Primer inicio de la aplicación. ¡Bienvenido al mundo del conocimiento!';
+
+  @override
+  String get achievementName2 => 'Primera palabra';
+
+  @override
+  String get achievementDescription2 => 'Añade tu primera palabra a tu diccionario.';
+
+  @override
+  String get achievementName3 => '¡Quiero saberlo todo!';
+
+  @override
+  String get achievementDescription3 => 'Estudia todas las palabras del día.';
+
+  @override
+  String get achievementName4 => 'Explorador principiante';
+
+  @override
+  String get achievementDescription4 => 'Aprende 10 palabras nuevas.';
+
+  @override
+  String get achievementName5 => 'Conocedor';
+
+  @override
+  String get achievementDescription5 => 'Deja una reseña sobre nuestra app y ayúdala a ganar popularidad.';
+
+  @override
+  String get achievementName6 => 'Entusiasta';
+
+  @override
+  String get achievementDescription6 => 'Mantén una racha de 5 días seguidos.';
+
+  @override
+  String get achievementName7 => '50 días';
+
+  @override
+  String get achievementDescription7 => 'Mantén una racha de 50 días seguidos.';
+
+  @override
+  String get achievementName8 => 'Persona disciplinada';
+
+  @override
+  String get achievementDescription8 => 'Mantén una racha de 100 días seguidos.';
+
+  @override
+  String get achievementName9 => 'Sabio';
+
+  @override
+  String get achievementDescription9 => 'Aprende 500 palabras.';
+
+  @override
+  String get achievementName10 => 'Maestro';
+
+  @override
+  String get achievementDescription10 => 'Aprende 100 palabras.';
+
+  @override
+  String get achievementName11 => 'Gurú social';
+
+  @override
+  String get achievementDescription11 => 'Comparte un logro en redes sociales.';
+
+  @override
+  String get unlockedStatus => 'desbloqueado';
+
+  @override
+  String get streakTitle => 'consecutivos';
+
+  @override
+  String get comparisonMinigameTitle => 'Comparación y traducción de palabras';
+
+  @override
   String get stillInDevelopment => 'Aún en desarrollo';
 
   @override

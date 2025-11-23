@@ -19,17 +19,17 @@ class _MinigamesPageState extends State<MinigamesPage>{
     final List<Map<String, dynamic>> minigames = [
       {
         "title": AppLocalizations.of(context)!.educationAnki,
-        "image": "",
+        "image": "assets/imgs/cards-svgrepo-com.png",
         "page": () => FlashcardPage(selectedFolderId: widget.selectedFolderId,)
       },
       {
         "title": AppLocalizations.of(context)!.allFlashcards,
-        "image": "",
+        "image": "assets/imgs/dictionary-icon.png",
         "page": () => AllFlashcardsPage(selectedFolderId: widget.selectedFolderId,)
       },
       {
         "title": AppLocalizations.of(context)!.timePage,
-        "image": "",
+        "image": "assets/imgs/timer-icon.png",
         "page": ()=> TimeFlashcardsPage(selectedFolderId: widget.selectedFolderId,)
       },
       
@@ -38,14 +38,17 @@ class _MinigamesPageState extends State<MinigamesPage>{
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.minigamesPage),
       ),
-      body: ListView.separated(
+      body: minigames.isNotEmpty
+      ? ListView.separated(
         itemCount: minigames.length,
         padding: EdgeInsets.only(left:10, right:10),
         separatorBuilder: (context, index) => SizedBox(height: 16),
         itemBuilder: (context, index){
+          print(widget.selectedFolderId);
            return minigameContainer(context, minigames[index], minigames[index]['page'] as Widget Function());
         },
-      ),
+      )
+      : Center(child: CircularProgressIndicator()),
     );
   }
 }
@@ -59,7 +62,7 @@ Widget minigameContainer(BuildContext context, minigame, Widget Function() pageB
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(12),
       border: Border.all(
-        color:Colors.white,
+        color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
         width:2
       )
     ),
@@ -70,7 +73,7 @@ Widget minigameContainer(BuildContext context, minigame, Widget Function() pageB
       ),),
       onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> pageBuilder())),
       leading: ImageIcon(
-                AssetImage("assets/imgs/cards-svgrepo-com.png"),
+                AssetImage(minigame['image']),
       ),
     )
   );

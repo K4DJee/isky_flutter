@@ -360,6 +360,81 @@ class AppLocalizationsFr extends AppLocalizations {
   String get privacyPolicyThanks => 'Merci d’utiliser Iskai ! Nous apprécions votre confiance.';
 
   @override
+  String get achievementName1 => 'Premier lancement de l’application';
+
+  @override
+  String get achievementDescription1 => 'Premier lancement de l’application. Bienvenue dans le monde des connaissances !';
+
+  @override
+  String get achievementName2 => 'Premier mot';
+
+  @override
+  String get achievementDescription2 => 'Ajoute ton premier mot à ton dictionnaire.';
+
+  @override
+  String get achievementName3 => 'Je veux tout savoir !';
+
+  @override
+  String get achievementDescription3 => 'Étudie tous les mots du jour.';
+
+  @override
+  String get achievementName4 => 'Explorateur débutant';
+
+  @override
+  String get achievementDescription4 => 'Apprends 10 nouveaux mots.';
+
+  @override
+  String get achievementName5 => 'Connaisseur';
+
+  @override
+  String get achievementDescription5 => 'Laisse un avis sur notre application et aide-la à gagner en popularité.';
+
+  @override
+  String get achievementName6 => 'Enthousiaste';
+
+  @override
+  String get achievementDescription6 => 'Maintiens une série de 5 jours d’affilée.';
+
+  @override
+  String get achievementName7 => '50 jours';
+
+  @override
+  String get achievementDescription7 => 'Maintiens une série de 50 jours d’affilée.';
+
+  @override
+  String get achievementName8 => 'Maître de discipline';
+
+  @override
+  String get achievementDescription8 => 'Maintiens une série de 100 jours d’affilée.';
+
+  @override
+  String get achievementName9 => 'Sage';
+
+  @override
+  String get achievementDescription9 => 'Apprends 500 mots.';
+
+  @override
+  String get achievementName10 => 'Maître';
+
+  @override
+  String get achievementDescription10 => 'Apprends 100 mots.';
+
+  @override
+  String get achievementName11 => 'Gourou social';
+
+  @override
+  String get achievementDescription11 => 'Partage un succès sur les réseaux sociaux.';
+
+  @override
+  String get unlockedStatus => 'déverrouillé';
+
+  @override
+  String get streakTitle => 'consécutifs';
+
+  @override
+  String get comparisonMinigameTitle => 'Comparaison de mots et traduction';
+
+  @override
   String get stillInDevelopment => 'Encore en développement';
 
   @override

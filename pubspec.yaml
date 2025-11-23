@@ -102,10 +102,12 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/sets/
+    - assets/data/achievements.json
     - assets/imgs/addWordSets.png
     - ./assets/imgs/cards-svgrepo-com.png
     - ./assets/imgs/app_icon2.png
@@ -119,6 +121,19 @@ flutter:
     - assets/imgs/onboardingScreen3.png
     - assets/imgs/onboardingScreen4.png
     - assets/imgs/onboardingScreen5.png
+    - assets/imgs/achievement-icon-1.png
+    - assets/imgs/achievement-icon-2.png
+    - assets/imgs/game.png
+    - assets/imgs/dictionary-icon.png
+    - assets/imgs/timer-icon.png
+    - assets/imgs/star.png
+    - assets/imgs/first_word.png
+    - assets/imgs/novice.png
+    - assets/imgs/antuziast.png
+    - assets/imgs/mudrezh.png
+    - assets/imgs/knowledge.png
+    - assets/imgs/guru.png
+    - assets/animations/fire.gif
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

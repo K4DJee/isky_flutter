@@ -360,6 +360,81 @@ class AppLocalizationsRu extends AppLocalizations {
   String get privacyPolicyThanks => 'Спасибо за использование Iskai! Мы ценим ваше доверие.';
 
   @override
+  String get achievementName1 => 'Первый запуск приложения';
+
+  @override
+  String get achievementDescription1 => 'Первый запуск приложения. Добро пожаловать в мир знаний!';
+
+  @override
+  String get achievementName2 => 'Первое слово';
+
+  @override
+  String get achievementDescription2 => 'Добавь первое слово в свой словарь.';
+
+  @override
+  String get achievementName3 => 'Хочу всё знать!';
+
+  @override
+  String get achievementDescription3 => 'Изучи все слова за день.';
+
+  @override
+  String get achievementName4 => 'Новичок-исследователь';
+
+  @override
+  String get achievementDescription4 => 'Изучи 10 новых слов.';
+
+  @override
+  String get achievementName5 => 'Ценитель';
+
+  @override
+  String get achievementDescription5 => 'Оставь отзыв о нашем приложении и помоги ему обрести популярность.';
+
+  @override
+  String get achievementName6 => 'Энтузиаст';
+
+  @override
+  String get achievementDescription6 => 'Держи ударную серию 5 дней подряд.';
+
+  @override
+  String get achievementName7 => '50 дней';
+
+  @override
+  String get achievementDescription7 => 'Держи ударную серию 50 дней подряд.';
+
+  @override
+  String get achievementName8 => 'Человек-дисциплина';
+
+  @override
+  String get achievementDescription8 => 'Держи ударную серию 100 дней подряд.';
+
+  @override
+  String get achievementName9 => 'Мудрец';
+
+  @override
+  String get achievementDescription9 => 'Изучи 500 слов.';
+
+  @override
+  String get achievementName10 => 'Мастер';
+
+  @override
+  String get achievementDescription10 => 'Изучи 100 слов.';
+
+  @override
+  String get achievementName11 => 'Социальный гуру';
+
+  @override
+  String get achievementDescription11 => 'Поделись достижением в соцсетях.';
+
+  @override
+  String get unlockedStatus => 'Разблокировано';
+
+  @override
+  String get streakTitle => 'подряд';
+
+  @override
+  String get comparisonMinigameTitle => 'Сопоставление слов и переводов';
+
+  @override
   String get stillInDevelopment => 'Ещё в разработке';
 
   @override

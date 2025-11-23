@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:iskai/database/sqfliteDatabase.dart';
 import 'package:iskai/helpers/themes.dart';
 import 'package:iskai/l10n/app_localizations.dart';
 import 'package:iskai/modals/AddWordModal.dart';
 import 'package:iskai/models/folders.dart';
+import 'package:iskai/models/streak_update_result.dart';
+import 'package:iskai/models/user_statistics.dart';
 import 'package:iskai/models/words.dart';
 import 'package:iskai/pages/StatisticPage.dart';
 import 'package:iskai/pages/achievements_page.dart';
 import 'package:iskai/pages/allFlashCardsPage.dart';
 import 'package:iskai/pages/flashCardsPage.dart';
+import 'package:iskai/pages/minigames_page.dart';
 import 'package:iskai/pages/onBoardingScreen.dart';
 import 'package:iskai/pages/timeFlashcardsPage.dart';
 import 'package:iskai/pages/wordActionsPage.dart';
@@ -16,6 +20,7 @@ import 'package:iskai/pages/word_sets_page.dart';
 import 'package:iskai/providers/FolderUpdateProvider.dart';
 import 'package:iskai/services/adService.dart';
 import 'package:iskai/services/databaseService.dart';
+import 'package:iskai/widgets/streak_popup.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 import 'pages/SettingsPage.dart';
@@ -100,6 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
     context.read<FolderUpdateProvider>().addListener(_onFolderUpdated);
     searchController.addListener(() => _filterWords());
     _loadFolders();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    _showStreakPopup(context);
+  });
 
     // if (Platform.isWindows || Platform.isLinux) {
     //   return;
@@ -368,6 +376,41 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
   }
+
+  void _showStreakPopup(BuildContext context)async{
+    final parentContext = context;
+    final formatted = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    StreakUpdateResult result = await _dbService.createUserStatistics(UserStatistics(dailyStreak: 1, createdAt: formatted));
+    if(!result.success){
+      ScaffoldMessenger.of(parentContext).showSnackBar(
+       SnackBar(content: Text('Ошибка с работой ударной серии')),
+    );
+    return;
+    }
+    if(result.streak == 0){
+      return;
+    }
+    showDialog(
+    context: parentContext,
+    barrierDismissible: true,
+    builder: (dialogContext) {
+      Future.delayed(Duration(seconds: 3), () {
+      if (Navigator.of(parentContext).canPop()) {
+          Navigator.of(parentContext).pop();
+        } 
+    });
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        Navigator.of(dialogContext).pop();
+      },
+      child: Center(
+        child: StreakPopup(streak: result.streak),
+      ),
+    );
+    } 
+  );
+  }
   
   Future<void> _openDonationUrl() async{
     final url = Uri.parse("https://yoomoney.ru/to/4100119234375386");
@@ -482,8 +525,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 );
-                // Можно открыть новую страницу:
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
               },
             ),
             ListTile(
@@ -517,7 +558,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               leading: ImageIcon(
-                AssetImage("assets/imgs/cards-svgrepo-com.png"),
+                AssetImage("assets/imgs/achievement-icon-1.png"),
               ),
               title: Text(AppLocalizations.of(context)!.achievementsPage),
               onTap: () {
@@ -544,105 +585,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: <Widget>[
-          PopupMenuButton<String>(
-            icon: ImageIcon(AssetImage("assets/imgs/cards-svgrepo-com.png")),
-            onSelected: (String value) {},
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem(
-                onTap: () {
-                  if (_selectedFolderIdForWord == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          AppLocalizations.of(context)!.selectFolder,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                    return;
-                  }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FlashcardPage(
-                        selectedFolderId: _selectedFolderIdForWord!,
-                      ),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: [
-                    ImageIcon(AssetImage("assets/imgs/cards-svgrepo-com.png")),
-                    SizedBox(width: 8),
-                    Text(AppLocalizations.of(context)!.educationAnki),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                onTap: () {
-                  if (_selectedFolderIdForWord == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          AppLocalizations.of(context)!.selectFolder,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                    return;
-                  }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AllFlashcardsPage(
-                        selectedFolderId: _selectedFolderIdForWord!,
-                      ),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.my_library_books),
-                    SizedBox(width: 8),
-                    Text(AppLocalizations.of(context)!.allFlashcards),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                onTap: () {
-                  if (_selectedFolderIdForWord == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          AppLocalizations.of(context)!.selectFolder,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                    return;
-                  }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TimeFlashcardsPage(
-                        selectedFolderId: _selectedFolderIdForWord!,
-                      ),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.timelapse),
-                    SizedBox(width: 8),
-                    Text(AppLocalizations.of(context)!.timePage),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          IconButton(onPressed: (){
+            Navigator.push(context,  MaterialPageRoute(builder: (context)=> MinigamesPage(selectedFolderId: 8,)));
+          }, icon: ImageIcon(AssetImage("assets/imgs/game.png"))),
           PopupMenuButton(
             tooltip: AppLocalizations.of(context)!.wordSetsTooltip,
             icon: ImageIcon(AssetImage('assets/imgs/addWordSets.png')),

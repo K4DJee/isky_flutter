@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iskai/helpers/themes.dart';
 import 'package:iskai/l10n/app_localizations.dart';
 import 'package:iskai/models/languages.dart';
+import 'package:iskai/pages/comparison_minigame.dart';
 import 'package:iskai/pages/export_import_actions_page.dart';
 import 'package:iskai/pages/foldersActions.dart';
 import 'package:iskai/pages/minigames_page.dart';
@@ -247,7 +248,7 @@ class _SettingsPageState extends State<SettingsPage>{
                   trailing: Icon(Icons.feedback),
                   selectedTileColor: Colors.black,
                   onTap:(){
-                    Navigator.push(context,  MaterialPageRoute(builder: (context)=> MinigamesPage(selectedFolderId: 8,)));
+                    Navigator.push(context,  MaterialPageRoute(builder: (context)=> ComparisonMinigame(selectedFolderId: 6,)));
                   }
                 ),
                 const Divider(height: 1, thickness: 1, color: Colors.grey),

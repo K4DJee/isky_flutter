@@ -801,6 +801,156 @@ abstract class AppLocalizations {
   /// **'Thank you for using Iskai! We appreciate your trust.'**
   String get privacyPolicyThanks;
 
+  /// No description provided for @achievementName1.
+  ///
+  /// In en, this message translates to:
+  /// **'First App Launch'**
+  String get achievementName1;
+
+  /// No description provided for @achievementDescription1.
+  ///
+  /// In en, this message translates to:
+  /// **'First launch of the app. Welcome to the world of knowledge!'**
+  String get achievementDescription1;
+
+  /// No description provided for @achievementName2.
+  ///
+  /// In en, this message translates to:
+  /// **'First Word'**
+  String get achievementName2;
+
+  /// No description provided for @achievementDescription2.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first word to your dictionary.'**
+  String get achievementDescription2;
+
+  /// No description provided for @achievementName3.
+  ///
+  /// In en, this message translates to:
+  /// **'I Want to Know Everything!'**
+  String get achievementName3;
+
+  /// No description provided for @achievementDescription3.
+  ///
+  /// In en, this message translates to:
+  /// **'Study all the words for the day.'**
+  String get achievementDescription3;
+
+  /// No description provided for @achievementName4.
+  ///
+  /// In en, this message translates to:
+  /// **'Novice Explorer'**
+  String get achievementName4;
+
+  /// No description provided for @achievementDescription4.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn 10 new words.'**
+  String get achievementDescription4;
+
+  /// No description provided for @achievementName5.
+  ///
+  /// In en, this message translates to:
+  /// **'Connoisseur'**
+  String get achievementName5;
+
+  /// No description provided for @achievementDescription5.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a review of our app and help it gain popularity.'**
+  String get achievementDescription5;
+
+  /// No description provided for @achievementName6.
+  ///
+  /// In en, this message translates to:
+  /// **'Enthusiast'**
+  String get achievementName6;
+
+  /// No description provided for @achievementDescription6.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain a 5-day streak.'**
+  String get achievementDescription6;
+
+  /// No description provided for @achievementName7.
+  ///
+  /// In en, this message translates to:
+  /// **'50 Days'**
+  String get achievementName7;
+
+  /// No description provided for @achievementDescription7.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain a 50-day streak.'**
+  String get achievementDescription7;
+
+  /// No description provided for @achievementName8.
+  ///
+  /// In en, this message translates to:
+  /// **'Discipline Master'**
+  String get achievementName8;
+
+  /// No description provided for @achievementDescription8.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain a 100-day streak.'**
+  String get achievementDescription8;
+
+  /// No description provided for @achievementName9.
+  ///
+  /// In en, this message translates to:
+  /// **'Sage'**
+  String get achievementName9;
+
+  /// No description provided for @achievementDescription9.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn 500 words.'**
+  String get achievementDescription9;
+
+  /// No description provided for @achievementName10.
+  ///
+  /// In en, this message translates to:
+  /// **'Master'**
+  String get achievementName10;
+
+  /// No description provided for @achievementDescription10.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn 100 words.'**
+  String get achievementDescription10;
+
+  /// No description provided for @achievementName11.
+  ///
+  /// In en, this message translates to:
+  /// **'Social Guru'**
+  String get achievementName11;
+
+  /// No description provided for @achievementDescription11.
+  ///
+  /// In en, this message translates to:
+  /// **'Share an achievement on social media.'**
+  String get achievementDescription11;
+
+  /// No description provided for @unlockedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocked'**
+  String get unlockedStatus;
+
+  /// No description provided for @streakTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'in a row'**
+  String get streakTitle;
+
+  /// No description provided for @comparisonMinigameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Word comparison and translation'**
+  String get comparisonMinigameTitle;
+
   /// No description provided for @stillInDevelopment.
   ///
   /// In en, this message translates to:
